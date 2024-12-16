@@ -1,0 +1,24 @@
+.ingredientsScroll {
+    height: calc(100vh - 300px);
+    overflow-y: scroll;
+}
+.ingredientList {
+    display: flex;
+    flex-wrap: wrap;
+}
+.ingredientSectionTitle {
+    font-size: 24px;
+}
+.ingredientItem {
+    width: calc(50% - 24px);
+    margin: 12px;
+    text-align: center;
+    position: relative;
+}
+.ingredientName {
+    min-height: 48px;
+}
+.priceIcon {
+    vertical-align: top;
+    margin-left: 8px;
+}
