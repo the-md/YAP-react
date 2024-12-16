@@ -1,0 +1,12 @@
+.container {
+    width: 1280px;
+    margin: auto;
+}
+
+.burgerColumn {
+    width: 600px;
+}
+
+.d-flex {
+    display: flex;
+}
