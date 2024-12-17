@@ -8,7 +8,7 @@ const IngredientSection: React.FC<IngredientSectionProps> = ({title, type, ingre
     <section className="mb-10">
       <h2 className={`mb-6 text_type_main-small ${styles.ingredientSectionTitle}`}>{title}</h2>
       <div className="display-flex flex_wrap-wrap">
-        {ingredients.filter(item => item.type === type).map(item => <IngredientItem item={item}/>)}
+        {ingredients.filter(item => item.type === type).map(item => <IngredientItem key={item._id} item={item}/>)}
       </div>
     </section>
   )

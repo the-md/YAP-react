@@ -18,6 +18,7 @@ const BurgerConstructor: React.FC<{ ingredients: Ingredients[] }> = ({ ingredien
         <div className="ml-8 mb-4">
           {bun &&
               <ConstructorElement
+                  key={'bun_1'}
                   type="top"
                   isLocked={true}
                   text={bun.name}
@@ -27,12 +28,11 @@ const BurgerConstructor: React.FC<{ ingredients: Ingredients[] }> = ({ ingredien
           }
         </div>
         <div className={styles.constructorScroll}>
-
           {randomIngredients.map((item, index) => (
-            <div className="display-flex justify_content-center align_items-center">
+            <div key={index} className="display-flex justify_content-center align_items-center">
               <DragIcon className="mr-2" type="primary" />
               <ConstructorElement
-                key={item._id + '_' + index}
+                key={item._id}
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
@@ -43,6 +43,7 @@ const BurgerConstructor: React.FC<{ ingredients: Ingredients[] }> = ({ ingredien
         <div className="ml-8 mt-4">
           {bun &&
               <ConstructorElement
+                  key={'bun_2'}
                   type="bottom"
                   isLocked={true}
                   text={bun.name}
