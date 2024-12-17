@@ -2,11 +2,21 @@
     width: 1280px;
     margin: auto;
 }
-
 .burgerColumn {
     width: 600px;
 }
-
-.d-flex {
+.display-flex {
     display: flex;
+}
+.justify_content-center {
+    justify-content: center;
+}
+.justify_content-end {
+    justify-content: end;
+}
+.align_items-center {
+    align-items: center;
+}
+.flex_wrap-wrap {
+    flex-wrap: wrap;
 }

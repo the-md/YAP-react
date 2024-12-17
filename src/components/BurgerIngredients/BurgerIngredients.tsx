@@ -7,7 +7,7 @@ const IngredientSection: React.FC<IngredientSectionProps> = ({title, type, ingre
   return (
     <section className="mb-10">
       <h2 className={`mb-6 text_type_main-small ${styles.ingredientSectionTitle}`}>{title}</h2>
-      <div className={styles.ingredientList}>
+      <div className="display-flex flex_wrap-wrap">
         {ingredients.filter(item => item.type === type).map(item => <IngredientItem item={item}/>)}
       </div>
     </section>
@@ -44,7 +44,7 @@ const BurgerIngredients: React.FC<{ ingredients: Ingredients[] }> = ({ ingredien
   return (
     <section className="burgerColumn">
       <h1 className="text_type_main-large">Соберите бургер</h1>
-      <div className="mb-10 d-flex">
+      <div className="mb-10 display-flex">
         <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>

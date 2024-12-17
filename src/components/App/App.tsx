@@ -11,7 +11,7 @@ function App() {
   })
   const URL = 'https://norma.nomoreparties.space'
 
-  const getProductData = () => {
+  const getProductData = React.useCallback(() => {
     setState({ ...state, hasError: false, isLoading: true });
     fetch(`${URL}/api/ingredients`)
       .then(res => res.json())
@@ -19,7 +19,7 @@ function App() {
       .catch(() => {
         setState({ ...state, hasError: true, isLoading: false });
       });
-  };
+  }, []);
 
   React.useEffect(() => {
     getProductData();
@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="wrapper text text_type_main-default">
       <AppHeader/>
-      <main className="container d-flex">
+      <main className="container display-flex">
         {state.isLoading && 'Загрузка ...'}
         {state.data &&
             <>

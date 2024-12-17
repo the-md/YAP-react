@@ -1,0 +1,14 @@
+.constructorScroll {
+    height: calc(100vh - 450px);
+    max-height: 464px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0 -16px 0 0;
+
+}
+.burgerConstructorTotalIcon {
+    width: 36px;
+    height: 36px;
+}
