@@ -1,45 +1,12 @@
 import React from "react";
-import { CurrencyIcon, Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import {Ingredients} from '../../types/Ingredients.ts'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import {IngredientsArray} from '../../types/ingredients-array.ts'
 import styles from './burger-ingredients.module.css';
+import IngredientSection from "./ingredient-section/ingredient-section.tsx";
 
-const IngredientSection: React.FC<IngredientSectionProps> = ({title, type, ingredients}) => {
-  return (
-    <section className="mb-10">
-      <h2 className={`mb-6 text_type_main-small ${styles.ingredientSectionTitle}`}>{title}</h2>
-      <div className="display-flex flex_wrap-wrap">
-        {ingredients.filter(item => item.type === type).map(item => <IngredientItem key={item._id} item={item}/>)}
-      </div>
-    </section>
-  )
-}
 
-interface IngredientSectionProps {
-  title: string;
-  type: string;
-  ingredients: Ingredients[];
-}
-
-const IngredientItem: React.FC<{ item: Ingredients }> = ({item}) => {
-  return (
-    <article className={`mb-8 ${styles.ingredientItem}`}>
-      <div className="image">
-        <img src={item.image} alt=""/>
-      </div>
-      <div className="m-1 text_type_digits-default">
-        {item.price} <CurrencyIcon className={styles.priceIcon} type="primary" />
-      </div>
-      <div className={styles.ingredientName}>
-        {item.name}
-      </div>
-      <Counter count={1} size="default" extraClass="m-1" />
-    </article>
-  )
-}
-
-const BurgerIngredients: React.FC<{ ingredients: Ingredients[] }> = ({ ingredients }) => {
+const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
   const [current, setCurrent] = React.useState('bun')
-  console.log('ingredients33', ingredients)
 
   return (
     <section className="burgerColumn">

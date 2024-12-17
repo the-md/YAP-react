@@ -1,12 +1,12 @@
 import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from "react";
-import { Ingredients } from "../../types/Ingredients.ts";
+import { IngredientsArray } from "../../types/ingredients-array.ts";
 import styles from './burger-constructor.module.css';
 
-const BurgerConstructor: React.FC<{ ingredients: Ingredients[] }> = ({ ingredients }) => {
+const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
   const bun = ingredients.find(item => item.type === "bun")
   const ingredientsWithoutBun = ingredients.filter(item => item.type !== "bun")
-  const randomIngredients: Ingredients[] = [];
+  const randomIngredients: IngredientsArray[] = [];
   const num: number = 10;
   for (let i = 0; i < num; i++) {
     const randomIndex = Math.floor(Math.random() * ingredientsWithoutBun.length);

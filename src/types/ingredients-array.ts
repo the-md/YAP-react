@@ -1,4 +1,4 @@
-export interface Ingredients {
+export interface IngredientsArray {
   _id: string,
   name: string,
   type: string,
