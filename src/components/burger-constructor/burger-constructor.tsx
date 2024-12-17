@@ -1,6 +1,6 @@
 import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from "react";
-import { IngredientsArray } from "../../types/ingredients-array.ts";
+import { IngredientsArray } from "../../types";
 import styles from './burger-constructor.module.css';
 
 const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
@@ -27,7 +27,7 @@ const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
               />
           }
         </div>
-        <div className={styles.constructorScroll}>
+        <div className={`custom-scroll ${styles.constructorScroll}`}>
           {randomIngredients.map((item, index) => (
             <div key={index} className="display-flex justify_content-center align_items-center">
               <DragIcon className="mr-2" type="primary" />

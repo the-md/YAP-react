@@ -1,12 +1,18 @@
 import React from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import {IngredientsArray} from '../../types/ingredients-array.ts'
+import { IngredientsArray } from '../../types'
 import styles from './burger-ingredients.module.css';
 import IngredientSection from "./ingredient-section/ingredient-section.tsx";
+import IngredientItem from "./ingredient-item/ingredient-item.tsx";
 
 
 const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
   const [current, setCurrent] = React.useState('bun')
+
+  const itemsBun = React.useMemo(() => ingredients.filter(item => item.type === 'bun'), [ingredients])
+  const itemsSauce = React.useMemo(() => ingredients.filter(item => item.type === 'sauce'), [ingredients])
+  const itemsMain = React.useMemo(() => ingredients.filter(item => item.type === 'main'), [ingredients])
+
 
   return (
     <section className="burgerColumn">
@@ -23,10 +29,16 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
         </Tab>
       </div>
 
-      <div className={styles.ingredientsScroll}>
-        <IngredientSection title="Булки" type="bun" ingredients={ingredients} />
-        <IngredientSection title="Соусы" type="sauce" ingredients={ingredients} />
-        <IngredientSection title="Начинки" type="main" ingredients={ingredients} />
+      <div className={`custom-scroll ${styles.ingredientsScroll}`}>
+        <IngredientSection title="Булки">
+          {itemsBun.map(item => <IngredientItem key={item._id} item={item}/>)}
+        </IngredientSection>
+        <IngredientSection title="Соусы">
+          {itemsSauce.map(item => <IngredientItem key={item._id} item={item}/>)}
+        </IngredientSection>
+        <IngredientSection title="Начинки">
+          {itemsMain.map(item => <IngredientItem key={item._id} item={item}/>)}
+        </IngredientSection>
       </div>
     </section>
   )

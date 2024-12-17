@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface IngredientsArray {
   _id: string,
   name: string,
@@ -11,5 +13,9 @@ export interface IngredientsArray {
   image_mobile: string,
   image_large: string,
   __v: number
+}
 
+export interface IngredientsSections {
+  title: string;
+  children: ReactNode
 }
