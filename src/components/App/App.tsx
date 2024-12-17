@@ -11,15 +11,15 @@ function App() {
   })
   const URL = 'https://norma.nomoreparties.space'
 
-  const getProductData = React.useCallback(() => {
-    setState({ ...state, hasError: false, isLoading: true });
+  const getProductData = () => {
+    setState((prevState) => ({ ...prevState, hasError: false, isLoading: true }));
     fetch(`${URL}/api/ingredients`)
-      .then(res => res.json())
-      .then(({ data }) => setState({ ...state, data, isLoading: false }))
+      .then((res) => res.json())
+      .then(({ data }) => setState((prevState) => ({ ...prevState, data, isLoading: false })))
       .catch(() => {
-        setState({ ...state, hasError: true, isLoading: false });
+        setState((prevState) => ({ ...prevState, hasError: true, isLoading: false }));
       });
-  }, []);
+  };
 
   React.useEffect(() => {
     getProductData();
