@@ -7,17 +7,17 @@ function App() {
   const [state, setState] = React.useState({
     data: null,
     isLoading: false,
-    hasError: false,
+    error: null,
   })
   const URL = 'https://norma.nomoreparties.space'
 
   const getProductData = () => {
-    setState((prevState) => ({ ...prevState, hasError: false, isLoading: true }));
+    setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
     fetch(`${URL}/api/ingredients`)
       .then((res) => res.json())
       .then(({ data }) => setState((prevState) => ({ ...prevState, data, isLoading: false })))
-      .catch(() => {
-        setState((prevState) => ({ ...prevState, hasError: true, isLoading: false }));
+      .catch((err) => {
+        setState((prevState) => ({ ...prevState, error: err.message, isLoading: false }));
       });
   };
 
@@ -28,8 +28,13 @@ function App() {
   return (
     <div className="wrapper text text_type_main-default">
       <AppHeader/>
-      <main className="container display-flex">
-        {state.isLoading && 'Загрузка ...'}
+      <main className="container display-flex position-relative">
+        {state.isLoading && (
+          <div className="loader-container display-flex justify_content-center align_items-center">
+            <div className="spinner"></div>
+          </div>
+        )}
+        {state.error && <div style={{ color: "red" }}>{state.error}</div>}
         {state.data &&
             <>
                 <BurgerIngredients ingredients={state.data} />

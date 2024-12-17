@@ -1,0 +1,12 @@
+.ingredientItem {
+    width: calc(50% - 32px);
+    text-align: center;
+    position: relative;
+}
+.ingredientName {
+    min-height: 48px;
+}
+.priceIcon {
+    vertical-align: top;
+    margin-left: 8px;
+}

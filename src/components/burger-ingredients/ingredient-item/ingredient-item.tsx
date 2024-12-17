@@ -1,11 +1,11 @@
 import React from "react";
 import { IngredientsArray } from "../../../types/ingredients-array.ts";
-import styles from "../burger-ingredients.module.css";
+import styles from "./ingredient-item.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const IngredientItem: React.FC<{ item: IngredientsArray }> = ({item}) => {
   return (
-    <article className={`mb-8 ${styles.ingredientItem}`}>
+    <article className={`mb-8 ml-4 mr-4 ${styles.ingredientItem}`}>
       <div className="image">
         <img src={item.image} alt=""/>
       </div>

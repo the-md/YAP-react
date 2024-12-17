@@ -10,7 +10,7 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
 
   return (
     <section className="burgerColumn">
-      <h1 className="text_type_main-large">Соберите бургер</h1>
+      <h1 className="mb-6 text_type_main-large">Соберите бургер</h1>
       <div className="mb-10 display-flex">
         <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
