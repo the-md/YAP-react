@@ -1,7 +1,7 @@
 import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from "react";
 import { Ingredients } from "../../types/Ingredients.ts";
-import styles from './BurgerConstructor.module.css';
+import styles from './burger-constructor.module.css';
 
 const BurgerConstructor: React.FC<{ ingredients: Ingredients[] }> = ({ ingredients }) => {
   const bun = ingredients.find(item => item.type === "bun")

@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrencyIcon, Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import {Ingredients} from '../../types/Ingredients.ts'
-import styles from './BurgerIngredients.module.css';
+import styles from './burger-ingredients.module.css';
 
 const IngredientSection: React.FC<IngredientSectionProps> = ({title, type, ingredients}) => {
   return (

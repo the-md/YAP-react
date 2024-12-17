@@ -1,7 +1,7 @@
 import React from "react";
-import AppHeader from '../AppHeader/AppHeader'
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.tsx";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.tsx";
+import AppHeader from '../app-header/app-header'
+import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
+import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
 
 function App() {
   const [state, setState] = React.useState({
