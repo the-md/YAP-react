@@ -7,7 +7,7 @@ const IngredientDetails: React.FC<{ item: IngredientsArray }> = ({item}) => {
   return (
     <article>
       <img src={item.image_large} alt=""/>
-      <div className={`mt-4 mb-8 text_type_main-medium ${styles.detailsName}`}>{item.name}</div>
+      <div className={`mt-4 mb-8 text_type_main-medium font_size-24 ${styles.detailsName}`}>{item.name}</div>
       <ul className={`text_color_inactive ${styles.detailsList}`}>
         <li>
           <div>Калории,ккал</div>
