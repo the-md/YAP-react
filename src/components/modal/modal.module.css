@@ -1,0 +1,16 @@
+.modal {
+    position: fixed;
+    left: calc(50% - 360px);
+    top: 100px;
+    margin: auto;
+    width: 720px;
+    max-height: 100%;
+    z-index: 999;
+}
+.modalContent {
+    background: #1C1C21;
+    border-radius: 40px;
+}
+.modalHeader {
+    height: 64px;
+}

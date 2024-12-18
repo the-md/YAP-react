@@ -14,6 +14,9 @@
 .justify_content-end {
     justify-content: end;
 }
+.justify_content-space-between {
+    justify-content: space-between;
+}
 .align_items-center {
     align-items: center;
 }
@@ -22,6 +25,15 @@
 }
 .position-relative {
     position: relative;
+}
+.position-fixed {
+    position: fixed;
+}
+.text_align-center {
+    text-align: center;
+}
+.cursor-pointer {
+    cursor: pointer;
 }
 .loader-container {
     height: 100vh;

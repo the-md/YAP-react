@@ -15,7 +15,21 @@ export interface IngredientsArray {
   __v: number
 }
 
-export interface IngredientsSections {
+export interface IngredientsSectionsProps {
   title: string;
   children: ReactNode
+}
+export interface IngredientItemProps {
+  item: IngredientsArray;
+  openModal: (item: IngredientsArray | null) => void
+}
+
+export interface ModalProps {
+  title: string;
+  children: ReactNode;
+  onClose: () => void
+}
+
+export interface ModalOverlayProps {
+  onClose: () => void
 }
