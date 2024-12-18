@@ -8,6 +8,9 @@
 .display-flex {
     display: flex;
 }
+.display-grid {
+    display: grid;
+}
 .justify_content-center {
     justify-content: center;
 }
@@ -19,6 +22,9 @@
 }
 .align_items-center {
     align-items: center;
+}
+.align_items-start {
+    align-items: start;
 }
 .flex_wrap-wrap {
     flex-wrap: wrap;

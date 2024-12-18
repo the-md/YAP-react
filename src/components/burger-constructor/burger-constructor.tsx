@@ -32,7 +32,7 @@ const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
                 />
             }
           </div>
-          <div className={`custom-scroll ${styles.constructorScroll}`}>
+          <div className={`custom-scroll display-flex ${styles.constructorScroll}`}>
             {randomIngredients.map((item, index) => (
               <div key={index} className="display-flex justify_content-center align_items-center">
                 <DragIcon className="mr-2" type="primary" />
