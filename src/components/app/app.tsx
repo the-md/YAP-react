@@ -26,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <div className="wrapper text text_type_main-default">
+    <div className="wrapper text_type_main-default">
       <AppHeader/>
       <main className="container display-flex">
         {state.isLoading && (

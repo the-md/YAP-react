@@ -16,9 +16,6 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
   const itemsSauce = React.useMemo(() => ingredients.filter(item => item.type === 'sauce'), [ingredients])
   const itemsMain = React.useMemo(() => ingredients.filter(item => item.type === 'main'), [ingredients])
 
-  const openModal = (item: IngredientsArray | null) => {
-    setModalItem(item)
-  }
   return (
     <>
       <section className="burgerColumn">
@@ -37,20 +34,21 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
 
         <div className={`custom-scroll ${styles.ingredientsScroll}`}>
           <IngredientSection title="Булки">
-            {itemsBun.map(item => <IngredientItem key={item._id} item={item} openModal={openModal}/>)}
+            {itemsBun.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
           </IngredientSection>
           <IngredientSection title="Соусы">
-            {itemsSauce.map(item => <IngredientItem key={item._id} item={item} openModal={openModal}/>)}
+            {itemsSauce.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
           </IngredientSection>
           <IngredientSection title="Начинки">
-            {itemsMain.map(item => <IngredientItem key={item._id} item={item} openModal={openModal}/>)}
+            {itemsMain.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
           </IngredientSection>
         </div>
       </section>
       {modalItem &&
-      <Modal title="Детали ингредиента" onClose={() => openModal(null)}>
-        <IngredientDetails item={modalItem} />
-      </Modal>}
+        <Modal title="Детали ингредиента" onClose={() => setModalItem(null)}>
+          <IngredientDetails item={modalItem} />
+        </Modal>
+      }
     </>
   )
 

@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({title, children, onClose}) => {
     (
     <>
       <div className={`${styles.modal}`} onClick={onClose}>
-        <div className={`pt-10 pl-10 pr-10 pb-15 ${styles.modalContent}`} onClick={(e) => e.stopPropagation()}>
+        <div className={`pt-10 pl-10 pr-10 pb-15 text_type_main-default ${styles.modalContent}`} onClick={(e) => e.stopPropagation()}>
           <header className={`display-flex justify_content-space-between align_items-center ${styles.modalHeader}`}>
             <div className="text_type_main-large">{title}</div>
             <CloseIcon className="cursor-pointer" onClick={onClose} type="primary" />
