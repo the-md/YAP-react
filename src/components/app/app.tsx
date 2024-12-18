@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="wrapper text text_type_main-default">
       <AppHeader/>
-      <main className="container display-flex position-relative">
+      <main className="container display-flex">
         {state.isLoading && (
           <div className="loader-container display-flex justify_content-center align_items-center">
             <div className="spinner"></div>
