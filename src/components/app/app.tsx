@@ -14,8 +14,13 @@ function App() {
   const getProductData = () => {
     setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
     fetch(`${URL}/api/ingredients`)
-      .then((res) => res.json())
-      .then(({ data }) => setState((prevState) => ({ ...prevState, data, isLoading: false })))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json()
+      })
+      .then(({data}) => setState((prevState) => ({...prevState, data, isLoading: false})))
       .catch((err) => {
         setState((prevState) => ({ ...prevState, error: err.message, isLoading: false }));
       });
