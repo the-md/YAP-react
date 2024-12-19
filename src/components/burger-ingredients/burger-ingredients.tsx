@@ -12,9 +12,19 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
   const [current, setCurrent] = React.useState('bun')
   const [modalItem, setModalItem] = React.useState<IngredientsArray | null>(null)
 
-  const itemsBun = React.useMemo(() => ingredients.filter(item => item.type === 'bun'), [ingredients])
-  const itemsSauce = React.useMemo(() => ingredients.filter(item => item.type === 'sauce'), [ingredients])
-  const itemsMain = React.useMemo(() => ingredients.filter(item => item.type === 'main'), [ingredients])
+  const { itemsBun, itemsSauce, itemsMain } = React.useMemo(() => {
+    const itemsBun: IngredientsArray[] = [];
+    const itemsSauce: IngredientsArray[] = [];
+    const itemsMain: IngredientsArray[] = [];
+
+    ingredients.forEach((item) => {
+      if (item.type === 'bun') itemsBun.push(item);
+      else if (item.type === 'sauce') itemsSauce.push(item);
+      else if (item.type === 'main') itemsMain.push(item);
+    });
+
+    return { itemsBun, itemsSauce, itemsMain };
+  }, [ingredients]);
 
   return (
     <>
