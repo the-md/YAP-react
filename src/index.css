@@ -1,0 +1,62 @@
+.container {
+    width: 1280px;
+    margin: auto;
+}
+.burgerColumn {
+    width: 600px;
+}
+.display-flex {
+    display: flex;
+}
+.display-grid {
+    display: grid;
+}
+.justify_content-center {
+    justify-content: center;
+}
+.justify_content-end {
+    justify-content: end;
+}
+.justify_content-space-between {
+    justify-content: space-between;
+}
+.align_items-center {
+    align-items: center;
+}
+.align_items-start {
+    align-items: start;
+}
+.flex_wrap-wrap {
+    flex-wrap: wrap;
+}
+.position-relative {
+    position: relative;
+}
+.position-fixed {
+    position: fixed;
+}
+.text_align-center {
+    text-align: center;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.font_size-24 {
+    font-size: 24px;
+}
+.loader-container {
+    height: 100vh;
+    width: 100%;
+}
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

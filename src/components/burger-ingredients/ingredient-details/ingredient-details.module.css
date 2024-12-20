@@ -1,0 +1,9 @@
+.detailsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+}
+.detailsList li {
+    min-width: 112px;
+}
