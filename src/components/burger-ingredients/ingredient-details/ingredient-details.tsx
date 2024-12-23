@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { IngredientsArray } from "../../../types";
+import { IngredientsArray } from "../../../utils/types.ts";
 
 
 const IngredientDetails: React.FC<{ item: IngredientsArray }> = ({item}) => {

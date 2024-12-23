@@ -1,5 +1,5 @@
 import React from "react";
-import { IngredientsSectionsProps } from "../../../types";
+import { IngredientsSectionsProps } from "../../../utils/types.ts";
 
 const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, children}) => {
   return (

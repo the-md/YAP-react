@@ -1,5 +1,5 @@
 import React from "react";
-import { IngredientItemProps } from "../../../types";
+import { IngredientItemProps } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 

@@ -1,6 +1,6 @@
 import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from "react";
-import { IngredientsArray } from "../../types";
+import { IngredientsArray } from "../../utils/types.ts";
 import styles from './burger-constructor.module.css';
 import Modal from "../modal/modal.tsx";
 import OrderDetails from "../order-details/order-details.tsx";

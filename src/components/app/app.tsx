@@ -1,4 +1,5 @@
 import React from "react";
+import { BASE_URL } from "../../utils/constants.ts";
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
@@ -9,11 +10,10 @@ function App() {
     isLoading: false,
     error: null,
   })
-  const URL = 'https://norma.nomoreparties.space'
 
   const getProductData = () => {
     setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
-    fetch(`${URL}/api/ingredients`)
+    fetch(`${BASE_URL}/ingredients`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);

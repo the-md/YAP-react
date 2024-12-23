@@ -1,5 +1,5 @@
 import styles from "./modal-overlay.module.css";
-import { ModalOverlayProps } from "../../../types";
+import { ModalOverlayProps } from "../../../utils/types.ts";
 
 
 
