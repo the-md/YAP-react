@@ -9,8 +9,8 @@ import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
 
 
 const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
-  const [current, setCurrent] = React.useState('bun')
-  const [modalItem, setModalItem] = React.useState<IngredientsArray | null>(null)
+  const [currentTab, setCurrentTab] = React.useState('bun')
+  const [modalIngredient, setModalIngredient] = React.useState<IngredientsArray | null>(null)
 
   const { itemsBun, itemsSauce, itemsMain } = React.useMemo(() => {
     const itemsBun: IngredientsArray[] = [];
@@ -31,32 +31,32 @@ const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
       <section className="burgerColumn">
         <h1 className="mb-6 text_type_main-large">Соберите бургер</h1>
         <div className="mb-10 display-flex">
-          <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+          <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
             Булки
           </Tab>
-          <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+          <Tab value="sauce" active={currentTab === 'sauce'} onClick={setCurrentTab}>
             Соусы
           </Tab>
-          <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+          <Tab value="main" active={currentTab === 'main'} onClick={setCurrentTab}>
             Начинки
           </Tab>
         </div>
 
         <div className={`custom-scroll ${styles.ingredientsScroll}`}>
           <IngredientSection title="Булки">
-            {itemsBun.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
+            {itemsBun.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalIngredient(item)}/>)}
           </IngredientSection>
           <IngredientSection title="Соусы">
-            {itemsSauce.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
+            {itemsSauce.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalIngredient(item)}/>)}
           </IngredientSection>
           <IngredientSection title="Начинки">
-            {itemsMain.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
+            {itemsMain.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalIngredient(item)}/>)}
           </IngredientSection>
         </div>
       </section>
-      {modalItem &&
-        <Modal title="Детали ингредиента" onClose={() => setModalItem(null)}>
-          <IngredientDetails item={modalItem} />
+      {modalIngredient &&
+        <Modal title="Детали ингредиента" onClose={() => setModalIngredient(null)}>
+          <IngredientDetails item={modalIngredient} />
         </Modal>
       }
     </>

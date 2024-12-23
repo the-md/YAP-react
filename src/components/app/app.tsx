@@ -1,5 +1,5 @@
 import React from "react";
-import { BASE_URL } from "../../utils/constants.ts";
+import { API_URL } from "../../utils/constants.ts";
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
@@ -13,7 +13,7 @@ function App() {
 
   const getProductData = () => {
     setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
-    fetch(`${BASE_URL}/ingredients`)
+    fetch(`${API_URL}/ingredients`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);

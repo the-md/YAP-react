@@ -6,9 +6,11 @@ import Modal from "../modal/modal.tsx";
 import OrderDetails from "../order-details/order-details.tsx";
 
 const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
-  const [modalItem, setModalItem] = React.useState(false)
+  const [modalContent, setModalContent] = React.useState(false)
+
   const bun = ingredients.find(item => item.type === "bun")
   const ingredientsWithoutBun = ingredients.filter(item => item.type !== "bun")
+
   const randomIngredients: IngredientsArray[] = [];
   const num: number = 10;
   for (let i = 0; i < num; i++) {
@@ -63,13 +65,13 @@ const BurgerConstructor: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingr
             <span className="text_type_digits-medium mr-2">610</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
           </div>
-          <Button onClick={() => setModalItem(true)} htmlType="button" type="primary" size="medium">
+          <Button onClick={() => setModalContent(true)} htmlType="button" type="primary" size="medium">
             Оформить заказ
           </Button>
         </div>
       </section>
-      {modalItem &&
-        <Modal title="" onClose={() => setModalItem(false)}>
+      {modalContent &&
+        <Modal title="" onClose={() => setModalContent(false)}>
           <OrderDetails />
         </Modal>
       }
