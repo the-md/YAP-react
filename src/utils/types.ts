@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
 
+export interface IngredientsData {
+  success: boolean,
+  data: IngredientsArray[];
+}
 export interface IngredientsArray {
   _id: string,
   name: string,

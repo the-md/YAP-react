@@ -1,11 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
-import { useSelector } from "react-redux";
 import { getAllIngredients } from "../../services/ingredients/slice.ts";
+import { loadIngredients } from "../../services/ingredients/actions.ts";
+import type { AppDispatch } from '../../services/store';
 
 function App() {
   const ingredientsState = useSelector(getAllIngredients);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(loadIngredients());
+  }, [dispatch]);
 
   return (
     <div className="wrapper text_type_main-default">
@@ -17,7 +26,7 @@ function App() {
           </div>
         )}
         {ingredientsState.error && <div style={{ color: "red" }}>{ingredientsState.error}</div>}
-        {ingredientsState.ingredients &&
+        {ingredientsState.ingredients.length > 0 &&
             <>
                 <BurgerIngredients ingredients={ingredientsState.ingredients} />
                 <BurgerConstructor ingredients={ingredientsState.ingredients} />
@@ -25,7 +34,7 @@ function App() {
         }
       </main>
     </div>
-)
+  )
 }
 
 export default App

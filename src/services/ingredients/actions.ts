@@ -2,8 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getIngredientsRequest } from "../../utils/api.ts";
 
 export const loadIngredients = createAsyncThunk (
-  "ingredients/gerIngredients",
+  "ingredients/loadIngredients",
   async () => {
-    return getIngredientsRequest()
+    const response = await getIngredientsRequest();
+    return response.data;
   }
 )
