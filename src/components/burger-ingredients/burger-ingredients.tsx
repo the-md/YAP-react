@@ -6,25 +6,18 @@ import IngredientSection from "./ingredient-section/ingredient-section.tsx";
 import IngredientItem from "./ingredient-item/ingredient-item.tsx";
 import Modal from "../modal/modal.tsx";
 import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
+import { useSelector } from "react-redux";
+import { getAllIngredients } from "../../services/ingredients/slice.ts";
 
 
-const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
+const BurgerIngredients: React.FC = () => {
+  const { ingredients } = useSelector(getAllIngredients);
   const [currentTab, setCurrentTab] = React.useState('bun')
   const [modalIngredient, setModalIngredient] = React.useState<IngredientsArray | null>(null)
 
-  const { itemsBun, itemsSauce, itemsMain } = React.useMemo(() => {
-    const itemsBun: IngredientsArray[] = [];
-    const itemsSauce: IngredientsArray[] = [];
-    const itemsMain: IngredientsArray[] = [];
-
-    ingredients.forEach((item) => {
-      if (item.type === 'bun') itemsBun.push(item);
-      else if (item.type === 'sauce') itemsSauce.push(item);
-      else if (item.type === 'main') itemsMain.push(item);
-    });
-
-    return { itemsBun, itemsSauce, itemsMain };
-  }, [ingredients]);
+  const itemsBun = ingredients?.filter((product) => product.type === 'bun');
+  const itemsSauce = ingredients?.filter((product) => product.type === 'sauce');
+  const itemsMain = ingredients?.filter((product) => product.type === 'main');
 
   return (
     <>

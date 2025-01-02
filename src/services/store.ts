@@ -1,10 +1,12 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-// import { burgerConstructorSlice } from './burger-constructor/slice.ts'
 import { ingredientsSlice } from './ingredients/slice.ts'
+import { burgerConstructorSlice } from './burger-constructor/slice.ts'
 // import { orderSlice } from './order/slice.ts'
 
 const rootReducer = combineSlices(
-  ingredientsSlice
+
+  burgerConstructorSlice,
+  ingredientsSlice,
 )
 
 export const store = configureStore({
@@ -12,3 +14,5 @@ export const store = configureStore({
   enhancers: (getDefaultEnhancers) => getDefaultEnhancers(),
   devTools: process.env.NODE_ENV !== 'production',
 })
+
+export type AppDispatch = typeof store.dispatch;

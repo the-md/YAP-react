@@ -43,3 +43,6 @@ export interface IngredientsState {
   loading: boolean;
   error: string | null;
 }
+export interface BurgerConstructorState {
+  ingredients: IngredientsArray[];
+}
