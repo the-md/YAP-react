@@ -1,0 +1,22 @@
+import { IngredientsArray } from "./types.ts";
+
+const apiConfig = {
+  baseUrl: 'https://norma.nomoreparties.space/api',
+  headers: {
+    "Content-Type": "application/json",
+  }
+}
+
+const getResponse = (res: Response): Promise<IngredientsArray[]> => {
+  if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+  }
+  return res.json()
+}
+
+export const getIngredientsRequest = (): Promise<IngredientsArray[]> => {
+  return fetch(`${apiConfig.baseUrl}/ingredients`, {
+    headers: apiConfig.headers,
+  })
+    .then(getResponse)
+};

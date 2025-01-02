@@ -1,49 +1,26 @@
-import React from "react";
-import { API_URL } from "../../utils/constants.ts";
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
+import { useSelector } from "react-redux";
+import { getAllIngredients } from "../../services/ingredients/slice.ts";
 
 function App() {
-  const [state, setState] = React.useState({
-    data: null,
-    isLoading: false,
-    error: null,
-  })
-
-  const getProductData = () => {
-    setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
-    fetch(`${API_URL}/ingredients`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json()
-      })
-      .then(({data}) => setState((prevState) => ({...prevState, data, isLoading: false})))
-      .catch((err) => {
-        setState((prevState) => ({ ...prevState, error: err.message, isLoading: false }));
-      });
-  };
-
-  React.useEffect(() => {
-    getProductData();
-  }, []);
+  const ingredientsState = useSelector(getAllIngredients);
 
   return (
     <div className="wrapper text_type_main-default">
       <AppHeader/>
       <main className="container display-flex">
-        {state.isLoading && (
+        {ingredientsState.loading && (
           <div className="loader-container display-flex justify_content-center align_items-center">
             <div className="spinner"></div>
           </div>
         )}
-        {state.error && <div style={{ color: "red" }}>{state.error}</div>}
-        {state.data &&
+        {ingredientsState.error && <div style={{ color: "red" }}>{ingredientsState.error}</div>}
+        {ingredientsState.ingredients &&
             <>
-                <BurgerIngredients ingredients={state.data} />
-                <BurgerConstructor ingredients={state.data} />
+                <BurgerIngredients ingredients={ingredientsState.ingredients} />
+                <BurgerConstructor ingredients={ingredientsState.ingredients} />
             </>
         }
       </main>

@@ -33,3 +33,9 @@ export interface ModalProps {
 export interface ModalOverlayProps {
   onClose: () => void
 }
+
+export interface IngredientsState {
+  ingredients: IngredientsArray[];
+  loading: boolean;
+  error: string | null;
+}
