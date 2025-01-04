@@ -7,11 +7,11 @@ import IngredientItem from "./ingredient-item/ingredient-item.tsx";
 import Modal from "../modal/modal.tsx";
 import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
 import { useSelector } from "react-redux";
-import { getAllIngredients } from "../../services/ingredients/slice.ts";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
 
 
 const BurgerIngredients: React.FC = () => {
-  const { ingredients } = useSelector(getAllIngredients);
+  const { ingredients } = useSelector(getIngredientsState);
   const [currentTab, setCurrentTab] = React.useState('bun')
   const [modalIngredient, setModalIngredient] = React.useState<IngredientsArray | null>(null)
 

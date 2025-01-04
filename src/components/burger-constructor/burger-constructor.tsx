@@ -1,31 +1,48 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-constructor.module.css';
 import Modal from "../modal/modal.tsx";
 import OrderDetails from "../order-details/order-details.tsx";
 import {
+  addIngredient,
   deleteIngredient,
   // getConstructorBun,
   getConstructorIngredients
 } from "../../services/burger-constructor/slice.ts";
-import { getAllIngredients } from "../../services/ingredients/slice.ts";
-// import { IngredientsArray } from "../../utils/types.ts";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { IngredientsArray } from "../../utils/types.ts";
 
 const BurgerConstructor: React.FC = () => {
   const [modalContent, setModalContent] = React.useState(false)
   const dispatch = useDispatch()
-  //
-  const { ingredients } = useSelector(getAllIngredients);
+  const { ingredients } = useSelector(getIngredientsState);
   const constructorIngredients = useSelector(getConstructorIngredients) ?? [];
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(ingredient:IngredientsArray) {
+      dispatch(addIngredient(ingredient));
+      console.log('all Ingredients', constructorIngredients)
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+  const borderColor = isHover ? 'lightgreen' : 'transparent';
+
+
+
+  //
+
   // const constructorIngredients = ingredients.filter(item=> item.type !== 'bun')
   const bun = ingredients.find(item => item.type === 'bun')
 
 
   const totalPrice = constructorIngredients.reduce((sum, current) => sum + current.price, 0)
 
-  const handleDelete = (id:string) => {
-    dispatch(deleteIngredient(id));
+  const handleDelete = (index:number) => {
+    dispatch(deleteIngredient(index));
   };
 
   if (!bun) {
@@ -35,7 +52,7 @@ const BurgerConstructor: React.FC = () => {
   return (
     <>
       <section className="burgerColumn ml-10 mt-25">
-        <div className="ml-4 mr-4">
+        <div className="ml-4 mr-4" ref={dropTarget} style={{borderColor}}>
           <div className="ml-8 mb-4">
             <ConstructorElement
               key={'bun_1'}
@@ -55,7 +72,7 @@ const BurgerConstructor: React.FC = () => {
                   text={item.name}
                   price={item.price}
                   thumbnail={item.image}
-                  handleClose={()=>{handleDelete(item._id)}}
+                  handleClose={()=>{handleDelete(index)}}
                 />
               </div>
             ))}

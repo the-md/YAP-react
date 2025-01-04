@@ -9,14 +9,10 @@ export const burgerConstructorSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: (state, action) => {
-      if (action.payload) {
-        state.ingredients = action.payload;
-      } else {
-        console.error('Попытка добавить null в ингредиенты');
-      }
+      state.ingredients.push(action.payload);
     },
     deleteIngredient: (state, action) => {
-      state.ingredients = state.ingredients.filter(ingredient => ingredient._id !== action.payload);
+      state.ingredients.splice(action.payload, 1);
     },
   },
   selectors: {
