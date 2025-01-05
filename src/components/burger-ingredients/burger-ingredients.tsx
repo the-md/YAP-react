@@ -1,6 +1,6 @@
 import React from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientsArray } from '../../utils/types.ts'
+import { IngredientObj } from '../../utils/types.ts'
 import styles from './burger-ingredients.module.css';
 import IngredientSection from "./ingredient-section/ingredient-section.tsx";
 import IngredientItem from "./ingredient-item/ingredient-item.tsx";
@@ -9,11 +9,10 @@ import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
 import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 
-
 const BurgerIngredients: React.FC = () => {
   const { ingredients } = useSelector(getIngredientsState);
   const [currentTab, setCurrentTab] = React.useState('bun')
-  const [modalIngredient, setModalIngredient] = React.useState<IngredientsArray | null>(null)
+  const [modalIngredient, setModalIngredient] = React.useState<IngredientObj | null>(null)
 
   const itemsBun = ingredients?.filter((product) => product.type === 'bun');
   const itemsSauce = ingredients?.filter((product) => product.type === 'sauce');

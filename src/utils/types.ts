@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 
-export interface IngredientsData {
+export interface IngredientsArr {
   success: boolean,
-  data: IngredientsArray[];
+  data: IngredientObj[];
 }
-export interface IngredientsArray {
+export interface IngredientObj {
   _id: string,
   name: string,
   type: string,
@@ -18,14 +18,13 @@ export interface IngredientsArray {
   image_large: string,
   __v: number
 }
-
 export interface IngredientsSectionsProps {
   title: string;
   children: ReactNode
 }
 export interface IngredientItemProps {
-  item: IngredientsArray;
-  openModal: (item: IngredientsArray | null) => void
+  item: IngredientObj;
+  openModal: (item: IngredientObj | null) => void
 }
 
 export interface ModalProps {
@@ -39,10 +38,11 @@ export interface ModalOverlayProps {
 }
 
 export interface IngredientsState {
-  ingredients: IngredientsArray[];
+  ingredients: IngredientObj[];
   loading: boolean;
   error: string | null;
 }
 export interface BurgerConstructorState {
-  ingredients: IngredientsArray[];
+  constructorIngredients: IngredientObj[];
+  bun: IngredientObj;
 }

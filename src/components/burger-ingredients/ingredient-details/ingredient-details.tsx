@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { IngredientsArray } from "../../../utils/types.ts";
+import { IngredientObj } from "../../../utils/types.ts";
 
 
-const IngredientDetails: React.FC<{ item: IngredientsArray }> = ({item}) => {
+const IngredientDetails: React.FC<{ item: IngredientObj }> = ({item}) => {
   return (
     <article>
       <img src={item.image_large} alt=""/>

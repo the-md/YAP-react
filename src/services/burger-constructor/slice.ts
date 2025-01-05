@@ -2,24 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 import { BurgerConstructorState } from "../../utils/types.ts";
 
 const initialState:BurgerConstructorState = {
-  ingredients: []
+  constructorIngredients: [],
+  bun: {}
 }
 export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
   initialState,
   reducers: {
     addIngredient: (state, action) => {
-      state.ingredients.push(action.payload);
+      if (action.payload.type === 'bun') {
+        state.bun = action.payload;
+      } else {
+        state.constructorIngredients.push(action.payload);
+      }
     },
     deleteIngredient: (state, action) => {
-      state.ingredients.splice(action.payload, 1);
+      state.constructorIngredients.splice(action.payload, 1);
     },
   },
   selectors: {
-    getConstructorIngredients: state => state.ingredients,
-    getConstructorBun: state => state.ingredients[0]
+    getConstructorState: state => state,
   }
 })
 
 export const { addIngredient, deleteIngredient } = burgerConstructorSlice.actions;
-export const {getConstructorIngredients, getConstructorBun} =  burgerConstructorSlice.selectors
+export const {getConstructorState} =  burgerConstructorSlice.selectors
