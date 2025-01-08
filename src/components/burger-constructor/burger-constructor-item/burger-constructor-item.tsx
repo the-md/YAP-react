@@ -2,28 +2,30 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { addIngredient, deleteIngredient } from "../../../services/burger-constructor/slice.ts";
-import { BurgerConstructorItemProps, IngredientObj } from "../../../utils/types.ts";
+import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
+import { BurgerConstructorItemProps } from "../../../utils/types.ts";
 import styles from './burger-constructor-item.module.css';
 
 const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null);
-  const [{isDrag}, drag] = useDrag({
-    type: "ingredient",
-    item: item,
-    collect: monitor => ({
-      isDrag: monitor.isDragging()
-    })
+  const [, drag] = useDrag({
+    type: "ingredientSort",
+    item: {item, index}
   });
-  const [{isHover}, drop] = useDrop({
-    accept: "ingredient",
-    drop(ingredient:IngredientObj) {
-      dispatch(addIngredient(ingredient));
-    },
-    collect: monitor => ({
-      isHover: monitor.isOver(),
-    })
+  const [, drop] = useDrop({
+    accept: "ingredientSort",
+    hover(dragItem:BurgerConstructorItemProps) {
+      if (dragItem.index !== index) {
+        dispatch(sortIngredient({fromIndex: dragItem.index, toIndex: index}));
+        dragItem.index = index; // Обновляем индекс для корректного перемещения
+      }
+      // console.log('item', hoverItem)
+      // const hoverIndex = hoverItem.index
+      // console.log('item', item)
+      // console.log('monitor', monitor)
+      // dispatch(sortIngredient())
+    }
   });
 
   drag(drop(ref));
@@ -35,9 +37,8 @@ const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, inde
   // TODO сделать подсветку для пустых блоков
 
   return (
-    !isDrag &&
     <>
-      <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} ${isHover ? styles.highlight : ''}`}>
+      <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} `} draggable>
         <DragIcon className="mr-2" type="primary"/>
         <ConstructorElement
           key={item._id}

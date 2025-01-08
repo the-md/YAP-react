@@ -19,11 +19,21 @@ export const burgerConstructorSlice = createSlice({
     deleteIngredient: (state, action) => {
       state.constructorIngredients.splice(action.payload, 1);
     },
+    sortIngredient: (state, action) => {
+      const { fromIndex, toIndex } = action.payload;
+      const newIngredients = [...state.constructorIngredients];
+
+      if (fromIndex !== -1 && toIndex !== -1) {
+        const [movedItem] = newIngredients.splice(fromIndex, 1);
+        newIngredients.splice(toIndex, 0, movedItem);
+        state.constructorIngredients = newIngredients;
+      }
+    },
   },
   selectors: {
     getConstructorState: state => state,
   }
 })
 
-export const { addIngredient, deleteIngredient } = burgerConstructorSlice.actions;
+export const { addIngredient, deleteIngredient, sortIngredient } = burgerConstructorSlice.actions;
 export const {getConstructorState} =  burgerConstructorSlice.selectors

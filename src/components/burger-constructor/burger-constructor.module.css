@@ -1,5 +1,5 @@
 .constructorScroll {
-    max-height: calc(100vh - 543px);
+    max-height: calc(100vh - 535px);
     min-height: 80px;
     overflow-y: scroll;
     flex-direction: column;
