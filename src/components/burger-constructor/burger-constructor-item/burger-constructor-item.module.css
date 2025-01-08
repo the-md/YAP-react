@@ -1,0 +1,20 @@
+.burgerConstructorItem {
+     border: 1px solid transparent;
+}
+.burgerConstructorItem.highlight {
+     padding-bottom: 96px;
+     position: relative;
+}
+.burgerConstructorItem::before {
+     width: 100%;
+     height: 80px;
+     border: 1px dashed red;
+     display: block;
+     position: absolute;
+     top: 96px;
+     border-radius: var(--common-border-radius-s);
+     margin-left: 32px;
+}
+.burgerConstructorItem.highlight::before {
+     content: '';
+}

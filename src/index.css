@@ -41,6 +41,9 @@
 .cursor-pointer {
     cursor: pointer;
 }
+.cursor-grab {
+    cursor: grab;
+}
 .font_size-24 {
     font-size: 24px;
 }

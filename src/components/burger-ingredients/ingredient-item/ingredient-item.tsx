@@ -12,7 +12,7 @@ const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
 
   return (
     <>
-      <div ref={dragRef} className={`cursor-pointer mb-8 ml-4 mr-4 text_align-center ${styles.ingredientItem}`} onClick={() => openModal(item)}>
+      <div ref={dragRef} className={`cursor-grab mb-8 ml-4 mr-4 text_align-center ${styles.ingredientItem}`} onClick={() => openModal(item)}>
         <img src={item.image} alt=""/>
         <div className="m-1 text_type_digits-default">
           {item.price} <CurrencyIcon className={`ml-2 ${styles.priceIcon}`} type="primary" />
@@ -20,6 +20,7 @@ const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
         <div className={styles.ingredientName}>
           {item.name}
         </div>
+        {/* TODO сделать счетчик интерактивным */}
         <Counter count={1} size="default" extraClass="m-1" />
       </div>
 

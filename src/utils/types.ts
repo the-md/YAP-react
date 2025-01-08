@@ -26,17 +26,14 @@ export interface IngredientItemProps {
   item: IngredientObj;
   openModal: (item: IngredientObj | null) => void
 }
-
 export interface ModalProps {
   title: string;
   children: ReactNode;
   onClose: () => void
 }
-
 export interface ModalOverlayProps {
   onClose: () => void
 }
-
 export interface IngredientsState {
   ingredients: IngredientObj[];
   loading: boolean;
@@ -44,5 +41,9 @@ export interface IngredientsState {
 }
 export interface BurgerConstructorState {
   constructorIngredients: IngredientObj[];
-  bun: IngredientObj;
+  bun: IngredientObj | null;
+}
+export interface BurgerConstructorItemProps {
+  item: IngredientObj;
+  index: number;
 }

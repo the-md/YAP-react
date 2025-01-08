@@ -3,7 +3,7 @@ import { BurgerConstructorState } from "../../utils/types.ts";
 
 const initialState:BurgerConstructorState = {
   constructorIngredients: [],
-  bun: {}
+  bun: null
 }
 export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
