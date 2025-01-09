@@ -1,3 +1,6 @@
+.hoverItem>.emptyItem {
+    border: 1px dashed #F2F2F3;
+}
 .constructorScroll {
     max-height: calc(100vh - 535px);
     min-height: 80px;

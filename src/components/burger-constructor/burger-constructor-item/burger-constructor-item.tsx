@@ -20,11 +20,6 @@ const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, inde
         dispatch(sortIngredient({fromIndex: dragItem.index, toIndex: index}));
         dragItem.index = index; // Обновляем индекс для корректного перемещения
       }
-      // console.log('item', hoverItem)
-      // const hoverIndex = hoverItem.index
-      // console.log('item', item)
-      // console.log('monitor', monitor)
-      // dispatch(sortIngredient())
     }
   });
 
@@ -39,7 +34,7 @@ const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, inde
   return (
     <>
       <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} `} draggable>
-        <DragIcon className="mr-2" type="primary"/>
+        <DragIcon className="mr-2 cursor-grab" type="primary"/>
         <ConstructorElement
           key={item._id}
           text={item.name}

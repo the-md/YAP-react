@@ -47,3 +47,6 @@ export interface BurgerConstructorItemProps {
   item: IngredientObj;
   index: number;
 }
+export interface ConstructorEmptyItemProps {
+  position: string
+}

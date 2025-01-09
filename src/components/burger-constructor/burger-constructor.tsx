@@ -7,17 +7,31 @@ import Modal from "../modal/modal.tsx";
 import OrderDetails from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item.tsx";
-import { IngredientObj } from "../../utils/types.ts";
+import { ConstructorEmptyItemProps, IngredientObj } from "../../utils/types.ts";
+
+const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
+  const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
+  const positionText:string = position === 'center' ? 'Перенесите ингредиент' : 'Перенесите булку'
+  return (
+    <div className={`constructor-element text_align-center ${positionClassName} ${styles.emptyItem}`}>
+      <p className="m-3">{positionText}</p>
+    </div>
+  )
+}
 
 const BurgerConstructor: React.FC = () => {
   const [modalContent, setModalContent] = React.useState(false)
   const {constructorIngredients, bun} = useSelector(getConstructorState);
   const dispatch = useDispatch()
-  const [, dropTarget] = useDrop({
+  const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
     drop(ingredient:IngredientObj) {
       dispatch(addIngredient(ingredient));
     },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+      draggingItemType: monitor.getItem()?.type,
+    }),
   });
 
   const totalPrice = constructorIngredients.reduce((sum, current) => sum + current.price, 0) + (bun ? bun.price : 0)
@@ -25,13 +39,11 @@ const BurgerConstructor: React.FC = () => {
 
   return (
     <>
-      <section className="burgerColumn ml-10 mt-25" ref={ bun ? null : dropTarget } >
+      <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>
         <div className="ml-4 mr-4">
-          <div className="ml-8 mb-4">
+          <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
             {!bun ? (
-              <div className="constructor-element constructor-element_pos_top text_align-center">
-                <p className="m-3">Выберите булки</p>
-              </div>
+              <ConstructorEmptyItem position="top" />
             ) : (
               <ConstructorElement
                 key={'bun_1'}
@@ -43,24 +55,20 @@ const BurgerConstructor: React.FC = () => {
               />
             )}
           </div>
-          <div className={`custom-scroll display-flex ${styles.constructorScroll}`}>
+          <div className={` ${canDrop && draggingItemType !== "bun" ? styles.hoverItem : ''}`}>
             {!constructorIngredients.length ? (
-              <div className="ml-7 constructor-element text_align-center">
-                <p className="m-3">Выберите начинку</p>
-              </div>
+              <ConstructorEmptyItem position="center" />
             ) : (
-              <>
+              <div className={`custom-scroll display-flex mb-4 mt-4 ${styles.constructorScroll}`}>
                 {constructorIngredients.map((item, index) => (
-                  <BurgerConstructorItem key={index} item={item} index={index} />
+                  <BurgerConstructorItem key={index} item={item} index={index}/>
                 ))}
-              </>
+              </div>
             )}
           </div>
-          <div className="ml-8 mt-4">
+          <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
             {!bun ? (
-              <div className="constructor-element constructor-element_pos_bottom text_align-center">
-                <p className="m-3">Выберите булки</p>
-              </div>
+              <ConstructorEmptyItem position="bottom" />
             ) : (
               <ConstructorElement
                 key={'bun_2'}
@@ -71,7 +79,6 @@ const BurgerConstructor: React.FC = () => {
                 thumbnail={bun.image}
               />
             )}
-
           </div>
         </div>
         <div className="mt-10 mb-10 display-flex justify_content-end align_items-center">
