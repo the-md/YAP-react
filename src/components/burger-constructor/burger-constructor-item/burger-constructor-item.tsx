@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
-import { BurgerConstructorItemProps } from "../../../utils/types.ts";
+import { IngredientObj } from "../../../utils/types.ts";
 import styles from './burger-constructor-item.module.css';
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
@@ -47,4 +47,9 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
       </div>
     </>
   )
+}
+
+interface BurgerConstructorItemProps {
+  item: IngredientObj;
+  index: number;
 }

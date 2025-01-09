@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadIngredients } from "./actions.ts";
-import { IngredientsState } from "../../utils/types.ts";
+import { IngredientObj } from "../../utils/types.ts";
 
 const initialState:IngredientsState = {
   ingredients: [],
@@ -32,3 +32,9 @@ export const ingredientsSlice = createSlice({
 })
 
 export const { getIngredientsState } =  ingredientsSlice.selectors
+
+interface IngredientsState {
+  ingredients: IngredientObj[];
+  loading: boolean;
+  error: string | null;
+}

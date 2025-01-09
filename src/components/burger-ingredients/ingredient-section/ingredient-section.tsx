@@ -1,5 +1,4 @@
-import React from "react";
-import { IngredientsSectionsProps } from "../../../utils/types.ts";
+import React, { ReactNode } from "react";
 
 export const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, children}) => {
   return (
@@ -10,4 +9,9 @@ export const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, ch
       </div>
     </section>
   )
+}
+
+interface IngredientsSectionsProps {
+  title: string;
+  children: ReactNode
 }

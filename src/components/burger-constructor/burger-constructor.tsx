@@ -6,7 +6,7 @@ import { Modal } from "../modal/modal.tsx";
 import { OrderDetails } from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
-import { ConstructorEmptyItemProps, IngredientObj } from "../../utils/types.ts";
+import { IngredientObj } from "../../utils/types.ts";
 import styles from './burger-constructor.module.css';
 
 export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
@@ -98,4 +98,8 @@ export const BurgerConstructor: React.FC = () => {
       }
     </>
   )
+}
+
+interface ConstructorEmptyItemProps {
+  position: string
 }

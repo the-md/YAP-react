@@ -1,10 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ModalProps } from "../../utils/types.ts";
 import { ModalOverlay } from "./modal-overlay/modal-overlay.tsx";
 import styles from "./modal.module.css";
-
 
 export const Modal: React.FC<ModalProps> = ({title, children, onClose}) => {
   React.useEffect(() => {
@@ -33,4 +31,10 @@ export const Modal: React.FC<ModalProps> = ({title, children, onClose}) => {
     </>
     ), document.getElementById("react-modals")!
   )
+}
+
+interface ModalProps {
+  title: string;
+  children: ReactNode;
+  onClose: () => void
 }

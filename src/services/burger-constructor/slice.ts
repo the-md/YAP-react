@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BurgerConstructorState } from "../../utils/types.ts";
+import { IngredientObj } from "../../utils/types.ts";
 
 const initialState:BurgerConstructorState = {
   constructorIngredients: [],
@@ -37,3 +37,8 @@ export const burgerConstructorSlice = createSlice({
 
 export const { addIngredient, deleteIngredient, sortIngredient } = burgerConstructorSlice.actions;
 export const {getConstructorState} =  burgerConstructorSlice.selectors
+
+interface BurgerConstructorState {
+  constructorIngredients: IngredientObj[];
+  bun: IngredientObj | null;
+}
