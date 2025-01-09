@@ -2,7 +2,7 @@ import React from "react";
 import OrderIcon from "../../images/done.svg";
 import styles from "./order-details.module.css"
 
-const OrderDetails: React.FC = () => {
+export const OrderDetails: React.FC = () => {
   return (
     <div className="mb-15">
       <div className={`mb-8 text_type_digits-large ${styles.orderNumber}`}>034536</div>
@@ -13,5 +13,3 @@ const OrderDetails: React.FC = () => {
     </div>
   )
 }
-
-export default OrderDetails

@@ -1,15 +1,15 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
-import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
+import { AppHeader } from '../app-header/app-header'
+import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.tsx";
+import { BurgerConstructor } from "../burger-constructor/burger-constructor.tsx";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import { loadIngredients } from "../../services/ingredients/actions.ts";
 import type { AppDispatch } from '../../services/store';
 
-function App() {
+export const App: React.FC = () => {
   const { loading, error } = useSelector(getIngredientsState);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,5 +37,3 @@ function App() {
     </div>
   )
 }
-
-export default App

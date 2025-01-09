@@ -1,15 +1,15 @@
 import React from "react";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientObj } from '../../utils/types.ts'
-import styles from './burger-ingredients.module.css';
-import IngredientSection from "./ingredient-section/ingredient-section.tsx";
-import IngredientItem from "./ingredient-item/ingredient-item.tsx";
-import Modal from "../modal/modal.tsx";
-import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
+import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
+import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
+import { Modal } from "../modal/modal.tsx";
+import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
 import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import styles from './burger-ingredients.module.css';
 
-const BurgerIngredients: React.FC = () => {
+export const BurgerIngredients: React.FC = () => {
   const { ingredients } = useSelector(getIngredientsState);
   const [currentTab, setCurrentTab] = React.useState('bun')
   const [modalIngredient, setModalIngredient] = React.useState<IngredientObj | null>(null)
@@ -55,5 +55,3 @@ const BurgerIngredients: React.FC = () => {
   )
 
 }
-
-export default BurgerIngredients

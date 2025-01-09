@@ -1,10 +1,10 @@
 import React from "react";
 import { useDrag } from "react-dnd";
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IngredientItemProps } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
+export const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: item,
@@ -27,5 +27,3 @@ const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
     </>
   )
 }
-
-export default IngredientItem

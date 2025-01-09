@@ -2,14 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './burger-constructor.module.css';
-import Modal from "../modal/modal.tsx";
-import OrderDetails from "../order-details/order-details.tsx";
+import { Modal } from "../modal/modal.tsx";
+import { OrderDetails } from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
-import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item.tsx";
+import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { ConstructorEmptyItemProps, IngredientObj } from "../../utils/types.ts";
+import styles from './burger-constructor.module.css';
 
-const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
+export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
   const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
   const positionText:string = position === 'center' ? 'Перенесите ингредиент' : 'Перенесите булку'
   return (
@@ -19,7 +19,7 @@ const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) =
   )
 }
 
-const BurgerConstructor: React.FC = () => {
+export const BurgerConstructor: React.FC = () => {
   const [modalContent, setModalContent] = React.useState(false)
   const {constructorIngredients, bun} = useSelector(getConstructorState);
   const dispatch = useDispatch()
@@ -99,5 +99,3 @@ const BurgerConstructor: React.FC = () => {
     </>
   )
 }
-
-export default BurgerConstructor

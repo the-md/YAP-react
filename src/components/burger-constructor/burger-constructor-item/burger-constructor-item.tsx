@@ -6,7 +6,7 @@ import { deleteIngredient, sortIngredient } from "../../../services/burger-const
 import { BurgerConstructorItemProps } from "../../../utils/types.ts";
 import styles from './burger-constructor-item.module.css';
 
-const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
+export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
   const dispatch = useDispatch()
   const ref = useRef<HTMLDivElement>(null);
   const [, drag] = useDrag({
@@ -48,5 +48,3 @@ const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, inde
     </>
   )
 }
-
-export default BurgerConstructorItem
