@@ -35,7 +35,6 @@ export const BurgerConstructor: React.FC = () => {
   });
 
   const totalPrice = constructorIngredients.reduce((sum, current) => sum + current.price, 0) + (bun ? bun.price : 0)
-  // TODO сделать проверку, чтобы не было NaN
 
   return (
     <>

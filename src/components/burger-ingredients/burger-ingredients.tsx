@@ -1,11 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientObj } from '../../utils/types.ts'
 import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
 import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
 import { Modal } from "../modal/modal.tsx";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
-import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from './burger-ingredients.module.css';
 

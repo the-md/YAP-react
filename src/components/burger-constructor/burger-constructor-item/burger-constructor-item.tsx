@@ -29,8 +29,6 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
     dispatch(deleteIngredient(index));
   };
 
-  // TODO сделать подсветку для пустых блоков
-
   return (
     <>
       <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} `} draggable>
