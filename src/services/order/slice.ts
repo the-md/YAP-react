@@ -36,7 +36,6 @@ export const orderSlice = createSlice({
   }
 })
 
-
 export const { closeModalOrder } = orderSlice.actions;
 
 export const { getOrder, getOpenModalOrder } =  orderSlice.selectors

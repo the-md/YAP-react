@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientObj } from '../../utils/types.ts'
 import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
 import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
 import { Modal } from "../modal/modal.tsx";
 import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
-import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { closeIngredientDetail, getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients: React.FC = () => {
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredients, openModal, ingredientDetail } = useSelector(getIngredientsState);
   const [currentTab, setCurrentTab] = React.useState('bun')
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [modalIngredient, setModalIngredient] = React.useState<IngredientObj | null>(null)
+  const dispatch = useDispatch()
 
   const itemsBun = ingredients?.filter((product) => product.type === 'bun');
   const itemsSauce = ingredients?.filter((product) => product.type === 'sauce');
@@ -75,11 +74,10 @@ export const BurgerIngredients: React.FC = () => {
               id={key}
             >
               <IngredientSection title={title}>
-                {items.map(item => (
+                {items?.map(item => (
                   <IngredientItem
                     key={item._id}
                     item={item}
-                    openModal={() => setModalIngredient(item)}
                   />
                 ))}
               </IngredientSection>
@@ -87,9 +85,9 @@ export const BurgerIngredients: React.FC = () => {
           ))}
         </div>
       </section>
-      {modalIngredient &&
-        <Modal title="Детали ингредиента" onClose={() => setModalIngredient(null)}>
-          <IngredientDetails item={modalIngredient} />
+      {openModal && ingredientDetail &&
+        <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
+          <IngredientDetails item={ingredientDetail} />
         </Modal>
       }
     </>

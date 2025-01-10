@@ -5,15 +5,27 @@ import { IngredientObj } from "../../utils/types.ts";
 const initialState:IngredientsStateProps = {
   ingredients: [],
   loading: false,
-  error: null
+  error: null,
+  openModal: false,
+  ingredientDetail: null,
 }
 
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
-  reducers: {},
+  reducers: {
+    openIngredientDetail: (state, action) => {
+      state.ingredientDetail = action.payload
+      state.openModal = true
+    },
+    closeIngredientDetail: (state) => {
+      state.ingredientDetail = null
+      state.openModal = false
+    },
+  },
   selectors: {
-    getIngredientsState: state => state
+    getIngredientsState: state => state,
+    getIngredientDetail: state => state.ingredientDetail
   },
   extraReducers: (builder) => {
     builder
@@ -31,10 +43,14 @@ export const ingredientsSlice = createSlice({
   }
 })
 
+export const { openIngredientDetail, closeIngredientDetail } = ingredientsSlice.actions;
+
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
 interface IngredientsStateProps {
   ingredients: IngredientObj[];
   loading: boolean;
   error: string | null;
+  openModal: boolean;
+  ingredientDetail: IngredientObj | null;
 }

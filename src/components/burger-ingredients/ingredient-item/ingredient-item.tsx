@@ -1,13 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getConstructorState } from "../../../services/burger-constructor/slice.ts";
 import { IngredientObj } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
+import { openIngredientDetail } from "../../../services/ingredients/slice.ts";
 
-export const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
+export const IngredientItem: React.FC<{ item: IngredientObj }> = ({item}) => {
   const { constructorIngredients, constructorBuns } = useSelector(getConstructorState);
+  const dispatch = useDispatch()
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: item,
@@ -18,7 +20,7 @@ export const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal})
 
   return (
     <>
-      <div ref={dragRef} className={`cursor-grab mb-8 ml-4 mr-4 text_align-center ${styles.ingredientItem}`} onClick={() => openModal(item)}>
+      <div ref={dragRef} className={`cursor-grab mb-8 ml-4 mr-4 text_align-center ${styles.ingredientItem}`} onClick={() => dispatch(openIngredientDetail(item))}>
         <img src={item.image} alt=""/>
         <div className="m-1 text_type_digits-default">
           {item.price} <CurrencyIcon className={`ml-2 ${styles.priceIcon}`} type="primary" />
@@ -33,9 +35,4 @@ export const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal})
 
     </>
   )
-}
-
-interface IngredientItemProps {
-  item: IngredientObj;
-  openModal: (item: IngredientObj | null) => void
 }
