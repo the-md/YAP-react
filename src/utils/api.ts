@@ -7,7 +7,7 @@ const apiConfig = {
   }
 }
 
-const getResponse = (res: Response): Promise<IngredientsArr> => {
+const getResponse = async <T>(res: Response): Promise<T> => {
   if (!res.ok) {
     throw new Error(`HTTP error! Status: ${res.status}`);
   }
@@ -18,5 +18,25 @@ export const getIngredientsRequest = async (): Promise<IngredientsArr> => {
   const res = await fetch(`${apiConfig.baseUrl}/ingredients`, {
     headers: apiConfig.headers,
   });
-  return await getResponse(res);
+  return await getResponse<IngredientsArr>(res);
 };
+
+export const postOrderRequest = async (order: string[]): Promise<OrderResponseProps> => {
+  const res = await fetch(`${apiConfig.baseUrl}/orders`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      ingredients: order
+    })
+  });
+  return await getResponse<OrderResponseProps>(res);
+};
+
+
+interface OrderResponseProps {
+  name: string;
+  order: {
+    number: number;
+  };
+  success: boolean;
+}

@@ -7,13 +7,13 @@ import { IngredientObj } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
 
 export const IngredientItem: React.FC<IngredientItemProps> = ({item, openModal}) => {
-  const { constructorIngredients, bun } = useSelector(getConstructorState);
+  const { constructorIngredients, constructorBuns } = useSelector(getConstructorState);
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: item,
   });
   const count:number = item.type === 'bun'
-    ? bun?._id === item._id ? 2 : 0
+    ? constructorBuns?._id === item._id ? 2 : 0
     : constructorIngredients.filter(ingredient => ingredient._id === item._id).length
 
   return (

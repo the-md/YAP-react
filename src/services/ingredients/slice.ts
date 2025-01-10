@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { loadIngredients } from "./actions.ts";
 import { IngredientObj } from "../../utils/types.ts";
 
-const initialState:IngredientsState = {
+const initialState:IngredientsStateProps = {
   ingredients: [],
   loading: false,
   error: null
@@ -33,7 +33,7 @@ export const ingredientsSlice = createSlice({
 
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
-interface IngredientsState {
+interface IngredientsStateProps {
   ingredients: IngredientObj[];
   loading: boolean;
   error: string | null;

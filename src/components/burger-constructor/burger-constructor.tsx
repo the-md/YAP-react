@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -8,6 +8,8 @@ import { addIngredient, getConstructorState } from "../../services/burger-constr
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { IngredientObj } from "../../utils/types.ts";
 import styles from './burger-constructor.module.css';
+import { postOrderThunk } from "../../services/order/actions.ts";
+import type { AppDispatch } from "../../services/store.ts";
 
 export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
   const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
@@ -21,8 +23,8 @@ export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({posit
 
 export const BurgerConstructor: React.FC = () => {
   const [modalContent, setModalContent] = React.useState(false)
-  const {constructorIngredients, bun} = useSelector(getConstructorState);
-  const dispatch = useDispatch()
+  const {constructorIngredients, constructorBuns} = useSelector(getConstructorState);
+  const dispatch = useDispatch<AppDispatch>()
   const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
     drop(ingredient:IngredientObj) {
@@ -34,23 +36,31 @@ export const BurgerConstructor: React.FC = () => {
     }),
   });
 
-  const totalPrice = constructorIngredients.reduce((sum, current) => sum + current.price, 0) + (bun ? bun.price : 0)
+  const totalPrice = useMemo(()=>{
+    return constructorIngredients.reduce((sum, current) => sum + current.price, 0) + (constructorBuns ? constructorBuns.price * 2 : 0)
+  }, [constructorIngredients, constructorBuns])
+
+  const handleCreateOrder = () => {
+    setModalContent(true)
+    const order:string[] = constructorIngredients.map(item => item._id)
+    dispatch(postOrderThunk(order));
+  }
 
   return (
     <>
       <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>
         <div className="ml-4 mr-4">
           <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
-            {!bun ? (
+            {!constructorBuns ? (
               <ConstructorEmptyItem position="top" />
             ) : (
               <ConstructorElement
                 key={'bun_1'}
                 type="top"
                 isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
+                text={constructorBuns.name}
+                price={constructorBuns.price}
+                thumbnail={constructorBuns.image}
               />
             )}
           </div>
@@ -66,16 +76,16 @@ export const BurgerConstructor: React.FC = () => {
             )}
           </div>
           <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
-            {!bun ? (
+            {!constructorBuns ? (
               <ConstructorEmptyItem position="bottom" />
             ) : (
               <ConstructorElement
                 key={'bun_2'}
                 type="bottom"
                 isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
+                text={constructorBuns.name}
+                price={constructorBuns.price}
+                thumbnail={constructorBuns.image}
               />
             )}
           </div>
@@ -85,7 +95,7 @@ export const BurgerConstructor: React.FC = () => {
             <span className="text_type_digits-medium mr-2">{totalPrice}</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
           </div>
-          <Button onClick={() => setModalContent(true)} htmlType="button" type="primary" size="medium">
+          <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
             Оформить заказ
           </Button>
         </div>

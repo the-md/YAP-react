@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IngredientObj } from "../../utils/types.ts";
 
-const initialState:BurgerConstructorState = {
+const initialState:BurgerConstructorStateProps = {
   constructorIngredients: [],
-  bun: null
+  constructorBuns: null
 }
 export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
@@ -11,7 +11,7 @@ export const burgerConstructorSlice = createSlice({
   reducers: {
     addIngredient: (state, action) => {
       if (action.payload.type === 'bun') {
-        state.bun = action.payload;
+        state.constructorBuns = action.payload;
       } else {
         state.constructorIngredients.push(action.payload);
       }
@@ -38,7 +38,7 @@ export const burgerConstructorSlice = createSlice({
 export const { addIngredient, deleteIngredient, sortIngredient } = burgerConstructorSlice.actions;
 export const {getConstructorState} =  burgerConstructorSlice.selectors
 
-interface BurgerConstructorState {
+interface BurgerConstructorStateProps {
   constructorIngredients: IngredientObj[];
-  bun: IngredientObj | null;
+  constructorBuns: IngredientObj | null;
 }
