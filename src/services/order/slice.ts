@@ -4,19 +4,26 @@ import { postOrderThunk } from "./actions.ts";
 const initialState:OrderStateProps = {
   orderObj: null,
   loading: false,
-  error: null
+  error: null,
+  openModal: false,
 }
 export const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    closeModalOrder: (state) => {
+      state.openModal = false
+    },
+  },
   selectors: {
-    getOrder: state => state.orderObj
+    getOrder: state => state.orderObj,
+    getOpenModalOrder: state => state.openModal,
   },
   extraReducers: (builder) => {
     builder
       .addCase(postOrderThunk.pending, (state) => {
         state.loading = true
+        state.openModal = true
       })
       .addCase(postOrderThunk.rejected, (state, action) => {
         state.error = action.error?.message || null;
@@ -29,7 +36,10 @@ export const orderSlice = createSlice({
   }
 })
 
-export const { getOrder } =  orderSlice.selectors
+
+export const { closeModalOrder } = orderSlice.actions;
+
+export const { getOrder, getOpenModalOrder } =  orderSlice.selectors
 
 interface OrderStateProps {
   orderObj: {
@@ -41,4 +51,5 @@ interface OrderStateProps {
   } | null;
   loading: boolean;
   error: string | null;
+  openModal: boolean;
 }

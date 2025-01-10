@@ -1,13 +1,12 @@
 import React from "react";
-import OrderIcon from "../../images/done.svg";
-import styles from "./order-details.module.css"
 import { useSelector } from "react-redux";
 import { getOrder } from "../../services/order/slice.ts";
+import OrderIcon from "../../images/done.svg";
+import styles from "./order-details.module.css"
 
 export const OrderDetails: React.FC = () => {
   const orderObj = useSelector(getOrder)
   const numOrder = orderObj?.order.number.toString().padStart(6, '0')
-  console.log('orderObj', orderObj)
   return (
     <div className="mb-15">
       <div className={`mb-8 text_type_digits-large ${styles.orderNumber}`}>{numOrder}</div>

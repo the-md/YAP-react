@@ -19,6 +19,10 @@ export const burgerConstructorSlice = createSlice({
     deleteIngredient: (state, action) => {
       state.constructorIngredients.splice(action.payload, 1);
     },
+    clearIngredients: (state) => {
+      state.constructorIngredients = [];
+      state.constructorBuns = null;
+    },
     sortIngredient: (state, action) => {
       const { fromIndex, toIndex } = action.payload;
       const newIngredients = [...state.constructorIngredients];

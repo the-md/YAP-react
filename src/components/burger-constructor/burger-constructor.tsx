@@ -5,11 +5,12 @@ import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-de
 import { Modal } from "../modal/modal.tsx";
 import { OrderDetails } from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
+import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
+import { postOrderThunk } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { IngredientObj } from "../../utils/types.ts";
-import styles from './burger-constructor.module.css';
-import { postOrderThunk } from "../../services/order/actions.ts";
 import type { AppDispatch } from "../../services/store.ts";
+import styles from './burger-constructor.module.css';
 
 export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
   const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
@@ -22,8 +23,8 @@ export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({posit
 }
 
 export const BurgerConstructor: React.FC = () => {
-  const [modalContent, setModalContent] = React.useState(false)
   const {constructorIngredients, constructorBuns} = useSelector(getConstructorState);
+  const openModal = useSelector(getOpenModalOrder);
   const dispatch = useDispatch<AppDispatch>()
   const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
@@ -41,8 +42,10 @@ export const BurgerConstructor: React.FC = () => {
   }, [constructorIngredients, constructorBuns])
 
   const handleCreateOrder = () => {
-    setModalContent(true)
-    const order:string[] = constructorIngredients.map(item => item._id)
+    const order:string[] = [
+      ...(constructorBuns ? [constructorBuns._id] : []),
+      ...constructorIngredients.map(item => item._id),
+    ];
     dispatch(postOrderThunk(order));
   }
 
@@ -100,8 +103,8 @@ export const BurgerConstructor: React.FC = () => {
           </Button>
         </div>
       </section>
-      {modalContent &&
-        <Modal title="" onClose={() => setModalContent(false)}>
+      {openModal &&
+        <Modal title="" onClose={() => dispatch(closeModalOrder())}>
           <OrderDetails />
         </Modal>
       }
