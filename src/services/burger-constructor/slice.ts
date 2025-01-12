@@ -19,7 +19,7 @@ export const burgerConstructorSlice = createSlice({
         }
       },
       prepare: (ingredient) => {
-        return { payload: { ...ingredient,uuid: nanoid() } };
+        return { payload: { ...ingredient, uuid: nanoid() } };
       },
     },
     deleteIngredient: (state, action: { payload: string }) => {

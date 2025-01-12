@@ -40,7 +40,6 @@ export const BurgerIngredients: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => updateCurrentTab();
     const container = document.querySelector(styles.ingredientsScroll);
-    console.log('container', container)
     container?.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [updateCurrentTab]);

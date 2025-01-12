@@ -30,7 +30,6 @@ export const BurgerConstructor: React.FC = () => {
     accept: "ingredient",
     drop(ingredient:IngredientObj) {
       dispatch(addIngredient(ingredient));
-      console.log('constructorIngredients', constructorIngredients)
     },
     collect: (monitor) => ({
       canDrop: monitor.canDrop(),
@@ -59,7 +58,7 @@ export const BurgerConstructor: React.FC = () => {
               <ConstructorEmptyItem position="top" />
             ) : (
               <ConstructorElement
-                key={'bun_1'}
+                key={constructorBuns.uuid}
                 type="top"
                 isLocked={true}
                 text={constructorBuns.name}
@@ -74,7 +73,7 @@ export const BurgerConstructor: React.FC = () => {
             ) : (
               <div className={`custom-scroll display-flex mb-4 mt-4 ${styles.constructorScroll}`}>
                 {constructorIngredients.map((item, index) => (
-                  <BurgerConstructorItem key={index} item={item} index={index}/>
+                  <BurgerConstructorItem key={item.uuid} item={item} index={index}/>
                 ))}
               </div>
             )}
@@ -84,7 +83,7 @@ export const BurgerConstructor: React.FC = () => {
               <ConstructorEmptyItem position="bottom" />
             ) : (
               <ConstructorElement
-                key={'bun_2'}
+                key={constructorBuns.uuid}
                 type="bottom"
                 isLocked={true}
                 text={constructorBuns.name}
