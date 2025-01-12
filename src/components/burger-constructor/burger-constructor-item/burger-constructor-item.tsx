@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
-import { IngredientObj } from "../../../utils/types.ts";
+import { IngredientWithUUID } from "../../../utils/types.ts";
 import styles from './burger-constructor-item.module.css';
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
@@ -25,22 +25,16 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
 
   drag(drop(ref));
 
-  const handleDelete = (index:number) => {
-    dispatch(deleteIngredient(index));
-  };
-
   return (
     <>
       <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} `} draggable>
         <DragIcon className="mr-2 cursor-grab" type="primary"/>
         <ConstructorElement
-          key={item._id}
+          key={item.uuid}
           text={item.name}
           price={item.price}
           thumbnail={item.image}
-          handleClose={() => {
-            handleDelete(index)
-          }}
+          handleClose={() => dispatch(deleteIngredient(item.uuid))}
         />
       </div>
     </>
@@ -48,6 +42,6 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
 }
 
 interface BurgerConstructorItemProps {
-  item: IngredientObj;
+  item: IngredientWithUUID;
   index: number;
 }

@@ -28,7 +28,7 @@ export const App: React.FC = () => {
     <div className="wrapper text_type_main-default">
       <AppHeader/>
       <main className="container display-flex">
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        {error && <div className="error-text">{error}</div>}
         <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />

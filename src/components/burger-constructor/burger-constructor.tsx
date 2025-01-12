@@ -30,6 +30,7 @@ export const BurgerConstructor: React.FC = () => {
     accept: "ingredient",
     drop(ingredient:IngredientObj) {
       dispatch(addIngredient(ingredient));
+      console.log('constructorIngredients', constructorIngredients)
     },
     collect: (monitor) => ({
       canDrop: monitor.canDrop(),

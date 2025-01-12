@@ -24,8 +24,7 @@ export const ingredientsSlice = createSlice({
     },
   },
   selectors: {
-    getIngredientsState: state => state,
-    getIngredientDetail: state => state.ingredientDetail
+    getIngredientsState: state => state
   },
   extraReducers: (builder) => {
     builder

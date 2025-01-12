@@ -16,3 +16,7 @@ export interface IngredientObj {
   image_large: string,
   __v: number
 }
+
+export interface IngredientWithUUID extends IngredientObj {
+  uuid: string;
+}
