@@ -41,12 +41,18 @@
 .cursor-pointer {
     cursor: pointer;
 }
+.cursor-grab {
+    cursor: grab;
+}
 .font_size-24 {
     font-size: 24px;
 }
 .loader-container {
     height: 100vh;
     width: 100%;
+}
+.error-text {
+    color: red;
 }
 .spinner {
     border: 8px solid #f3f3f3;
@@ -59,4 +65,7 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+.constructor-element {
+    border: 1px solid transparent;
 }

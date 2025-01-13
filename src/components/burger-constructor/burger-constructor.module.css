@@ -1,7 +1,9 @@
+.hoverItem>.emptyItem {
+    border: 1px dashed #F2F2F3;
+}
 .constructorScroll {
-    height: calc(100vh - 564px);
-    max-height: 464px;
-    min-height: 176px;
+    max-height: calc(100vh - 535px);
+    min-height: 80px;
     overflow-y: scroll;
     flex-direction: column;
     gap: 16px;

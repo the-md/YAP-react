@@ -1,9 +1,8 @@
 import React from "react";
+import { IngredientObj } from "../../../utils/types.ts";
 import styles from "./ingredient-details.module.css";
-import { IngredientsArray } from "../../../types";
 
-
-const IngredientDetails: React.FC<{ item: IngredientsArray }> = ({item}) => {
+export const IngredientDetails: React.FC<{ item: IngredientObj }> = ({item}) => {
   return (
     <article>
       <img src={item.image_large} alt=""/>
@@ -29,5 +28,3 @@ const IngredientDetails: React.FC<{ item: IngredientsArray }> = ({item}) => {
     </article>
   )
 }
-
-export default IngredientDetails

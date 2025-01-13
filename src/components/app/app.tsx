@@ -1,54 +1,39 @@
-import React from "react";
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from "../burger-ingredients/burger-ingredients.tsx";
-import BurgerConstructor from "../burger-constructor/burger-constructor.tsx";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { AppHeader } from '../app-header/app-header'
+import { BurgerIngredients } from "../burger-ingredients/burger-ingredients.tsx";
+import { BurgerConstructor } from "../burger-constructor/burger-constructor.tsx";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { loadIngredients } from "../../services/ingredients/actions.ts";
+import type { AppDispatch } from '../../services/store';
 
-function App() {
-  const [state, setState] = React.useState({
-    data: null,
-    isLoading: false,
-    error: null,
-  })
-  const URL = 'https://norma.nomoreparties.space'
+export const App: React.FC = () => {
+  const { loading, error } = useSelector(getIngredientsState);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const getProductData = () => {
-    setState((prevState) => ({ ...prevState, error: null, isLoading: true }));
-    fetch(`${URL}/api/ingredients`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json()
-      })
-      .then(({data}) => setState((prevState) => ({...prevState, data, isLoading: false})))
-      .catch((err) => {
-        setState((prevState) => ({ ...prevState, error: err.message, isLoading: false }));
-      });
-  };
+  useEffect(() => {
+    dispatch(loadIngredients());
+  }, [dispatch]);
 
-  React.useEffect(() => {
-    getProductData();
-  }, []);
-
+  if (loading) return (
+    <main className="container display-flex">
+      <div className="loader-container display-flex justify_content-center align_items-center">
+        <div className="spinner"></div>
+      </div>
+    </main>
+  );
   return (
     <div className="wrapper text_type_main-default">
       <AppHeader/>
       <main className="container display-flex">
-        {state.isLoading && (
-          <div className="loader-container display-flex justify_content-center align_items-center">
-            <div className="spinner"></div>
-          </div>
-        )}
-        {state.error && <div style={{ color: "red" }}>{state.error}</div>}
-        {state.data &&
-            <>
-                <BurgerIngredients ingredients={state.data} />
-                <BurgerConstructor ingredients={state.data} />
-            </>
-        }
+        {error && <div className="error-text">{error}</div>}
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </div>
-)
+  )
 }
-
-export default App

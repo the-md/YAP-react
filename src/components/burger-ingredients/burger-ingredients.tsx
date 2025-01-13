@@ -1,67 +1,95 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientsArray } from '../../types'
+import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
+import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
+import { Modal } from "../modal/modal.tsx";
+import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
+import { closeIngredientDetail, getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from './burger-ingredients.module.css';
-import IngredientSection from "./ingredient-section/ingredient-section.tsx";
-import IngredientItem from "./ingredient-item/ingredient-item.tsx";
-import Modal from "../modal/modal.tsx";
-import IngredientDetails from "./ingredient-details/ingredient-details.tsx";
 
+export const BurgerIngredients: React.FC = () => {
+  const { ingredients, openModal, ingredientDetail } = useSelector(getIngredientsState);
+  const [currentTab, setCurrentTab] = React.useState('bun')
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const dispatch = useDispatch()
 
-const BurgerIngredients: React.FC<{ ingredients: IngredientsArray[] }> = ({ ingredients }) => {
-  const [current, setCurrent] = React.useState('bun')
-  const [modalItem, setModalItem] = React.useState<IngredientsArray | null>(null)
+  const itemsBun = ingredients?.filter((product) => product.type === 'bun');
+  const itemsSauce = ingredients?.filter((product) => product.type === 'sauce');
+  const itemsMain = ingredients?.filter((product) => product.type === 'main');
 
-  const { itemsBun, itemsSauce, itemsMain } = React.useMemo(() => {
-    const itemsBun: IngredientsArray[] = [];
-    const itemsSauce: IngredientsArray[] = [];
-    const itemsMain: IngredientsArray[] = [];
+  const tabsMap = [
+    { key: "bun", title: "Булки", items: itemsBun },
+    { key: "sauce", title: "Соусы", items: itemsSauce },
+    { key: "main", title: "Начинки", items: itemsMain },
+  ]
 
-    ingredients.forEach((item) => {
-      if (item.type === 'bun') itemsBun.push(item);
-      else if (item.type === 'sauce') itemsSauce.push(item);
-      else if (item.type === 'main') itemsMain.push(item);
+  const updateCurrentTab = useCallback(() => {
+    const visibleSection = Object.entries(sectionRefs.current).find(([, ref]) => {
+      if (!ref) return false;
+
+      const rect = ref.getBoundingClientRect();
+      return rect.top >= 0 && rect.top < window.innerHeight * 0.5;
     });
 
-    return { itemsBun, itemsSauce, itemsMain };
-  }, [ingredients]);
+    if (visibleSection?.[0] && visibleSection[0] !== currentTab) {
+      setCurrentTab(visibleSection[0]);
+    }
+  }, [currentTab]);
+
+  useEffect(() => {
+    const handleScroll = () => updateCurrentTab();
+    const container = document.querySelector(styles.ingredientsScroll);
+    container?.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [updateCurrentTab]);
+
+  const scrollToSection = (key: string) => {
+    sectionRefs.current[key]?.scrollIntoView({ behavior: "smooth" });
+    setCurrentTab(key);
+  };
 
   return (
     <>
       <section className="burgerColumn">
         <h1 className="mb-6 text_type_main-large">Соберите бургер</h1>
         <div className="mb-10 display-flex">
-          <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
-            Булки
-          </Tab>
-          <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
-            Соусы
-          </Tab>
-          <Tab value="main" active={current === 'main'} onClick={setCurrent}>
-            Начинки
-          </Tab>
+          {tabsMap.map(({key, title}) => (
+            <Tab
+              key={key}
+              value={key}
+              active={currentTab === key}
+              onClick={() => scrollToSection(key)}
+            >
+              {title}
+            </Tab>
+          ))}
         </div>
 
         <div className={`custom-scroll ${styles.ingredientsScroll}`}>
-          <IngredientSection title="Булки">
-            {itemsBun.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
-          </IngredientSection>
-          <IngredientSection title="Соусы">
-            {itemsSauce.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
-          </IngredientSection>
-          <IngredientSection title="Начинки">
-            {itemsMain.map(item => <IngredientItem key={item._id} item={item} openModal={() => setModalItem(item)}/>)}
-          </IngredientSection>
+          {tabsMap.map(({key, title, items}) => (
+            <section
+              key={key}
+              ref={(el) => (sectionRefs.current[key] = el as HTMLDivElement)}
+              id={key}
+            >
+              <IngredientSection title={title}>
+                {items?.map(item => (
+                  <IngredientItem
+                    key={item._id}
+                    item={item}
+                  />
+                ))}
+              </IngredientSection>
+            </section>
+          ))}
         </div>
       </section>
-      {modalItem &&
-        <Modal title="Детали ингредиента" onClose={() => setModalItem(null)}>
-          <IngredientDetails item={modalItem} />
+      {openModal && ingredientDetail &&
+        <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
+          <IngredientDetails item={ingredientDetail} />
         </Modal>
       }
     </>
   )
-
 }
-
-export default BurgerIngredients
