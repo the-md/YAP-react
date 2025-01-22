@@ -52,7 +52,6 @@ export const BurgerIngredients: React.FC = () => {
   return (
     <>
       <section className="burgerColumn">
-        <h1 className="mb-6 text_type_main-large">Соберите бургер</h1>
         <div className="mb-10 display-flex">
           {tabsMap.map(({key, title}) => (
             <Tab
@@ -86,7 +85,7 @@ export const BurgerIngredients: React.FC = () => {
         </div>
       </section>
       {openModal && ingredientDetail &&
-        <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
+          <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
           <IngredientDetails item={ingredientDetail} />
         </Modal>
       }
