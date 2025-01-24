@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 export const ForgotPassword: React.FC = () => {
   const [valueLogin, setValueLogin] = useState('')

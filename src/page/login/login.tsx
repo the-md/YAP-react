@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 export const Login: React.FC = () => {
   const [valueLogin, setValueLogin] = useState('')

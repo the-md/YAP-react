@@ -4,7 +4,7 @@ import styles from "./ingredient-details.module.css";
 
 export const IngredientDetails: React.FC<{ item: IngredientObj }> = ({item}) => {
   return (
-    <article>
+    <article className="text_align-center">
       <img src={item.image_large} alt=""/>
       <div className={`mt-4 mb-8 text_type_main-medium font_size-24 ${styles.detailsName}`}>{item.name}</div>
       <ul className={`text_color_inactive display-flex align_items-start justify_content-center ${styles.detailsList}`}>

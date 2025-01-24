@@ -86,8 +86,8 @@ export const BurgerIngredients: React.FC = () => {
       </section>
       {openModal && ingredientDetail &&
           <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
-          <IngredientDetails item={ingredientDetail} />
-        </Modal>
+              <IngredientDetails item={ingredientDetail} />
+          </Modal>
       }
     </>
   )
