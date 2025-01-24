@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import { IngredientObj } from "../../utils/types.ts";
 import { IngredientDetails } from "../../components/burger-ingredients/ingredient-details/ingredient-details.tsx";
 import { Modal } from "../../components/modal/modal.tsx";
 
-export const IngredientPage: React.FC = () => {
+export const IngredientPage: React.FC<IngredientPageProps> = ({isModal}) => {
   const { ingredientId } = useParams();
   const { ingredients } = useSelector(getIngredientsState);
   const [ingredient, setIngredient] = useState<IngredientObj | undefined>()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const ingredientCurrent = ingredients.find(item=> item._id === ingredientId)
     setIngredient(ingredientCurrent)
   }, [ingredients, ingredientId]);
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const background = location.state && location.state.background;
-
   const handleClose = () => {
     navigate(-1); // Возврат на предыдущий путь
   };
 
-  if (background && ingredient) {
+  if (isModal && ingredient) {
     return (
       <Modal title="Детали ингредиента" onClose={handleClose}>
         <IngredientDetails item={ingredient} />
@@ -46,4 +43,8 @@ export const IngredientPage: React.FC = () => {
       )}
     </>
   )
+}
+
+interface IngredientPageProps {
+  isModal?: boolean;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { AppHeader } from '../app-header/app-header'
 import { Home } from "../../page/home/home.tsx";
 import { Login } from "../../page/login/login.tsx";
@@ -12,18 +12,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import type { AppDispatch } from "../../services/store.ts";
 import { loadIngredients } from "../../services/ingredients/actions.ts";
+import { Modal } from "../modal/modal.tsx";
 
 
 
 export const App: React.FC = () => {
   const { loading, error } = useSelector(getIngredientsState);
   const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(loadIngredients());
   }, [dispatch]);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+
+  const handleModalClose = () => {
+    // Возвращаемся к предыдущему пути при закрытии модалки
+    navigate(-1);
+  };
 
   if (loading) return (
     <div className="container display-flex">
@@ -45,6 +53,19 @@ export const App: React.FC = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<NotFound404/>}/>
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/ingredients/:ingredientId'
+            element={
+              <Modal title="Детали ингредиента" onClose={handleModalClose}>
+                <IngredientPage isModal={true} />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   )
 }
