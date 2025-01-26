@@ -5,7 +5,7 @@ import { BurgerIngredients } from "../../components/burger-ingredients/burger-in
 import { BurgerConstructor } from "../../components/burger-constructor/burger-constructor.tsx";
 
 
-export const Home: React.FC = () => {
+export const HomePage: React.FC = () => {
 
   return (
     <div className="container">

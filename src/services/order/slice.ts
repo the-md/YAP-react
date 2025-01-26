@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postOrderThunk } from "./actions.ts";
 
-const initialState:OrderStateProps = {
+const initialState:OrderState = {
   orderObj: null,
   loading: false,
   error: null,
@@ -40,7 +40,7 @@ export const { closeModalOrder } = orderSlice.actions;
 
 export const { getOrder, getOpenModalOrder } =  orderSlice.selectors
 
-interface OrderStateProps {
+interface OrderState {
   orderObj: {
     name: string;
     order: {

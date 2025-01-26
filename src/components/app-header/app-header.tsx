@@ -19,7 +19,7 @@ export const AppHeader: React.FC = () => {
                     className="mr-2"
                     type={isActive ? 'primary' : 'secondary'}
                   />
-                  <span className={isActive ? styles.headerLinkActive: ""}>Конструктор</span>
+                  <span className={isActive ? styles.headerLinkActive : ""}>Конструктор</span>
                 </>
               )}
             </NavLink>
@@ -33,7 +33,7 @@ export const AppHeader: React.FC = () => {
                     className="mr-2"
                     type={isActive ? 'primary' : 'secondary'}
                   />
-                  <span className={isActive ? styles.headerLinkActive: ""}>Лента заказов</span>
+                  <span className={isActive ? styles.headerLinkActive : ""}>Лента заказов</span>
                 </>
               )}
             </NavLink>
@@ -53,7 +53,7 @@ export const AppHeader: React.FC = () => {
                     className="mr-2"
                     type={isActive ? 'primary' : 'secondary'}
                   />
-                  <span className={isActive ? styles.headerLinkActive: ""}>Личный кабинет</span>
+                  <span className={isActive ? styles.headerLinkActive : ""}>Личный кабинет</span>
                 </>
               )}
             </NavLink>

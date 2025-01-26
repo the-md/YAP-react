@@ -8,7 +8,7 @@ import { addIngredient, getConstructorState } from "../../services/burger-constr
 import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
 import { postOrderThunk } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
-import { IngredientObj } from "../../utils/types.ts";
+import { Ingredient } from "../../utils/types.ts";
 import type { AppDispatch } from "../../services/store.ts";
 import styles from './burger-constructor.module.css';
 
@@ -28,7 +28,7 @@ export const BurgerConstructor: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
-    drop(ingredient:IngredientObj) {
+    drop(ingredient:Ingredient) {
       dispatch(addIngredient(ingredient));
     },
     collect: (monitor) => ({

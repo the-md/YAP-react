@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const NotFound404: React.FC = () => {
+export const NotFoundPage: React.FC = () => {
 
   return (
     <div className="container mb-10 mt-10 ">

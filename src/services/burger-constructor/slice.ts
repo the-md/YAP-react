@@ -1,7 +1,7 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { IngredientWithUUID } from "../../utils/types.ts";
+import { ConstructorIngredient } from "../../utils/types.ts";
 
-const initialState: BurgerConstructorStateProps = {
+const initialState: BurgerConstructorState = {
   constructorIngredients: [],
   constructorBuns: null,
 };
@@ -11,7 +11,7 @@ export const burgerConstructorSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: {
-      reducer: (state, action: PayloadAction<IngredientWithUUID>) => {
+      reducer: (state, action: PayloadAction<ConstructorIngredient>) => {
         if (action.payload.type === "bun") {
           state.constructorBuns = action.payload;
         } else {
@@ -53,7 +53,7 @@ export const {
 
 export const { getConstructorState } =  burgerConstructorSlice.selectors
 
-interface BurgerConstructorStateProps {
-  constructorIngredients: IngredientWithUUID[];
-  constructorBuns: IngredientWithUUID | null;
+interface BurgerConstructorState {
+  constructorIngredients: ConstructorIngredient[];
+  constructorBuns: ConstructorIngredient | null;
 }

@@ -1,8 +1,4 @@
-export interface IngredientsArr {
-  success: boolean,
-  data: IngredientObj[];
-}
-export interface IngredientObj {
+export interface Ingredient {
   _id: string,
   name: string,
   type: string,
@@ -16,7 +12,12 @@ export interface IngredientObj {
   image_large: string,
   __v: number
 }
-
-export interface IngredientWithUUID extends IngredientObj {
+export interface ConstructorIngredient extends Ingredient {
   uuid: string;
+}
+export interface User {
+  email: string;
+  name: string;
+  password: string;
+  token: string;
 }

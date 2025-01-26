@@ -1,8 +1,8 @@
 import React from "react";
-import { IngredientObj } from "../../../utils/types.ts";
+import { Ingredient } from "../../../utils/types.ts";
 import styles from "./ingredient-details.module.css";
 
-export const IngredientDetails: React.FC<{ item: IngredientObj }> = ({item}) => {
+export const IngredientDetails: React.FC<{ item: Ingredient }> = ({item}) => {
   return (
     <article className="text_align-center">
       <img src={item.image_large} alt=""/>

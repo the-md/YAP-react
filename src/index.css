@@ -34,6 +34,9 @@ a:hover {
 .align_items-start {
     align-items: start;
 }
+.align_items-end {
+    align-items: end;
+}
 .flex_wrap-wrap {
     flex-wrap: wrap;
 }

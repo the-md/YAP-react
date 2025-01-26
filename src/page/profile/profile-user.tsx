@@ -1,20 +1,19 @@
 import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { onLogin } from "../../services/user/actions.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/user/slice.ts";
 
-export const LoginPage: React.FC = () => {
+export const ProfileUser: React.FC = () => {
   const dispatch = useDispatch();
+  const {user} = useSelector(getUser)
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    name: user.name,
+    email: user.email,
+    password: '******',
   })
-  const inputRef = useRef<HTMLInputElement>(null)
-  const onIconClick = () => {
-    if (inputRef.current){
-      inputRef.current.type = inputRef.current.type === 'text' ? 'password' : 'text'
-    }
+
+  const onIconClick = (e) => {
+    console.log('update', e)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,49 +29,69 @@ export const LoginPage: React.FC = () => {
     if (!formData.email || !formData.password) {
       return;
     }
-    dispatch(onLogin(formData));
+    // dispatch(onLogin(formData));
     setFormData({
+      name: '',
       email: '',
       password: '',
     });
   }
 
   return (
-    <div className="container text_align-center mt-30 mb-10">
-      <h1 className="text text_type_main-medium mb-6">Вход</h1>
+    <div className="text_align-center">
       <div className="display-flex flex_direction-column align_items-center">
         <form action="" onSubmit={handleSubmitForm}>
           <Input
-            type={'email'}
-            placeholder={'E-mail'}
+            type={'text'}
+            placeholder={'Имя'}
             onChange={e => handleChange(e)}
-            value={formData.email}
-            name={'email'}
+            icon={'EditIcon'}
+            value={formData.name}
+            name={'name'}
+            onIconClick={(e)=>onIconClick(e)}
             error={false}
             errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
+            disabled
+          />
+          <Input
+            type={'email'}
+            placeholder={'Логин'}
+            onChange={e => handleChange(e)}
+            icon={'EditIcon'}
+            value={formData.email}
+            name={'email'}
+            onIconClick={onIconClick}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+            extraClass="mb-6"
+            disabled
           />
           <Input
             type={'password'}
             placeholder={'Пароль'}
             onChange={e => handleChange(e)}
-            icon={'ShowIcon'}
+            icon={'EditIcon'}
             value={formData.password}
             name={'password'}
-            error={false}
-            ref={inputRef}
             onIconClick={onIconClick}
+            error={false}
             errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
+            disabled
           />
-          <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
-            Войти
-          </Button>
+          <div className="display-flex justify_content-end">
+            <Button htmlType="submit" type="secondary" size="medium" extraClass="mb-20">
+              Отмена
+            </Button>
+            <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
+              Сохранить
+            </Button>
+          </div>
         </form>
-        <p className="text text_type_main-default mb-4">Вы — новый пользователь? <Link to='/register'>Зарегистрироваться</Link></p>
-        <p className="text text_type_main-default">Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link></p>
 
       </div>
     </div>

@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getConstructorState } from "../../../services/burger-constructor/slice.ts";
-import { IngredientObj } from "../../../utils/types.ts";
+import { Ingredient } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const IngredientItem: React.FC<{ item: IngredientObj }> = ({item}) => {
+export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
   const { constructorIngredients, constructorBuns } = useSelector(getConstructorState);
   const location = useLocation();
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ export const IngredientItem: React.FC<{ item: IngredientObj }> = ({item}) => {
     ? constructorBuns?._id === item._id ? 2 : 0
     : constructorIngredients.filter(ingredient => ingredient._id === item._id).length
 
-  const onIngredientClick = (ingredient:IngredientObj) => {
+  const onIngredientClick = (ingredient:Ingredient) => {
     navigate(`/ingredients/${ingredient._id}`, {
       state: { background: location },
     });

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 
-export const Register: React.FC = () => {
+export const ResetPasswordPage: React.FC = () => {
   const [valuePass, setValuePass] = useState('')
   const [valueCode, setValueCode] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
