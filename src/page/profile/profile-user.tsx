@@ -1,18 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUser } from "../../services/user/slice.ts";
 
 export const ProfileUser: React.FC = () => {
-  const dispatch = useDispatch();
-  const {user} = useSelector(getUser)
+  const user = useSelector(getUser)
   const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
+    name: user?.name || '',
+    email: user?.email || '',
     password: '******',
   })
 
-  const onIconClick = (e) => {
+  const onIconClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     console.log('update', e)
   }
 
@@ -62,7 +61,7 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.email}
             name={'email'}
-            onIconClick={onIconClick}
+            onIconClick={(e)=>onIconClick(e)}
             error={false}
             errorText={'Ошибка'}
             size={'default'}
@@ -76,7 +75,7 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.password}
             name={'password'}
-            onIconClick={onIconClick}
+            onIconClick={(e)=>onIconClick(e)}
             error={false}
             errorText={'Ошибка'}
             size={'default'}

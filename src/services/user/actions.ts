@@ -1,20 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginRequest, logoutRequest, getUserRequest, registerRequest } from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
+import { User } from "../../utils/types.ts";
 
 export const onLogin = createAsyncThunk (
   "user/onLogin",
-  async (data) => {
+  async (data: User) => {
     const response = await loginRequest(data);
-    console.log('response onLogin', response)
-
-
-    const accessToken = response.accessToken.split('Bearer ')[1];
-    const refreshToken = response.refreshToken;
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-
-    return response;
+    localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
+    localStorage.setItem('refreshToken', response.refreshToken);
+    return response.user;
   }
 )
 
@@ -24,7 +19,6 @@ export const onLogout = createAsyncThunk (
     const response = await logoutRequest();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    console.log('onLogout', response)
     return response;
   }
 )
@@ -44,9 +38,10 @@ export const checkUserAuth = createAsyncThunk(
 
 export const onRegister = createAsyncThunk (
   "user/onRegister",
-  async (data) => {
+  async (data: User) => {
     const response = await registerRequest(data);
-    console.log('response onRegister', response)
+    localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
+    localStorage.setItem('refreshToken', response.refreshToken);
     return response.user;
   }
 )

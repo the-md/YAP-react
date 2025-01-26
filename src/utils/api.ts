@@ -1,4 +1,4 @@
-import { Ingredient } from "./types.ts";
+import { Ingredient, User } from "./types.ts";
 
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
@@ -50,26 +50,25 @@ export const resetPasswordRequest = async (data) => {
   return await getResponse(res);
 };
 
-export const registerRequest = async (data) => {
-  console.log('registerRequest', data)
+export const registerRequest = async (data: User): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/register`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<AuthResponseProps>(res);
 };
 
-export const loginRequest = async (data) => {
+export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/login`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<AuthResponseProps>(res);
 };
 
-export const logoutRequest = async (): Promise<void> => {
+export const logoutRequest = async () => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/logout`, {
     method: 'POST',
     headers: apiConfig.headers
@@ -93,7 +92,7 @@ export const getUserRequest = async () => {
   return await getResponse(res);
 };
 
-export const updateUserRequest = async (user) => {
+export const updateUserRequest = async (user: User) => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
     headers: apiConfig.headers,
@@ -112,4 +111,12 @@ interface OrderResponseProps {
 interface IngredientsProps {
   success: boolean,
   data: Ingredient[];
+}
+interface AuthResponseProps {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+  user: {
+    email: string,
+    name: string  }
 }

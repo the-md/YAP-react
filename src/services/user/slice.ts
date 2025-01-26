@@ -26,10 +26,14 @@ export const userSlice = createSlice({
     builder
       .addCase(onLogin.fulfilled, (state, action) => {
         state.user = action.payload;
+        console.log('onLogin.fulfilled action.payload', action.payload)
+        console.log('onLogin.fulfilled state.user', state.user)
+
         state.isAuthChecked = true;
       })
       .addCase(onRegister.fulfilled, (state, action) => {
-        console.log('action.payload', state, action.payload)
+        state.user = action.payload;
+        state.isAuthChecked = true;
       })
       .addCase(onLogout.fulfilled, (state) => {
         state.user = null;

@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./profile.module.css"
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onLogout } from "../../services/user/actions.ts";
+import type { AppDispatch } from "../../services/store.ts";
 
 export const ProfilePage: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
+  const matchOrders = useMatch("/profile/orders")
   const handleLogout = () => {
     dispatch(onLogout())
   }
@@ -41,7 +43,9 @@ export const ProfilePage: React.FC = () => {
               </NavLink>
             </li>
           </ul>
-          <p className={`mt-20 ${styles.caption}`}>В этом разделе вы можете изменить свои персональные данные</p>
+          <p className={`mt-20 ${styles.caption}`}>
+            В этом разделе вы можете {matchOrders ? 'просмотреть свою историю заказов' : 'изменить свои персональные данные'}
+          </p>
         </div>
 
         <Outlet/>

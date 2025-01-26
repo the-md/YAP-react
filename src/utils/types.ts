@@ -16,8 +16,7 @@ export interface ConstructorIngredient extends Ingredient {
   uuid: string;
 }
 export interface User {
-  email: string;
-  name: string;
-  password: string;
-  token: string;
+  email?: string;
+  password?: string;
+  name?: string;
 }

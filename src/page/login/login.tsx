@@ -3,9 +3,10 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../../services/user/actions.ts";
+import type { AppDispatch } from "../../services/store.ts";
 
 export const LoginPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
