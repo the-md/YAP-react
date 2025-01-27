@@ -32,22 +32,22 @@ export const postOrderRequest = async (order: string[]): Promise<OrderResponsePr
   return await getResponse<OrderResponseProps>(res);
 };
 
-export const forgotPasswordRequest = async (data) => {
+export const forgotPasswordRequest = async (data: User): Promise<fogotPasswordResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<fogotPasswordResponseProps>(res);
 };
 
-export const resetPasswordRequest = async (data) => {
+export const resetPasswordRequest = async (data: resetPasswordRequestProps): Promise<fogotPasswordResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset/reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<fogotPasswordResponseProps>(res);
 };
 
 export const registerRequest = async (data: User): Promise<AuthResponseProps> => {
@@ -68,7 +68,7 @@ export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
   return await getResponse<AuthResponseProps>(res);
 };
 
-export const logoutRequest = async (data: LogoutResponseProps) => {
+export const logoutRequest = async (data: LogoutRequestProps) => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/logout`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -116,9 +116,6 @@ interface IngredientsProps {
   success: boolean,
   data: Ingredient[];
 }
-interface LogoutResponseProps {
-  token: string
-}
 interface AuthResponseProps {
   success: boolean,
   accessToken: string,
@@ -126,4 +123,15 @@ interface AuthResponseProps {
   user: {
     email: string,
     name: string  }
+}
+interface LogoutRequestProps {
+  token: string
+}
+interface fogotPasswordResponseProps {
+  success: string,
+  message: string
+}
+interface resetPasswordRequestProps {
+  password: string,
+  token: string
 }

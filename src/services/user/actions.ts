@@ -1,5 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginRequest, logoutRequest, getUserRequest, registerRequest } from "../../utils/api.ts";
+import {
+  loginRequest,
+  logoutRequest,
+  getUserRequest,
+  registerRequest,
+  forgotPasswordRequest, resetPasswordRequest
+} from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
 import { User } from "../../utils/types.ts";
 
@@ -9,7 +15,6 @@ export const onLogin = createAsyncThunk (
     const response = await loginRequest(data);
     localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
     localStorage.setItem('refreshToken', response.refreshToken);
-    console.log('response.user', response.user)
     return response.user;
   }
 )
@@ -30,6 +35,7 @@ export const onLogout = createAsyncThunk (
 export const checkUserAuth = createAsyncThunk(
   "user/checkUserAuth",
   async (_, { dispatch }) => {
+    console.log("localStorage", localStorage.getItem("accessToken"))
     if (localStorage.getItem("accessToken")) {
       getUserRequest()
         .then(user => dispatch(setUser(user)))
@@ -49,3 +55,25 @@ export const onRegister = createAsyncThunk (
     return response.user;
   }
 )
+
+export const onForgotPassword = createAsyncThunk (
+  "user/onForgotPassword",
+  async (data: User) => {
+    const response = await forgotPasswordRequest(data);
+    console.log('onForgotPassword response', response)
+    return response.success;
+  }
+)
+
+export const onResetPassword = createAsyncThunk (
+  "user/onResetPassword",
+  async (data: resetPasswordRequestProps) => {
+    const response = await resetPasswordRequest(data);
+    return response.success;
+  }
+)
+
+interface resetPasswordRequestProps {
+  password: string,
+  token: string
+}

@@ -5,7 +5,6 @@ import { getUserState } from "../../services/user/slice.ts";
 
 export const ProfileUser: React.FC = () => {
   const { user} = useSelector(getUserState)
-  console.log('user00', user)
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -15,7 +14,6 @@ export const ProfileUser: React.FC = () => {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  console.log('user', user)
 
   const onIconClick = (ref: React.RefObject<HTMLInputElement>) => {
     if (ref.current) {

@@ -20,6 +20,7 @@ const Protected: React.FC<ProtectedProps> = ({ onlyUnAuth = false, component}) =
 
   if (onlyUnAuth && user) {
     const { from } = location.state ?? { from: { pathname: "/ "} };
+    console.log('onlyUnAuth && user', onlyUnAuth, user)
     return <Navigate to={from} />;
   }
 
