@@ -4,7 +4,7 @@ const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
   headers: {
     "Content-Type": "application/json",
-  }
+  },
 }
 
 const getResponse = async <T>(res: Response): Promise<T> => {
@@ -68,10 +68,11 @@ export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
   return await getResponse<AuthResponseProps>(res);
 };
 
-export const logoutRequest = async () => {
+export const logoutRequest = async (data: LogoutResponseProps) => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/logout`, {
     method: 'POST',
-    headers: apiConfig.headers
+    headers: apiConfig.headers,
+    body: JSON.stringify(data)
   });
   return await getResponse(res);
 };
@@ -87,7 +88,10 @@ export const tokenRequest = async (data) => {
 
 export const getUserRequest = async () => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
-    headers: apiConfig.headers,
+    headers: {
+      ...apiConfig.headers,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
   });
   return await getResponse(res);
 };
@@ -111,6 +115,9 @@ interface OrderResponseProps {
 interface IngredientsProps {
   success: boolean,
   data: Ingredient[];
+}
+interface LogoutResponseProps {
+  token: string
 }
 interface AuthResponseProps {
   success: boolean,

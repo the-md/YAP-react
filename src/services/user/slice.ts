@@ -19,6 +19,7 @@ export const userSlice = createSlice({
     }
   },
   selectors: {
+    getUserState: (state) => state,
     getIsAuthChecked: (state) => state.isAuthChecked,
     getUser: (state) => state.user,
   },
@@ -26,9 +27,6 @@ export const userSlice = createSlice({
     builder
       .addCase(onLogin.fulfilled, (state, action) => {
         state.user = action.payload;
-        console.log('onLogin.fulfilled action.payload', action.payload)
-        console.log('onLogin.fulfilled state.user', state.user)
-
         state.isAuthChecked = true;
       })
       .addCase(onRegister.fulfilled, (state, action) => {
@@ -43,7 +41,7 @@ export const userSlice = createSlice({
 
 export const { setIsAuthChecked, setUser } = userSlice.actions;
 
-export const { getIsAuthChecked, getUser } =  userSlice.selectors
+export const { getIsAuthChecked, getUser, getUserState } =  userSlice.selectors
 
 interface UserState {
   user: User | null;

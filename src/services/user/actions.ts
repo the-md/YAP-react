@@ -9,6 +9,7 @@ export const onLogin = createAsyncThunk (
     const response = await loginRequest(data);
     localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
     localStorage.setItem('refreshToken', response.refreshToken);
+    console.log('response.user', response.user)
     return response.user;
   }
 )
@@ -16,7 +17,10 @@ export const onLogin = createAsyncThunk (
 export const onLogout = createAsyncThunk (
   "user/onLogout",
   async () => {
-    const response = await logoutRequest();
+    const refreshToken = {
+      "token": localStorage.getItem("refreshToken") || ''
+    }
+    const response = await logoutRequest(refreshToken);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     return response;

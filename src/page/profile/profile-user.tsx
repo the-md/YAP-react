@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { getUser } from "../../services/user/slice.ts";
+import { getUserState } from "../../services/user/slice.ts";
 
 export const ProfileUser: React.FC = () => {
-  const user = useSelector(getUser)
+  const { user} = useSelector(getUserState)
+  console.log('user00', user)
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     password: '******',
   })
+  const [changeForm, setChangeForm] = useState(false)
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  console.log('user', user)
 
-  const onIconClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
-    console.log('update', e)
+  const onIconClick = (ref: React.RefObject<HTMLInputElement>) => {
+    if (ref.current) {
+      ref.current.removeAttribute("disabled")
+    }
+    setChangeForm(true)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,15 +34,11 @@ export const ProfileUser: React.FC = () => {
 
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault()
+    setChangeForm(false)
     if (!formData.email || !formData.password) {
       return;
     }
     // dispatch(onLogin(formData));
-    setFormData({
-      name: '',
-      email: '',
-      password: '',
-    });
   }
 
   return (
@@ -47,7 +52,8 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.name}
             name={'name'}
-            onIconClick={(e)=>onIconClick(e)}
+            onIconClick={()=>onIconClick(nameRef)}
+            ref={nameRef}
             error={false}
             errorText={'Ошибка'}
             size={'default'}
@@ -61,7 +67,8 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.email}
             name={'email'}
-            onIconClick={(e)=>onIconClick(e)}
+            onIconClick={()=>onIconClick(emailRef)}
+            ref={emailRef}
             error={false}
             errorText={'Ошибка'}
             size={'default'}
@@ -75,21 +82,25 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.password}
             name={'password'}
-            onIconClick={(e)=>onIconClick(e)}
+            onIconClick={()=>onIconClick(passwordRef)}
+            ref={passwordRef}
             error={false}
             errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
             disabled
           />
-          <div className="display-flex justify_content-end">
-            <Button htmlType="submit" type="secondary" size="medium" extraClass="mb-20">
-              Отмена
-            </Button>
-            <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
-              Сохранить
-            </Button>
-          </div>
+          {changeForm && (
+            <div className="display-flex justify_content-end">
+              <Button htmlType="reset" type="secondary" size="medium" extraClass="mb-20">
+                Отмена
+              </Button>
+              <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
+                Сохранить
+              </Button>
+            </div>
+          )}
+
         </form>
 
       </div>
