@@ -14,7 +14,7 @@ export const ForgotPasswordPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(setIsChangePassword(false))
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isResetPassword) {

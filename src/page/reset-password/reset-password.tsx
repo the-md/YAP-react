@@ -20,7 +20,7 @@ export const ResetPasswordPage: React.FC = () => {
     if (!isResetPassword && !isChangePassword) {
       navigate('/forgot-password');
     }
-  }, [isResetPassword, navigate]);
+  }, [isResetPassword, isChangePassword, navigate]);
 
   const onIconClick = () => {
     if (inputRef.current){
@@ -52,7 +52,7 @@ export const ResetPasswordPage: React.FC = () => {
       navigate('/login');
       dispatch(setIsResetPassword(false))
     }
-  }, [isChangePassword, navigate]);
+  }, [isChangePassword, navigate, dispatch]);
 
   return (
     <div className="container text_align-center mt-30 mb-10">
