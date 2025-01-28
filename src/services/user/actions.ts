@@ -35,7 +35,6 @@ export const onLogout = createAsyncThunk (
 export const checkUserAuth = createAsyncThunk(
   "user/checkUserAuth",
   async (_, { dispatch }) => {
-    console.log("localStorage", localStorage.getItem("accessToken"))
     if (localStorage.getItem("accessToken")) {
       getUserRequest()
         .then(user => dispatch(setUser(user)))
@@ -60,7 +59,6 @@ export const onForgotPassword = createAsyncThunk (
   "user/onForgotPassword",
   async (data: User) => {
     const response = await forgotPasswordRequest(data);
-    console.log('onForgotPassword response', response)
     return response.success;
   }
 )

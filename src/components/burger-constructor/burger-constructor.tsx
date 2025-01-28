@@ -11,6 +11,8 @@ import { BurgerConstructorItem } from "./burger-constructor-item/burger-construc
 import { Ingredient } from "../../utils/types.ts";
 import type { AppDispatch } from "../../services/store.ts";
 import styles from './burger-constructor.module.css';
+import { getUser } from "../../services/user/slice.ts";
+import { useNavigate } from "react-router-dom";
 
 export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
   const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
@@ -25,7 +27,9 @@ export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({posit
 export const BurgerConstructor: React.FC = () => {
   const {constructorIngredients, constructorBuns} = useSelector(getConstructorState);
   const openModal = useSelector(getOpenModalOrder);
+  const user = useSelector(getUser);
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate();
   const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
     drop(ingredient:Ingredient) {
@@ -93,14 +97,20 @@ export const BurgerConstructor: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="mt-10 mb-10 display-flex justify_content-end align_items-center">
+        <div className="mt-10 mb-10 mr-4 ml-4 display-flex justify_content-end align_items-center">
           <div className="mr-10 display-flex justify_content-center">
             <span className="text_type_digits-medium mr-2">{totalPrice}</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
           </div>
-          <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
-            Оформить заказ
-          </Button>
+          {user ? (
+            <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
+              Оформить заказ
+            </Button>
+          ) : (
+            <Button onClick={() => navigate('/login')} htmlType="button" type="primary" size="medium">
+              Войти
+            </Button>
+          )}
         </div>
       </section>
       {openModal &&

@@ -24,7 +24,10 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
 export const postOrderRequest = async (order: string[]): Promise<OrderResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
-    headers: apiConfig.headers,
+    headers: {
+      ...apiConfig.headers,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
     body: JSON.stringify({
       ingredients: order
     })

@@ -16,7 +16,7 @@ export const orderSlice = createSlice({
     },
   },
   selectors: {
-    getOrder: state => state.orderObj,
+    getOrderState: state => state,
     getOpenModalOrder: state => state.openModal,
   },
   extraReducers: (builder) => {
@@ -38,7 +38,7 @@ export const orderSlice = createSlice({
 
 export const { closeModalOrder } = orderSlice.actions;
 
-export const { getOrder, getOpenModalOrder } =  orderSlice.selectors
+export const { getOrderState, getOpenModalOrder } =  orderSlice.selectors
 
 interface OrderState {
   orderObj: {

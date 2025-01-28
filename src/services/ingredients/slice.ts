@@ -9,6 +9,7 @@ const initialState:IngredientsState = {
   openModal: false,
   ingredientDetail: null,
 }
+//todo проверить - все ли здесь нужно, может что то удалить
 
 export const ingredientsSlice = createSlice({
   name: "ingredients",
