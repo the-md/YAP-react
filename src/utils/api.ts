@@ -32,22 +32,22 @@ export const postOrderRequest = async (order: string[]): Promise<OrderResponsePr
   return await getResponse<OrderResponseProps>(res);
 };
 
-export const forgotPasswordRequest = async (data: User): Promise<fogotPasswordResponseProps> => {
+export const forgotPasswordRequest = async (data: User): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse<fogotPasswordResponseProps>(res);
+  return await getResponse<MessageResponseProps>(res);
 };
 
-export const resetPasswordRequest = async (data: resetPasswordRequestProps): Promise<fogotPasswordResponseProps> => {
+export const resetPasswordRequest = async (data: resetPasswordRequestProps): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset/reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse<fogotPasswordResponseProps>(res);
+  return await getResponse<MessageResponseProps>(res);
 };
 
 export const registerRequest = async (data: User): Promise<AuthResponseProps> => {
@@ -68,22 +68,22 @@ export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
   return await getResponse<AuthResponseProps>(res);
 };
 
-export const logoutRequest = async (data: LogoutRequestProps) => {
+export const logoutRequest = async (data: TokenRequestProps): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/logout`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<MessageResponseProps>(res);
 };
 
-export const tokenRequest = async (data) => {
+export const tokenRequest = async (data: TokenRequestProps): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
   });
-  return await getResponse(res);
+  return await getResponse<AuthResponseProps>(res);
 };
 
 export const getUserRequest = async () => {
@@ -120,14 +120,15 @@ interface AuthResponseProps {
   success: boolean,
   accessToken: string,
   refreshToken: string,
-  user: {
+  user?: {
     email: string,
-    name: string  }
+    name: string
+  }
 }
-interface LogoutRequestProps {
+interface TokenRequestProps {
   token: string
 }
-interface fogotPasswordResponseProps {
+interface MessageResponseProps {
   success: string,
   message: string
 }
