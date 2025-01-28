@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { getUserState } from "../../services/user/slice.ts";
+import { getUserState } from "../../../services/user/slice.ts";
 
 export const ProfileUser: React.FC = () => {
-  const { user} = useSelector(getUserState)
+  const { user } = useSelector(getUserState)
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -36,7 +36,6 @@ export const ProfileUser: React.FC = () => {
     if (!formData.email || !formData.password) {
       return;
     }
-    // dispatch(onLogin(formData));
   }
 
   return (

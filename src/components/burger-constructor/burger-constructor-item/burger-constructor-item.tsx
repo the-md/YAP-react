@@ -18,7 +18,7 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
     hover(dragItem:BurgerConstructorItemProps) {
       if (dragItem.index !== index) {
         dispatch(sortIngredient({fromIndex: dragItem.index, toIndex: index}));
-        dragItem.index = index; // Обновляем индекс для корректного перемещения
+        dragItem.index = index;
       }
     }
   });

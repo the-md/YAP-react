@@ -18,7 +18,7 @@ export const ForgotPasswordPage: React.FC = () => {
 
   useEffect(() => {
     if (isResetPassword) {
-      navigate('/reset-password'); // Навигация выполняется только после успешного обновления состояния
+      navigate('/reset-password');
     }
   }, [isResetPassword, navigate]);
 

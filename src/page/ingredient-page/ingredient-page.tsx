@@ -18,7 +18,7 @@ export const IngredientPage: React.FC<IngredientPageProps> = ({isModal}) => {
   }, [ingredients, ingredientId]);
 
   const handleClose = () => {
-    navigate(-1); // Возврат на предыдущий путь
+    navigate(-1);
   };
 
   if (isModal && ingredient) {

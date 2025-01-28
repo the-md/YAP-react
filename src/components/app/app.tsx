@@ -14,8 +14,8 @@ import { checkUserAuth } from "../../services/user/actions.ts";
 import { Modal } from "../modal/modal.tsx";
 import { ProfilePage } from "../../page/profile/profile.tsx";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route.tsx";
-import { ProfileUser } from "../../page/profile/profile-user.tsx";
-import { ProfileOrder } from "../../page/profile/profile-order.tsx";
+import { ProfileUser } from "../../page/profile/profile-user/profile-user.tsx";
+import { ProfileOrder } from "../../page/profile/profile-order/profile-order.tsx";
 import { LentaPage } from "../../page/lenta/lenta.tsx";
 
 export const App: React.FC = () => {

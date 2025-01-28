@@ -37,11 +37,10 @@ export const AppHeader: React.FC = () => {
                 </>
               )}
             </NavLink>
-            <Link className={`p-5 ml-2 display-flex ${styles.headerLink}`} to="/"></Link>
           </nav>
-          <a className="display-flex" href="/">
+          <Link className="display-flex" to="/">
             <Logo/>
-          </a>
+          </Link>
           <nav className={`display-flex justify_content-end align_items-center ${styles.navRight}`}>
             <NavLink
               to={`/profile`}
