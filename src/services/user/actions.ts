@@ -4,7 +4,8 @@ import {
   logoutRequest,
   getUserRequest,
   registerRequest,
-  forgotPasswordRequest, resetPasswordRequest
+  forgotPasswordRequest,
+  resetPasswordRequest
 } from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
 import { User } from "../../utils/types.ts";

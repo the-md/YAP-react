@@ -3,7 +3,7 @@ import { Ingredient, User } from "./types.ts";
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json;charset=utf-8",
   },
 }
 
@@ -14,6 +14,26 @@ const getResponse = async <T>(res: Response): Promise<T> => {
   return res.json()
 }
 
+export const fetchWithRefresh = async (url: string, options: RequestInit): Promise<Response> => {
+  try {
+    const  res = await fetch(url, options)
+    return await getResponse(res);
+  } catch (err: unknown) {
+    if (err instanceof Error && err.message === "jwt expired") {
+      const refreshData = await refreshTokenRequest()
+      if(!refreshData.success) {
+        Promise.reject(refreshData)
+      }
+      localStorage.setItem("refreshToken", refreshData.refreshToken)
+      localStorage.setItem("accessToken", refreshData.accessToken)
+      const res = await fetch(url, options)
+      return await getResponse(res);
+    } else {
+      return Promise.reject(err)
+    }
+  }
+};
+
 export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/ingredients`, {
     headers: apiConfig.headers,
@@ -21,8 +41,8 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
   return await getResponse<IngredientsProps>(res);
 };
 
-export const postOrderRequest = async (order: string[]): Promise<OrderResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/orders`, {
+export const orderRequest = async (order: string[]): Promise<OrderResponseProps> => {
+  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
     headers: {
       ...apiConfig.headers,
@@ -44,7 +64,7 @@ export const forgotPasswordRequest = async (data: User): Promise<MessageResponse
   return await getResponse<MessageResponseProps>(res);
 };
 
-export const resetPasswordRequest = async (data: resetPasswordRequestProps): Promise<MessageResponseProps> => {
+export const resetPasswordRequest = async (data: ResetPasswordRequestProps): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset/reset`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -80,17 +100,19 @@ export const logoutRequest = async (data: TokenRequestProps): Promise<MessageRes
   return await getResponse<MessageResponseProps>(res);
 };
 
-export const tokenRequest = async (data: TokenRequestProps): Promise<AuthResponseProps> => {
+export const refreshTokenRequest = async (): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
     method: 'POST',
     headers: apiConfig.headers,
-    body: JSON.stringify(data)
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken")
+    })
   });
   return await getResponse<AuthResponseProps>(res);
 };
 
 export const getUserRequest = async () => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
+  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/auth/user`, {
     headers: {
       ...apiConfig.headers,
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -100,7 +122,7 @@ export const getUserRequest = async () => {
 };
 
 export const updateUserRequest = async (user: User) => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
+  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
     headers: apiConfig.headers,
     body: JSON.stringify(user)
@@ -132,10 +154,11 @@ interface TokenRequestProps {
   token: string
 }
 interface MessageResponseProps {
-  success: string,
-  message: string
+  success?: boolean,
+  message?: string,
+  status?: number
 }
-interface resetPasswordRequestProps {
+interface ResetPasswordRequestProps {
   password: string,
   token: string
 }

@@ -42,6 +42,9 @@ export const userSlice = createSlice({
       .addCase(onLogout.fulfilled, (state) => {
         state.user = null;
       })
+      .addCase(onLogout.rejected, (state) => {
+        state.user = null;
+      })
       .addCase(onRegister.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isAuthChecked = true;
