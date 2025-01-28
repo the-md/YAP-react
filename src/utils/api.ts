@@ -14,24 +14,43 @@ const getResponse = async <T>(res: Response): Promise<T> => {
   return res.json()
 }
 
-export const fetchWithRefresh = async (url: string, options: RequestInit): Promise<Response> => {
+const isTokenExpired = (token: string): boolean => {
   try {
-    const  res = await fetch(url, options)
-    return await getResponse(res);
-  } catch (err: unknown) {
-    if (err instanceof Error && err.message === "jwt expired") {
-      const refreshData = await refreshTokenRequest()
-      if(!refreshData.success) {
-        Promise.reject(refreshData)
-      }
-      localStorage.setItem("refreshToken", refreshData.refreshToken)
-      localStorage.setItem("accessToken", refreshData.accessToken)
-      const res = await fetch(url, options)
-      return await getResponse(res);
-    } else {
-      return Promise.reject(err)
-    }
+    const [, payload] = token.split(".");
+    const decoded = JSON.parse(atob(payload));
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp < now;
+  } catch (error) {
+    console.error("Ошибка при проверке токена:", error);
+    return false;
   }
+};
+
+const checkAndRefreshToken = async (): Promise<void> => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    return;
+  }
+
+  if (isTokenExpired(accessToken)) {
+    const refreshData = await refreshTokenRequest()
+    if(!refreshData.success) {
+      Promise.reject(refreshData)
+    }
+    localStorage.setItem("refreshToken", refreshData.refreshToken)
+    localStorage.setItem('accessToken', refreshData.accessToken.split('Bearer ')[1]);
+  }
+};
+
+export const refreshTokenRequest = async (): Promise<AuthResponseProps> => {
+  const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
+    method: 'POST',
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken")
+    })
+  });
+  return await getResponse<AuthResponseProps>(res);
 };
 
 export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
@@ -42,7 +61,8 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
 };
 
 export const orderRequest = async (order: string[]): Promise<OrderResponseProps> => {
-  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/orders`, {
+  await checkAndRefreshToken();
+  const res = await fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
     headers: {
       ...apiConfig.headers,
@@ -100,34 +120,28 @@ export const logoutRequest = async (data: TokenRequestProps): Promise<MessageRes
   return await getResponse<MessageResponseProps>(res);
 };
 
-export const refreshTokenRequest = async (): Promise<AuthResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
-    method: 'POST',
-    headers: apiConfig.headers,
-    body: JSON.stringify({
-      token: localStorage.getItem("refreshToken")
-    })
-  });
-  return await getResponse<AuthResponseProps>(res);
-};
-
-export const getUserRequest = async () => {
-  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/auth/user`, {
+export const getUserRequest = async (): Promise<UserResponseProps> => {
+  await checkAndRefreshToken();
+  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
     headers: {
       ...apiConfig.headers,
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   });
-  return await getResponse(res);
+  return await getResponse<UserResponseProps>(res);
 };
 
-export const updateUserRequest = async (user: User) => {
-  const res = await fetchWithRefresh(`${apiConfig.baseUrl}/auth/user`, {
+export const updateUserRequest = async (user: User): Promise<UserResponseProps> => {
+  await checkAndRefreshToken();
+  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
-    headers: apiConfig.headers,
+    headers: {
+      ...apiConfig.headers,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
     body: JSON.stringify(user)
   });
-  return await getResponse(res);
+  return await getResponse<UserResponseProps>(res);
 };
 
 interface OrderResponseProps {
@@ -146,6 +160,13 @@ interface AuthResponseProps {
   accessToken: string,
   refreshToken: string,
   user?: {
+    email: string,
+    name: string
+  }
+}
+interface UserResponseProps {
+  success: boolean,
+  user: {
     email: string,
     name: string
   }
