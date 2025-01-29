@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import { getUserState } from "../../../services/user/slice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../../services/user/slice.ts";
+import { onChangeUser } from "../../../services/user/actions.ts";
+import type { AppDispatch } from "../../../services/store.ts";
 
 export const ProfileUser: React.FC = () => {
-  const { user } = useSelector(getUserState)
+  const user = useSelector(getUser)
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -14,11 +17,11 @@ export const ProfileUser: React.FC = () => {
   const [changeForm, setChangeForm] = useState(false)
   const nameRef = useRef<HTMLInputElement | null>(null);
 
-  const onIconClick = () => {
+  const onIconClickName = () => {
     setIsNameEdit(true)
     setTimeout(() => nameRef.current!.focus(), 0);
   }
-  const onNameBlur = () => {
+  const onBlurName = () => {
     setIsNameEdit(false);
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,9 +38,16 @@ export const ProfileUser: React.FC = () => {
     if (!formData.email || !formData.password) {
       return;
     }
+    onChangeUser(formData)
   }
   const handleResetForm = () => {
     setChangeForm(false)
+    dispatch(onChangeUser(formData))
+    setFormData({
+      name: user?.name || '',
+      email: user?.email || '',
+      password: '******',
+    })
   }
 
   return (
@@ -55,8 +65,8 @@ export const ProfileUser: React.FC = () => {
             size={'default'}
             extraClass="mb-6"
             disabled={!isNameEdit}
-            onIconClick={onIconClick}
-            onBlur={onNameBlur}
+            onIconClick={onIconClickName}
+            onBlur={onBlurName}
           />
           <EmailInput
             onChange={e => handleChange(e)}
@@ -83,9 +93,7 @@ export const ProfileUser: React.FC = () => {
               </Button>
             </div>
           )}
-
         </form>
-
       </div>
     </div>
   )

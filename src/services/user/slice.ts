@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { onForgotPassword, onLogin, onLogout, onRegister, onResetPassword } from "./actions.ts";
+import { onChangeUser, onForgotPassword, onLogin, onLogout, onRegister, onResetPassword } from "./actions.ts";
 import { User } from "../../utils/types.ts";
 
 const initialState: UserState = {
@@ -55,6 +55,9 @@ export const userSlice = createSlice({
       .addCase(onResetPassword.fulfilled, (state, action) => {
         state.isChangePassword = action.payload;
       })
+      .addCase(onChangeUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
   }
 })
 
@@ -72,7 +75,7 @@ export const {
 } =  userSlice.selectors
 
 interface UserState {
-  user?: User | null;
+  user: User | null;
   isAuthChecked: boolean;
   isResetPassword?: boolean;
   isChangePassword?: boolean;

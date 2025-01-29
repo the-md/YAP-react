@@ -42,7 +42,7 @@ const checkAndRefreshToken = async (): Promise<void> => {
   }
 };
 
-export const refreshTokenRequest = async (): Promise<AuthResponseProps> => {
+export const refreshTokenRequest = async (): Promise<AuthTokenResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -50,7 +50,7 @@ export const refreshTokenRequest = async (): Promise<AuthResponseProps> => {
       token: localStorage.getItem("refreshToken")
     })
   });
-  return await getResponse<AuthResponseProps>(res);
+  return await getResponse<AuthTokenResponseProps>(res);
 };
 
 export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
@@ -155,11 +155,16 @@ interface IngredientsProps {
   success: boolean,
   data: Ingredient[];
 }
+interface AuthTokenResponseProps {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+}
 interface AuthResponseProps {
   success: boolean,
   accessToken: string,
   refreshToken: string,
-  user?: {
+  user: {
     email: string,
     name: string
   }

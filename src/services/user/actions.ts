@@ -5,7 +5,7 @@ import {
   getUserRequest,
   registerRequest,
   forgotPasswordRequest,
-  resetPasswordRequest
+  resetPasswordRequest, updateUserRequest
 } from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
 import { User } from "../../utils/types.ts";
@@ -71,6 +71,16 @@ export const onResetPassword = createAsyncThunk (
     return response.success;
   }
 )
+
+export const onChangeUser = createAsyncThunk (
+  "user/onResetPassword",
+  async (data: User) => {
+    const response = await updateUserRequest(data);
+    return response.user;
+  }
+)
+
+
 
 interface resetPasswordRequestProps {
   password: string,
