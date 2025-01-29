@@ -11,12 +11,14 @@ import { Loading } from "../../components/loading/loading.tsx";
 
 
 export const HomePage: React.FC = () => {
-  const { loading } = useSelector(getIngredientsState);
+  const { ingredients, loading } = useSelector(getIngredientsState);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(loadIngredients());
-  }, [dispatch]);
+    if (ingredients.length === 0) {
+      dispatch(loadIngredients());
+    }
+  }, [dispatch, ingredients]);
 
   if (loading) return (
     <Loading container={true}/>

@@ -5,6 +5,8 @@ import { getUser } from "../../../services/user/slice.ts";
 import { onChangeUser } from "../../../services/user/actions.ts";
 import type { AppDispatch } from "../../../services/store.ts";
 
+//todo проверить баг с отсутствием имя и логина в форме
+
 export const ProfileUser: React.FC = () => {
   const user = useSelector(getUser)
   const dispatch = useDispatch<AppDispatch>();

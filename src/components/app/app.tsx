@@ -36,7 +36,7 @@ export const App: React.FC = () => {
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/lenta" element={<LentaPage />} />
-        <Route path="/ingredients/:ingredientId" element={<IngredientPage />} />
+        <Route path="/ingredients/:ingredientId" element={<IngredientPage isModal={false} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />

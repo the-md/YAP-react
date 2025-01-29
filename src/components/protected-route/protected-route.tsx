@@ -14,7 +14,6 @@ const Protected: React.FC<ProtectedProps> = ({ onlyUnAuth = false, component}) =
   const user = useSelector(getUser);
   const location = useLocation();
 
-
   if (!isAuthChecked) {
     return <Loading container={true}/>;
   }

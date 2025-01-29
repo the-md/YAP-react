@@ -6,7 +6,7 @@ import { Modal } from "../modal/modal.tsx";
 import { OrderDetails } from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
-import { postOrderThunk } from "../../services/order/actions.ts";
+import { onCreateOrder } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { Ingredient } from "../../utils/types.ts";
 import type { AppDispatch } from "../../services/store.ts";
@@ -46,11 +46,15 @@ export const BurgerConstructor: React.FC = () => {
   }, [constructorIngredients, constructorBuns])
 
   const handleCreateOrder = () => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
     const order:string[] = [
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
     ];
-    dispatch(postOrderThunk(order));
+    dispatch(onCreateOrder(order));
   }
 
   return (
@@ -102,15 +106,9 @@ export const BurgerConstructor: React.FC = () => {
             <span className="text_type_digits-medium mr-2">{totalPrice}</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
           </div>
-          {user ? (
-            <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
-              Оформить заказ
-            </Button>
-          ) : (
-            <Button onClick={() => navigate('/login')} htmlType="button" type="primary" size="medium">
-              Войти
-            </Button>
-          )}
+          <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
+            Оформить заказ
+          </Button>
         </div>
       </section>
       {openModal &&
