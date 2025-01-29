@@ -52,8 +52,6 @@ export const RegisterPage: React.FC = () => {
             onChange={e => handleChange(e)}
             value={formData.name}
             name={'name'}
-            error={false}
-            errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
           />
@@ -63,8 +61,6 @@ export const RegisterPage: React.FC = () => {
             onChange={e => handleChange(e)}
             value={formData.email}
             name={'email'}
-            error={false}
-            errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
           />
@@ -75,10 +71,8 @@ export const RegisterPage: React.FC = () => {
             icon={'ShowIcon'}
             value={formData.password}
             name={'password'}
-            error={false}
             ref={inputRef}
             onIconClick={onIconClick}
-            errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
           />

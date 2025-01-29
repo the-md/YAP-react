@@ -44,8 +44,6 @@ export const ForgotPasswordPage: React.FC = () => {
             onChange={e => setValueEmail(e.target.value)}
             value={valueEmail}
             name={'email'}
-            error={false}
-            errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
           />

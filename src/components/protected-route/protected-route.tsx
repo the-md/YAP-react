@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getIsAuthChecked, getUser } from "../../services/user/slice.ts";
+import { Loading } from "../loading/loading.tsx";
 
 type ProtectedProps = {
   onlyUnAuth?: boolean;
@@ -15,7 +16,7 @@ const Protected: React.FC<ProtectedProps> = ({ onlyUnAuth = false, component}) =
 
 
   if (!isAuthChecked) {
-    return <p>Загрузка...</p>;
+    return <Loading container={true}/>;
   }
 
   if (onlyUnAuth && user) {
