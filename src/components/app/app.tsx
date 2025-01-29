@@ -1,22 +1,22 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { AppHeader } from '../app-header/app-header'
-import { HomePage } from "../../page/home/home.tsx";
-import { LoginPage } from "../../page/login/login.tsx";
-import { ResetPasswordPage } from "../../page/reset-password/reset-password.tsx";
-import { ForgotPasswordPage } from "../../page/forgot-password/forgot-password.tsx";
-import { RegisterPage } from "../../page/register/register.tsx";
-import { NotFoundPage } from "../../page/not-found/not-found.tsx";
-import { IngredientPage } from "../../page/ingredient-page/ingredient-page.tsx";
 import { useDispatch } from "react-redux";
+import { AppHeader } from '../app-header/app-header'
+import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route.tsx";
 import type { AppDispatch } from "../../services/store.ts";
 import { checkUserAuth } from "../../services/user/actions.ts";
 import { Modal } from "../modal/modal.tsx";
-import { ProfilePage } from "../../page/profile/profile.tsx";
-import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route.tsx";
-import { ProfileUser } from "../../page/profile/profile-user/profile-user.tsx";
-import { ProfileOrder } from "../../page/profile/profile-order/profile-order.tsx";
-import { LentaPage } from "../../page/lenta/lenta.tsx";
+import { HomePage } from "../../pages/home/home.tsx";
+import { LoginPage } from "../../pages/login/login.tsx";
+import { ResetPasswordPage } from "../../pages/reset-password/reset-password.tsx";
+import { ForgotPasswordPage } from "../../pages/forgot-password/forgot-password.tsx";
+import { RegisterPage } from "../../pages/register/register.tsx";
+import { NotFoundPage } from "../../pages/not-found/not-found.tsx";
+import { IngredientPage } from "../../pages/ingredient-page/ingredient-page.tsx";
+import { ProfilePage } from "../../pages/profile/profile.tsx";
+import { ProfileUser } from "../../pages/profile/profile-user/profile-user.tsx";
+import { ProfileOrder } from "../../pages/profile/profile-order/profile-order.tsx";
+import { LentaPage } from "../../pages/lenta/lenta.tsx";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
