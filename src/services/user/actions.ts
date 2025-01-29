@@ -73,7 +73,7 @@ export const onResetPassword = createAsyncThunk (
 )
 
 export const onChangeUser = createAsyncThunk (
-  "user/onResetPassword",
+  "user/onChangeUser",
   async (data: User) => {
     const response = await updateUserRequest(data);
     return response.user;

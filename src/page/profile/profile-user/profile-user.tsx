@@ -35,14 +35,10 @@ export const ProfileUser: React.FC = () => {
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault()
     setChangeForm(false)
-    if (!formData.email || !formData.password) {
-      return;
-    }
-    onChangeUser(formData)
+    dispatch(onChangeUser(formData))
   }
   const handleResetForm = () => {
     setChangeForm(false)
-    dispatch(onChangeUser(formData))
     setFormData({
       name: user?.name || '',
       email: user?.email || '',

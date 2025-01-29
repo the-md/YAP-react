@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
 import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
-import { Modal } from "../modal/modal.tsx";
-import { IngredientDetails } from "./ingredient-details/ingredient-details.tsx";
-import { closeIngredientDetail, getIngredientsState } from "../../services/ingredients/slice.ts";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients: React.FC = () => {
-  const { ingredients, openModal, ingredientDetail } = useSelector(getIngredientsState);
+  const { ingredients } = useSelector(getIngredientsState);
   const [currentTab, setCurrentTab] = React.useState('bun')
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const dispatch = useDispatch()
 
   const itemsBun = ingredients?.filter((product) => product.type === 'bun');
   const itemsSauce = ingredients?.filter((product) => product.type === 'sauce');
@@ -84,11 +81,6 @@ export const BurgerIngredients: React.FC = () => {
           ))}
         </div>
       </section>
-      {openModal && ingredientDetail &&
-          <Modal title="Детали ингредиента" onClose={() => dispatch(closeIngredientDetail())}>
-              <IngredientDetails item={ingredientDetail} />
-          </Modal>
-      }
     </>
   )
 }

@@ -6,24 +6,11 @@ const initialState:IngredientsState = {
   ingredients: [],
   loading: false,
   error: null,
-  openModal: false,
-  ingredientDetail: null,
 }
-//todo проверить - все ли здесь нужно, может что то удалить
-
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
-  reducers: {
-    openIngredientDetail: (state, action) => {
-      state.ingredientDetail = action.payload
-      state.openModal = true
-    },
-    closeIngredientDetail: (state) => {
-      state.ingredientDetail = null
-      state.openModal = false
-    },
-  },
+  reducers: {},
   selectors: {
     getIngredientsState: state => state
   },
@@ -43,14 +30,10 @@ export const ingredientsSlice = createSlice({
   }
 })
 
-export const { openIngredientDetail, closeIngredientDetail } = ingredientsSlice.actions;
-
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
 interface IngredientsState {
   ingredients: Ingredient[];
   loading: boolean;
   error: string | null;
-  openModal: boolean;
-  ingredientDetail: Ingredient | null;
 }

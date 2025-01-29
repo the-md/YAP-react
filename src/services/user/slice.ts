@@ -7,6 +7,7 @@ const initialState: UserState = {
   isAuthChecked: false,
   isResetPassword: false,
   isChangePassword: false,
+  messageNotification: '',
 };
 
 export const userSlice = createSlice({
@@ -79,4 +80,5 @@ interface UserState {
   isAuthChecked: boolean;
   isResetPassword?: boolean;
   isChangePassword?: boolean;
+  messageNotification: string;
 }
