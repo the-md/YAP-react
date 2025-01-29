@@ -15,7 +15,6 @@ export interface Ingredient {
 export interface ConstructorIngredient extends Ingredient {
   uuid: string;
 }
-//todo почему здесь знак вопроса
 export interface User {
   email?: string;
   password?: string;

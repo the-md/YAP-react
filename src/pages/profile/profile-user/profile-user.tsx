@@ -4,19 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../services/user/slice.ts";
 import { onChangeUser } from "../../../services/user/actions.ts";
 import type { AppDispatch } from "../../../services/store.ts";
-
-//todo проверить баг с отсутствием имя и логина в форме
+import { User } from "../../../utils/types.ts";
 
 export const ProfileUser: React.FC = () => {
   const user = useSelector(getUser)
   const dispatch = useDispatch<AppDispatch>();
+  const [changeForm, setChangeForm] = useState(false)
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     password: '******',
   })
   const [isNameEdit, setIsNameEdit] = useState(false)
-  const [changeForm, setChangeForm] = useState(false)
   const nameRef = useRef<HTMLInputElement | null>(null);
 
   const onIconClickName = () => {
@@ -36,8 +35,17 @@ export const ProfileUser: React.FC = () => {
   };
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault()
+    if (!user) {
+      return;
+    }
+    const updatedData: Partial<User> = {};
+    if (formData.name !== user.name) updatedData.name = formData.name;
+    if (formData.email !== user.email) updatedData.email = formData.email;
+    if (formData.password !== '******') updatedData.password = formData.password;
+    if (Object.keys(updatedData).length > 0) {
+      dispatch(onChangeUser(updatedData));
+    }
     setChangeForm(false)
-    dispatch(onChangeUser(formData))
   }
   const handleResetForm = () => {
     setChangeForm(false)

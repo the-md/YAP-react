@@ -29,7 +29,6 @@ export const App: React.FC = () => {
   const navigate = useNavigate();
   const background = location.state && location.state.background;
 
-//todo обработать error сообщение
   return (
     <div className="wrapper text_type_main-default">
       <AppHeader/>
