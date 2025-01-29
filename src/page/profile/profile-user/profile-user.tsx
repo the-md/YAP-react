@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { getUserState } from "../../../services/user/slice.ts";
 
@@ -10,32 +10,34 @@ export const ProfileUser: React.FC = () => {
     email: user?.email || '',
     password: '******',
   })
+  const [isNameEdit, setIsNameEdit] = useState(false)
   const [changeForm, setChangeForm] = useState(false)
   const nameRef = useRef<HTMLInputElement | null>(null);
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const onIconClick = (ref: React.RefObject<HTMLInputElement>) => {
-    if (ref.current) {
-      ref.current.removeAttribute("disabled")
-    }
-    setChangeForm(true)
+  const onIconClick = () => {
+    setIsNameEdit(true)
+    setTimeout(() => nameRef.current!.focus(), 0);
   }
-
+  const onNameBlur = () => {
+    setIsNameEdit(false);
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChangeForm(true)
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault()
     setChangeForm(false)
     if (!formData.email || !formData.password) {
       return;
     }
+  }
+  const handleResetForm = () => {
+    setChangeForm(false)
   }
 
   return (
@@ -49,47 +51,31 @@ export const ProfileUser: React.FC = () => {
             icon={'EditIcon'}
             value={formData.name}
             name={'name'}
-            onIconClick={()=>onIconClick(nameRef)}
             ref={nameRef}
-            error={false}
-            errorText={'Ошибка'}
             size={'default'}
             extraClass="mb-6"
-            disabled
+            disabled={!isNameEdit}
+            onIconClick={onIconClick}
+            onBlur={onNameBlur}
           />
-          <Input
-            type={'email'}
-            placeholder={'Логин'}
+          <EmailInput
             onChange={e => handleChange(e)}
-            icon={'EditIcon'}
             value={formData.email}
             name={'email'}
-            onIconClick={()=>onIconClick(emailRef)}
-            ref={emailRef}
-            error={false}
-            errorText={'Ошибка'}
-            size={'default'}
+            placeholder="Логин"
+            isIcon={true}
             extraClass="mb-6"
-            disabled
           />
-          <Input
-            type={'password'}
-            placeholder={'Пароль'}
+          <PasswordInput
             onChange={e => handleChange(e)}
-            icon={'EditIcon'}
             value={formData.password}
             name={'password'}
-            onIconClick={()=>onIconClick(passwordRef)}
-            ref={passwordRef}
-            error={false}
-            errorText={'Ошибка'}
-            size={'default'}
             extraClass="mb-6"
-            disabled
+            icon="EditIcon"
           />
           {changeForm && (
             <div className="display-flex justify_content-end">
-              <Button htmlType="reset" type="secondary" size="medium" extraClass="mb-20">
+              <Button htmlType="reset" type="secondary" size="medium" extraClass="mb-20" onClick={handleResetForm}>
                 Отмена
               </Button>
               <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
