@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postOrderThunk } from "./actions.ts";
+import { onCreateOrder } from "./actions.ts";
 
-const initialState:OrderStateProps = {
+const initialState:OrderState = {
   orderObj: null,
   loading: false,
   error: null,
@@ -16,20 +16,20 @@ export const orderSlice = createSlice({
     },
   },
   selectors: {
-    getOrder: state => state.orderObj,
+    getOrderState: state => state,
     getOpenModalOrder: state => state.openModal,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(postOrderThunk.pending, (state) => {
+      .addCase(onCreateOrder.pending, (state) => {
         state.loading = true
         state.openModal = true
       })
-      .addCase(postOrderThunk.rejected, (state, action) => {
+      .addCase(onCreateOrder.rejected, (state, action) => {
         state.error = action.error?.message || null;
         state.loading = false
       })
-      .addCase(postOrderThunk.fulfilled, (state, action) => {
+      .addCase(onCreateOrder.fulfilled, (state, action) => {
         state.orderObj = action.payload;
         state.loading = false
       })
@@ -38,9 +38,9 @@ export const orderSlice = createSlice({
 
 export const { closeModalOrder } = orderSlice.actions;
 
-export const { getOrder, getOpenModalOrder } =  orderSlice.selectors
+export const { getOrderState, getOpenModalOrder } =  orderSlice.selectors
 
-interface OrderStateProps {
+interface OrderState {
   orderObj: {
     name: string;
     order: {

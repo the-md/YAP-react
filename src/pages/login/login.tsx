@@ -1,0 +1,77 @@
+import React, { useRef, useState } from "react";
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { onLogin } from "../../services/user/actions.ts";
+import type { AppDispatch } from "../../services/store.ts";
+
+export const LoginPage: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+  const inputRef = useRef<HTMLInputElement>(null)
+  const onIconClick = () => {
+    if (inputRef.current){
+      inputRef.current.type = inputRef.current.type === 'text' ? 'password' : 'text'
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitForm = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.email || !formData.password) {
+      return;
+    }
+    dispatch(onLogin(formData));
+    setFormData({
+      email: '',
+      password: '',
+    });
+  }
+
+  return (
+    <div className="container text_align-center mt-30 mb-10">
+      <h1 className="text text_type_main-medium mb-6">Вход</h1>
+      <div className="display-flex flex_direction-column align_items-center">
+        <form action="" onSubmit={handleSubmitForm}>
+          <Input
+            type={'email'}
+            placeholder={'E-mail'}
+            onChange={e => handleChange(e)}
+            value={formData.email}
+            name={'email'}
+            size={'default'}
+            extraClass="mb-6"
+          />
+          <Input
+            type={'password'}
+            placeholder={'Пароль'}
+            onChange={e => handleChange(e)}
+            icon={'ShowIcon'}
+            value={formData.password}
+            name={'password'}
+            ref={inputRef}
+            onIconClick={onIconClick}
+            size={'default'}
+            extraClass="mb-6"
+          />
+          <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
+            Войти
+          </Button>
+        </form>
+        <p className="text text_type_main-default mb-4">Вы — новый пользователь? <Link to='/register'>Зарегистрироваться</Link></p>
+        <p className="text text_type_main-default">Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link></p>
+
+      </div>
+    </div>
+  )
+}

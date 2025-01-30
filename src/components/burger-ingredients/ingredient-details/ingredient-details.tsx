@@ -1,11 +1,27 @@
 import React from "react";
-import { IngredientObj } from "../../../utils/types.ts";
+import { Ingredient } from "../../../utils/types.ts";
 import styles from "./ingredient-details.module.css";
 
-export const IngredientDetails: React.FC<{ item: IngredientObj }> = ({item}) => {
+export const IngredientDetails: React.FC<{ item: Ingredient }> = ({item}) => {
   return (
-    <article>
-      <img src={item.image_large} alt=""/>
+    <article className="text_align-center">
+      <img
+        alt=""
+        className={styles.detailImage}
+        src={item.image}
+        data-image={item.image_large}
+        onLoad={(e) => {
+          const img = e.target as HTMLImageElement;
+          const highResSrc = img.getAttribute("data-image");
+          if (highResSrc) {
+            const newImg = new Image();
+            newImg.src = highResSrc;
+            newImg.onload = () => {
+              img.src = highResSrc;
+            };
+          }
+        }}
+      />
       <div className={`mt-4 mb-8 text_type_main-medium font_size-24 ${styles.detailsName}`}>{item.name}</div>
       <ul className={`text_color_inactive display-flex align_items-start justify_content-center ${styles.detailsList}`}>
         <li>

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
-import { IngredientWithUUID } from "../../../utils/types.ts";
+import { ConstructorIngredient } from "../../../utils/types.ts";
 import styles from './burger-constructor-item.module.css';
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
@@ -18,7 +18,7 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
     hover(dragItem:BurgerConstructorItemProps) {
       if (dragItem.index !== index) {
         dispatch(sortIngredient({fromIndex: dragItem.index, toIndex: index}));
-        dragItem.index = index; // Обновляем индекс для корректного перемещения
+        dragItem.index = index;
       }
     }
   });
@@ -42,6 +42,6 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
 }
 
 interface BurgerConstructorItemProps {
-  item: IngredientWithUUID;
+  item: ConstructorIngredient;
   index: number;
 }

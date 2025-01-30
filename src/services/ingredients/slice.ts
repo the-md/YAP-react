@@ -1,28 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadIngredients } from "./actions.ts";
-import { IngredientObj } from "../../utils/types.ts";
+import { Ingredient } from "../../utils/types.ts";
 
-const initialState:IngredientsStateProps = {
+const initialState:IngredientsState = {
   ingredients: [],
   loading: false,
   error: null,
-  openModal: false,
-  ingredientDetail: null,
 }
-
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
-  reducers: {
-    openIngredientDetail: (state, action) => {
-      state.ingredientDetail = action.payload
-      state.openModal = true
-    },
-    closeIngredientDetail: (state) => {
-      state.ingredientDetail = null
-      state.openModal = false
-    },
-  },
+  reducers: {},
   selectors: {
     getIngredientsState: state => state
   },
@@ -42,14 +30,10 @@ export const ingredientsSlice = createSlice({
   }
 })
 
-export const { openIngredientDetail, closeIngredientDetail } = ingredientsSlice.actions;
-
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
-interface IngredientsStateProps {
-  ingredients: IngredientObj[];
+interface IngredientsState {
+  ingredients: Ingredient[];
   loading: boolean;
   error: string | null;
-  openModal: boolean;
-  ingredientDetail: IngredientObj | null;
 }

@@ -1,12 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getOrder } from "../../services/order/slice.ts";
+import { getOrderState } from "../../services/order/slice.ts";
 import OrderIcon from "../../images/done.svg";
 import styles from "./order-details.module.css"
+import { Loading } from "../loading/loading.tsx";
 
 export const OrderDetails: React.FC = () => {
-  const orderObj = useSelector(getOrder)
+  const {orderObj, loading} = useSelector(getOrderState)
   const numOrder = orderObj?.order.number.toString().padStart(6, '0')
+  if (loading) return (
+    <Loading/>
+  );
   return (
     <div className="mb-15">
       <div className={`mb-8 text_type_digits-large ${styles.orderNumber}`}>{numOrder}</div>

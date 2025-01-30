@@ -6,11 +6,13 @@ import { Modal } from "../modal/modal.tsx";
 import { OrderDetails } from "../order-details/order-details.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
-import { postOrderThunk } from "../../services/order/actions.ts";
+import { onCreateOrder } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
-import { IngredientObj } from "../../utils/types.ts";
+import { Ingredient } from "../../utils/types.ts";
 import type { AppDispatch } from "../../services/store.ts";
 import styles from './burger-constructor.module.css';
+import { getUser } from "../../services/user/slice.ts";
+import { useNavigate } from "react-router-dom";
 
 export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({position}) => {
   const positionClassName:string = position === 'center' ? 'ml-8 mb-4 mt-4' : `constructor-element_pos_${position}`
@@ -25,10 +27,12 @@ export const ConstructorEmptyItem: React.FC<ConstructorEmptyItemProps> = ({posit
 export const BurgerConstructor: React.FC = () => {
   const {constructorIngredients, constructorBuns} = useSelector(getConstructorState);
   const openModal = useSelector(getOpenModalOrder);
+  const user = useSelector(getUser);
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate();
   const [{ canDrop, draggingItemType }, dropTargetBun] = useDrop({
     accept: "ingredient",
-    drop(ingredient:IngredientObj) {
+    drop(ingredient:Ingredient) {
       dispatch(addIngredient(ingredient));
     },
     collect: (monitor) => ({
@@ -42,11 +46,15 @@ export const BurgerConstructor: React.FC = () => {
   }, [constructorIngredients, constructorBuns])
 
   const handleCreateOrder = () => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
     const order:string[] = [
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
     ];
-    dispatch(postOrderThunk(order));
+    dispatch(onCreateOrder(order));
   }
 
   return (
@@ -93,7 +101,7 @@ export const BurgerConstructor: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="mt-10 mb-10 display-flex justify_content-end align_items-center">
+        <div className="mt-10 mb-10 mr-4 ml-4 display-flex justify_content-end align_items-center">
           <div className="mr-10 display-flex justify_content-center">
             <span className="text_type_digits-medium mr-2">{totalPrice}</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
