@@ -4,7 +4,6 @@ import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
 import { ConstructorIngredient } from "../../../utils/types.ts";
-import styles from './burger-constructor-item.module.css';
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
   const dispatch = useDispatch()
@@ -27,7 +26,7 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
 
   return (
     <>
-      <div ref={ref} className={`display-flex justify_content-center align_items-center ${styles.burgerConstructorItem} `} draggable>
+      <div ref={ref} className="display-flex justify_content-center align_items-center" draggable>
         <DragIcon className="mr-2 cursor-grab" type="primary"/>
         <ConstructorElement
           key={item.uuid}
