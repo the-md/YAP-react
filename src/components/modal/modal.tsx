@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "./modal-overlay/modal-overlay.tsx";
 import styles from "./modal.module.css";
@@ -15,7 +15,7 @@ export const Modal: React.FC<ModalProps> = ({title, children, onClose}) => {
     }
   }, [onClose])
 
-  return ReactDOM.createPortal(
+  return createPortal(
     (
     <>
       <div className={`${styles.modal}`} onClick={onClose}>

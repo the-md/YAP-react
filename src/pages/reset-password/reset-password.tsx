@@ -10,11 +10,11 @@ export const ResetPasswordPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isResetPassword, isChangePassword} = useSelector(getUserState)
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formDataProps>({
     password: '',
     code: '',
   })
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     if (!isResetPassword && !isChangePassword) {
@@ -24,7 +24,7 @@ export const ResetPasswordPage: React.FC = () => {
 
   const onIconClick = () => {
     if (inputRef.current){
-      inputRef.current.type = inputRef.current.type === 'text' ? 'password' : 'text'
+      inputRef.current!.type = inputRef.current!.type === 'text' ? 'password' : 'text'
     }
   }
 
@@ -88,4 +88,9 @@ export const ResetPasswordPage: React.FC = () => {
       </div>
     </div>
   )
+}
+
+export interface formDataProps {
+  password: string;
+  code: string;
 }

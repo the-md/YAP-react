@@ -6,16 +6,18 @@ import { onChangeUser } from "../../../services/user/actions.ts";
 import type { AppDispatch } from "../../../services/store.ts";
 import { User } from "../../../utils/types.ts";
 
+
+
 export const ProfileUser: React.FC = () => {
   const user = useSelector(getUser)
   const dispatch = useDispatch<AppDispatch>();
-  const [changeForm, setChangeForm] = useState(false)
-  const [formData, setFormData] = useState({
+  const [changeForm, setChangeForm] = useState<boolean>(false)
+  const [formData, setFormData] = useState<User>({
     name: user?.name || '',
     email: user?.email || '',
     password: '******',
   })
-  const [isNameEdit, setIsNameEdit] = useState(false)
+  const [isNameEdit, setIsNameEdit] = useState<boolean>(false)
   const nameRef = useRef<HTMLInputElement | null>(null);
 
   const onIconClickName = () => {

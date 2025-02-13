@@ -24,7 +24,7 @@ export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
       state: { background: location },
     });
   }
-
+//todo проблема с ref
   return (
     <div
       ref={dragRef}

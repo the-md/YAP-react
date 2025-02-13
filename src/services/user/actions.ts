@@ -5,7 +5,8 @@ import {
   getUserRequest,
   registerRequest,
   forgotPasswordRequest,
-  resetPasswordRequest, updateUserRequest
+  resetPasswordRequest,
+  updateUserRequest
 } from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
 import { User } from "../../utils/types.ts";
@@ -33,7 +34,7 @@ export const onLogout = createAsyncThunk (
   }
 )
 
-export const checkUserAuth = createAsyncThunk(
+export const checkUserAuth = createAsyncThunk (
   "user/checkUserAuth",
   async (_, { dispatch }) => {
     if (localStorage.getItem("accessToken")) {

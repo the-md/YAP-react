@@ -60,7 +60,7 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
   return await getResponse<IngredientsProps>(res);
 };
 
-export const orderRequest = async (order: string[]): Promise<OrderResponseProps> => {
+export const orderRequest = async (order: Array<string>): Promise<OrderResponseProps> => {
   await checkAndRefreshToken();
   const res = await fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
@@ -153,13 +153,14 @@ interface OrderResponseProps {
 }
 interface IngredientsProps {
   success: boolean,
-  data: Ingredient[];
+  data: Array<Ingredient>;
 }
 interface AuthTokenResponseProps {
   success: boolean,
   accessToken: string,
   refreshToken: string,
 }
+//todo omit
 interface AuthResponseProps {
   success: boolean,
   accessToken: string,

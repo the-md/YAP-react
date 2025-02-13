@@ -7,7 +7,7 @@ import { ConstructorIngredient } from "../../../utils/types.ts";
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
   const dispatch = useDispatch()
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [, drag] = useDrag({
     type: "ingredientSort",
     item: {item, index}

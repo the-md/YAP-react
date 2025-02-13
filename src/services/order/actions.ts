@@ -4,7 +4,7 @@ import { clearIngredients } from "../burger-constructor/slice.ts";
 
 export const onCreateOrder = createAsyncThunk (
   "order/postOrder",
-  async (data:string[], { dispatch }) => {
+  async (data: Array<string>, { dispatch }) => {
     const response = await orderRequest(data);
     if (response.success) {
       dispatch(clearIngredients());

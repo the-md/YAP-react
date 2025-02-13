@@ -15,6 +15,7 @@ export interface Ingredient {
 export interface ConstructorIngredient extends Ingredient {
   uuid: string;
 }
+//todo возможно стоит убрать ? и использовать Omit<Type, Keys> или Pick<Type, Keys>
 export interface User {
   email?: string;
   password?: string;

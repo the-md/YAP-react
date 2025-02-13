@@ -15,7 +15,7 @@ export const ProfilePage: React.FC = () => {
   return (
     <div className="container text_align-center mt-30 mb-10">
       <div className={`display-grid ${styles.blockGrid}`}>
-        <div className={`mr-15 ${styles.leftBlock}`}>
+        <div className="mr-15">
           <ul className={styles.menu}>
             <li>
               <NavLink

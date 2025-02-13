@@ -54,6 +54,6 @@ export const {
 export const { getConstructorState } =  burgerConstructorSlice.selectors
 
 interface BurgerConstructorState {
-  constructorIngredients: ConstructorIngredient[];
+  constructorIngredients: Array<ConstructorIngredient>;
   constructorBuns: ConstructorIngredient | null;
 }
