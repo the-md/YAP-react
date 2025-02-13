@@ -10,20 +10,19 @@ const initialState:IngredientsState = {
 export const ingredientsSlice = createSlice({
   name: "ingredients",
   initialState,
-  reducers: {},
   selectors: {
     getIngredientsState: state => state
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadIngredients.pending, (state) => {
+      .addCase(loadIngredients.pending, (state: IngredientsState) => {
         state.loading = true
       })
-      .addCase(loadIngredients.rejected, (state, action) => {
+      .addCase(loadIngredients.rejected, (state: IngredientsState, action) => {
         state.error = action.error?.message || null;
         state.loading = false
       })
-      .addCase(loadIngredients.fulfilled, (state, action) => {
+      .addCase(loadIngredients.fulfilled, (state: IngredientsState, action) => {
         state.ingredients = action.payload;
         state.loading = false
       })

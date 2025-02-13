@@ -4,9 +4,10 @@ import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
 import { ConstructorIngredient } from "../../../utils/types.ts";
+import type { AppDispatch } from "../../../services/store.ts";
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>();
   const ref = useRef<HTMLDivElement | null>(null);
   const [, drag] = useDrag({
     type: "ingredientSort",

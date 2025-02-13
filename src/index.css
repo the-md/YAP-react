@@ -34,20 +34,11 @@ a:hover {
 .align_items-start {
     align-items: start;
 }
-.align_items-end {
-    align-items: end;
-}
 .flex_wrap-wrap {
     flex-wrap: wrap;
 }
 .flex_direction-column {
     flex-direction: column;
-}
-.position-relative {
-    position: relative;
-}
-.position-fixed {
-    position: fixed;
 }
 .text_align-center {
     text-align: center;
@@ -60,10 +51,6 @@ a:hover {
 }
 .font_size-24 {
     font-size: 24px;
-}
-
-.error-text {
-    color: red;
 }
 .constructor-element {
     border: 1px solid transparent;

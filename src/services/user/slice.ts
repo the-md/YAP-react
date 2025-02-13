@@ -36,27 +36,27 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(onLogin.fulfilled, (state, action) => {
+      .addCase(onLogin.fulfilled, (state: UserState, action) => {
         state.user = action.payload;
         state.isAuthChecked = true;
       })
-      .addCase(onLogout.fulfilled, (state) => {
+      .addCase(onLogout.fulfilled, (state: UserState) => {
         state.user = null;
       })
-      .addCase(onLogout.rejected, (state) => {
+      .addCase(onLogout.rejected, (state: UserState) => {
         state.user = null;
       })
-      .addCase(onRegister.fulfilled, (state, action) => {
+      .addCase(onRegister.fulfilled, (state: UserState, action) => {
         state.user = action.payload;
         state.isAuthChecked = true;
       })
-      .addCase(onForgotPassword.fulfilled, (state, action) => {
+      .addCase(onForgotPassword.fulfilled, (state: UserState, action) => {
         state.isResetPassword = action.payload;
       })
-      .addCase(onResetPassword.fulfilled, (state, action) => {
+      .addCase(onResetPassword.fulfilled, (state: UserState, action) => {
         state.isChangePassword = action.payload;
       })
-      .addCase(onChangeUser.fulfilled, (state, action) => {
+      .addCase(onChangeUser.fulfilled, (state: UserState, action) => {
         state.user = action.payload;
       })
   }
