@@ -21,3 +21,17 @@ export interface User {
   password?: string;
   name?: string;
 }
+
+export interface OrderResponseProps {
+  name: string;
+  order: {
+    number: number;
+  };
+  success: boolean;
+}
+
+export interface MessageResponseProps {
+  success?: boolean,
+  message?: string,
+  status?: number
+}

@@ -1,4 +1,4 @@
-import { Ingredient, User } from "./types.ts";
+import { Ingredient, MessageResponseProps, OrderResponseProps, User } from "./types.ts";
 
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
@@ -144,13 +144,7 @@ export const updateUserRequest = async (user: User): Promise<UserResponseProps> 
   return await getResponse<UserResponseProps>(res);
 };
 
-interface OrderResponseProps {
-  name: string;
-  order: {
-    number: number;
-  };
-  success: boolean;
-}
+
 interface IngredientsProps {
   success: boolean,
   data: Array<Ingredient>;
@@ -161,15 +155,6 @@ interface AuthTokenResponseProps {
   refreshToken: string,
 }
 //todo omit
-interface AuthResponseProps {
-  success: boolean,
-  accessToken: string,
-  refreshToken: string,
-  user: {
-    email: string,
-    name: string
-  }
-}
 interface UserResponseProps {
   success: boolean,
   user: {
@@ -180,12 +165,16 @@ interface UserResponseProps {
 interface TokenRequestProps {
   token: string
 }
-interface MessageResponseProps {
-  success?: boolean,
-  message?: string,
-  status?: number
-}
 interface ResetPasswordRequestProps {
   password: string,
   token: string
+}
+export interface AuthResponseProps {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+  user: {
+    email: string,
+    name: string
+  }
 }

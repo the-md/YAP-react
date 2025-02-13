@@ -9,11 +9,11 @@ import {
   updateUserRequest
 } from "../../utils/api.ts";
 import { setIsAuthChecked, setUser } from "./slice.ts";
-import { User } from "../../utils/types.ts";
+import { MessageResponseProps, User } from "../../utils/types.ts";
 
-export const onLogin = createAsyncThunk (
+export const onLogin = createAsyncThunk<User, User> (
   "user/onLogin",
-  async (data: User) => {
+  async (data) => {
     const response = await loginRequest(data);
     localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
     localStorage.setItem('refreshToken', response.refreshToken);
@@ -21,7 +21,7 @@ export const onLogin = createAsyncThunk (
   }
 )
 
-export const onLogout = createAsyncThunk (
+export const onLogout = createAsyncThunk<MessageResponseProps, void> (
   "user/onLogout",
   async () => {
     const refreshToken = {
@@ -34,7 +34,7 @@ export const onLogout = createAsyncThunk (
   }
 )
 
-export const checkUserAuth = createAsyncThunk (
+export const checkUserAuth = createAsyncThunk<void, void> (
   "user/checkUserAuth",
   async (_, { dispatch }) => {
     if (localStorage.getItem("accessToken")) {
@@ -47,9 +47,9 @@ export const checkUserAuth = createAsyncThunk (
   }
 )
 
-export const onRegister = createAsyncThunk (
+export const onRegister = createAsyncThunk<User, User> (
   "user/onRegister",
-  async (data: User) => {
+  async (data) => {
     const response = await registerRequest(data);
     localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
     localStorage.setItem('refreshToken', response.refreshToken);
@@ -57,30 +57,29 @@ export const onRegister = createAsyncThunk (
   }
 )
 
-export const onForgotPassword = createAsyncThunk (
+export const onForgotPassword = createAsyncThunk<boolean, User> (
   "user/onForgotPassword",
-  async (data: User) => {
+  async (data) => {
     const response = await forgotPasswordRequest(data);
     return response.success;
   }
 )
 
-export const onResetPassword = createAsyncThunk (
+export const onResetPassword = createAsyncThunk<boolean, resetPasswordRequestProps> (
   "user/onResetPassword",
-  async (data: resetPasswordRequestProps) => {
+  async (data) => {
     const response = await resetPasswordRequest(data);
     return response.success;
   }
 )
 
-export const onChangeUser = createAsyncThunk (
+export const onChangeUser = createAsyncThunk<User, User> (
   "user/onChangeUser",
   async (data: User) => {
     const response = await updateUserRequest(data);
     return response.user;
   }
 )
-
 
 
 interface resetPasswordRequestProps {
