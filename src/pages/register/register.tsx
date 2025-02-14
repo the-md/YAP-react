@@ -51,7 +51,7 @@ export const RegisterPage: React.FC = () => {
             type={'text'}
             placeholder={'Имя'}
             onChange={e => handleChange(e)}
-            value={formData.name}
+            value={formData.name ?? ''}
             name={'name'}
             size={'default'}
             extraClass="mb-6"
@@ -60,7 +60,7 @@ export const RegisterPage: React.FC = () => {
             type={'email'}
             placeholder={'E-mail'}
             onChange={e => handleChange(e)}
-            value={formData.email}
+            value={formData.email ?? ''}
             name={'email'}
             size={'default'}
             extraClass="mb-6"
@@ -70,7 +70,7 @@ export const RegisterPage: React.FC = () => {
             placeholder={'Пароль'}
             onChange={e => handleChange(e)}
             icon={'ShowIcon'}
-            value={formData.password}
+            value={formData.password ?? ''}
             name={'password'}
             ref={inputRef}
             onIconClick={onIconClick}

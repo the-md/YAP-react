@@ -31,7 +31,7 @@ export interface OrderResponseProps {
 }
 
 export interface MessageResponseProps {
-  success?: boolean,
+  success: boolean,
   message?: string,
   status?: number
 }

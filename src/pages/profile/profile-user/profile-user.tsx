@@ -67,7 +67,7 @@ export const ProfileUser: React.FC = () => {
             placeholder={'Имя'}
             onChange={e => handleChange(e)}
             icon={'EditIcon'}
-            value={formData.name}
+            value={formData.name ?? ''}
             name={'name'}
             ref={nameRef}
             size={'default'}
@@ -78,7 +78,7 @@ export const ProfileUser: React.FC = () => {
           />
           <EmailInput
             onChange={e => handleChange(e)}
-            value={formData.email}
+            value={formData.email ?? ''}
             name={'email'}
             placeholder="Логин"
             isIcon={true}
@@ -86,7 +86,7 @@ export const ProfileUser: React.FC = () => {
           />
           <PasswordInput
             onChange={e => handleChange(e)}
-            value={formData.password}
+            value={formData.password ?? ''}
             name={'password'}
             extraClass="mb-6"
             icon="EditIcon"

@@ -48,7 +48,7 @@ export const LoginPage: React.FC = () => {
             type={'email'}
             placeholder={'E-mail'}
             onChange={e => handleChange(e)}
-            value={formData.email}
+            value={formData.email ?? ''}
             name={'email'}
             size={'default'}
             extraClass="mb-6"
@@ -58,7 +58,7 @@ export const LoginPage: React.FC = () => {
             placeholder={'Пароль'}
             onChange={e => handleChange(e)}
             icon={'ShowIcon'}
-            value={formData.password}
+            value={formData.password ?? ''}
             name={'password'}
             ref={inputRef}
             onIconClick={onIconClick}
