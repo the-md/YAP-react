@@ -13,4 +13,5 @@ export const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, ch
 
 interface IngredientsSectionsProps {
   title: string;
+  children: React.ReactNode;
 }

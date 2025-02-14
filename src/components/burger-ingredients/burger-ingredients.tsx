@@ -20,7 +20,7 @@ export const BurgerIngredients: React.FC = () => {
     { key: "sauce", title: "Соусы", items: itemsSauce },
     { key: "main", title: "Начинки", items: itemsMain },
   ]
-//todo проблема с циклами
+
   const updateCurrentTab = useCallback(() => {
     const visibleSection = Object.entries(sectionRefs.current).find(([, ref]) => {
       if (!ref) return false;

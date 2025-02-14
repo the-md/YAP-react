@@ -56,7 +56,6 @@ export const BurgerConstructor: React.FC = () => {
     ];
     dispatch(onCreateOrder(order));
   }
-//todo проблема с ref
   return (
     <>
       <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>
