@@ -76,7 +76,7 @@ export const {
 } =  userSlice.selectors
 
 interface UserState {
-  user: User | null;
+  user: Omit<User, "password"> | null;
   isAuthChecked: boolean;
   isResetPassword?: boolean;
   isChangePassword?: boolean;

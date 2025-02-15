@@ -75,7 +75,7 @@ export const orderRequest = async (order: Array<string>): Promise<OrderResponseP
   return await getResponse<OrderResponseProps>(res);
 };
 
-export const forgotPasswordRequest = async (data: User): Promise<MessageResponseProps> => {
+export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -102,7 +102,7 @@ export const registerRequest = async (data: User): Promise<AuthResponseProps> =>
   return await getResponse<AuthResponseProps>(res);
 };
 
-export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
+export const loginRequest = async (data: Omit<User, 'name'>): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/login`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -131,7 +131,7 @@ export const getUserRequest = async (): Promise<UserResponseProps> => {
   return await getResponse<UserResponseProps>(res);
 };
 
-export const updateUserRequest = async (user: User): Promise<UserResponseProps> => {
+export const updateUserRequest = async (user: Partial<User>): Promise<UserResponseProps> => {
   await checkAndRefreshToken();
   const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
@@ -144,7 +144,6 @@ export const updateUserRequest = async (user: User): Promise<UserResponseProps> 
   return await getResponse<UserResponseProps>(res);
 };
 
-
 interface IngredientsProps {
   success: boolean,
   data: Array<Ingredient>;
@@ -154,13 +153,9 @@ interface AuthTokenResponseProps {
   accessToken: string,
   refreshToken: string,
 }
-//todo omit
 interface UserResponseProps {
   success: boolean,
-  user: {
-    email: string,
-    name: string
-  }
+  user: Omit<User, 'password'>
 }
 interface TokenRequestProps {
   token: string
@@ -173,8 +168,5 @@ export interface AuthResponseProps {
   success: boolean,
   accessToken: string,
   refreshToken: string,
-  user: {
-    email: string,
-    name: string
-  }
+  user: Omit<User, 'password'>
 }

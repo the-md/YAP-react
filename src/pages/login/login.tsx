@@ -8,7 +8,7 @@ import { User } from "../../utils/types.ts";
 
 export const LoginPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState<User>({
+  const [formData, setFormData] = useState<Omit<User, 'name'>>({
     email: '',
     password: '',
   })

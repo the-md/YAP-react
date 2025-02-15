@@ -11,7 +11,7 @@ import {
 import { setIsAuthChecked, setUser } from "./slice.ts";
 import { MessageResponseProps, User } from "../../utils/types.ts";
 
-export const onLogin = createAsyncThunk<User, User> (
+export const onLogin = createAsyncThunk<Omit<User, 'password'>, Omit<User, 'name'>> (
   "user/onLogin",
   async (data) => {
     const response = await loginRequest(data);
@@ -47,7 +47,7 @@ export const checkUserAuth = createAsyncThunk<void, void> (
   }
 )
 
-export const onRegister = createAsyncThunk<User, User> (
+export const onRegister = createAsyncThunk<Omit<User, 'password'>, User> (
   "user/onRegister",
   async (data) => {
     const response = await registerRequest(data);
@@ -57,7 +57,7 @@ export const onRegister = createAsyncThunk<User, User> (
   }
 )
 
-export const onForgotPassword = createAsyncThunk<boolean, User> (
+export const onForgotPassword = createAsyncThunk<boolean, Pick<User, 'email'>> (
   "user/onForgotPassword",
   async (data) => {
     const response = await forgotPasswordRequest(data);
@@ -73,9 +73,9 @@ export const onResetPassword = createAsyncThunk<boolean, resetPasswordRequestPro
   }
 )
 
-export const onChangeUser = createAsyncThunk<User, User> (
+export const onChangeUser = createAsyncThunk<Omit<User, 'password'>, Partial<User>> (
   "user/onChangeUser",
-  async (data: User) => {
+  async (data) => {
     const response = await updateUserRequest(data);
     return response.user;
   }
