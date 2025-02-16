@@ -1,4 +1,4 @@
-import { Ingredient, User } from "./types.ts";
+import { Ingredient, MessageResponseProps, OrderResponseProps, User } from "./types.ts";
 
 const apiConfig = {
   baseUrl: 'https://norma.nomoreparties.space/api',
@@ -60,7 +60,7 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
   return await getResponse<IngredientsProps>(res);
 };
 
-export const orderRequest = async (order: string[]): Promise<OrderResponseProps> => {
+export const orderRequest = async (order: Array<string>): Promise<OrderResponseProps> => {
   await checkAndRefreshToken();
   const res = await fetch(`${apiConfig.baseUrl}/orders`, {
     method: 'POST',
@@ -75,7 +75,7 @@ export const orderRequest = async (order: string[]): Promise<OrderResponseProps>
   return await getResponse<OrderResponseProps>(res);
 };
 
-export const forgotPasswordRequest = async (data: User): Promise<MessageResponseProps> => {
+export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<MessageResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/password-reset`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -102,7 +102,7 @@ export const registerRequest = async (data: User): Promise<AuthResponseProps> =>
   return await getResponse<AuthResponseProps>(res);
 };
 
-export const loginRequest = async (data: User): Promise<AuthResponseProps> => {
+export const loginRequest = async (data: Omit<User, 'name'>): Promise<AuthResponseProps> => {
   const res = await fetch(`${apiConfig.baseUrl}/auth/login`, {
     method: 'POST',
     headers: apiConfig.headers,
@@ -131,7 +131,7 @@ export const getUserRequest = async (): Promise<UserResponseProps> => {
   return await getResponse<UserResponseProps>(res);
 };
 
-export const updateUserRequest = async (user: User): Promise<UserResponseProps> => {
+export const updateUserRequest = async (user: Partial<User>): Promise<UserResponseProps> => {
   await checkAndRefreshToken();
   const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
     method: 'PATCH',
@@ -144,47 +144,29 @@ export const updateUserRequest = async (user: User): Promise<UserResponseProps> 
   return await getResponse<UserResponseProps>(res);
 };
 
-interface OrderResponseProps {
-  name: string;
-  order: {
-    number: number;
-  };
-  success: boolean;
-}
 interface IngredientsProps {
   success: boolean,
-  data: Ingredient[];
+  data: Array<Ingredient>;
 }
 interface AuthTokenResponseProps {
   success: boolean,
   accessToken: string,
   refreshToken: string,
 }
-interface AuthResponseProps {
-  success: boolean,
-  accessToken: string,
-  refreshToken: string,
-  user: {
-    email: string,
-    name: string
-  }
-}
 interface UserResponseProps {
   success: boolean,
-  user: {
-    email: string,
-    name: string
-  }
+  user: Omit<User, 'password'>
 }
 interface TokenRequestProps {
   token: string
 }
-interface MessageResponseProps {
-  success?: boolean,
-  message?: string,
-  status?: number
-}
 interface ResetPasswordRequestProps {
   password: string,
   token: string
+}
+export interface AuthResponseProps {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+  user: Omit<User, 'password'>
 }

@@ -50,13 +50,12 @@ export const BurgerConstructor: React.FC = () => {
       navigate('/login')
       return
     }
-    const order:string[] = [
+    const order:Array<string> = [
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
     ];
     dispatch(onCreateOrder(order));
   }
-
   return (
     <>
       <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>

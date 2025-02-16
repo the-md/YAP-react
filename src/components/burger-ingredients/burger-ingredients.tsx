@@ -8,7 +8,7 @@ import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients: React.FC = () => {
   const { ingredients } = useSelector(getIngredientsState);
-  const [currentTab, setCurrentTab] = React.useState('bun')
+  const [currentTab, setCurrentTab] = React.useState<string>('bun')
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const itemsBun = ingredients?.filter((product) => product.type === 'bun');

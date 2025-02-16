@@ -7,7 +7,7 @@ import { onForgotPassword } from "../../services/user/actions.ts";
 import { getUserState, setIsChangePassword } from "../../services/user/slice.ts";
 
 export const ForgotPasswordPage: React.FC = () => {
-  const [valueEmail, setValueEmail] = useState('')
+  const [valueEmail, setValueEmail] = useState<string>('')
   const dispatch = useDispatch<AppDispatch>();
   const {isResetPassword} = useSelector(getUserState)
   const navigate = useNavigate();

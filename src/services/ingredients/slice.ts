@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadIngredients } from "./actions.ts";
 import { Ingredient } from "../../utils/types.ts";
 
@@ -12,28 +12,28 @@ export const ingredientsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    getIngredientsState: state => state
+    getIngredientsState: (state: IngredientsState) => state,
   },
   extraReducers: (builder) => {
     builder
       .addCase(loadIngredients.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(loadIngredients.rejected, (state, action) => {
         state.error = action.error?.message || null;
-        state.loading = false
+        state.loading = false;
       })
-      .addCase(loadIngredients.fulfilled, (state, action) => {
+      .addCase(loadIngredients.fulfilled, (state, action: PayloadAction<Array<Ingredient>>) => {
         state.ingredients = action.payload;
-        state.loading = false
-      })
-  }
+        state.loading = false;
+      });
+  },
 })
 
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
 interface IngredientsState {
-  ingredients: Ingredient[];
+  ingredients: Array<Ingredient>;
   loading: boolean;
   error: string | null;
 }

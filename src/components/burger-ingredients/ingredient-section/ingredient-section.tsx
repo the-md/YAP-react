@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 export const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, children}) => {
   return (
@@ -13,5 +13,5 @@ export const IngredientSection: React.FC<IngredientsSectionsProps> = ({title, ch
 
 interface IngredientsSectionsProps {
   title: string;
-  children: ReactNode
+  children: React.ReactNode;
 }

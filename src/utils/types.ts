@@ -16,7 +16,19 @@ export interface ConstructorIngredient extends Ingredient {
   uuid: string;
 }
 export interface User {
-  email?: string;
-  password?: string;
-  name?: string;
+  email: string;
+  password: string;
+  name: string;
+}
+export interface OrderResponseProps {
+  name: string;
+  order: {
+    number: number;
+  };
+  success: boolean;
+}
+export interface MessageResponseProps {
+  success: boolean,
+  message?: string,
+  status?: number
 }

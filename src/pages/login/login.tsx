@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../../services/user/actions.ts";
 import type { AppDispatch } from "../../services/store.ts";
+import { User } from "../../utils/types.ts";
 
 export const LoginPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Omit<User, 'name'>>({
     email: '',
     password: '',
   })
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const onIconClick = () => {
     if (inputRef.current){
-      inputRef.current.type = inputRef.current.type === 'text' ? 'password' : 'text'
+      inputRef.current!.type = inputRef.current!.type === 'text' ? 'password' : 'text'
     }
   }
 
@@ -47,7 +48,7 @@ export const LoginPage: React.FC = () => {
             type={'email'}
             placeholder={'E-mail'}
             onChange={e => handleChange(e)}
-            value={formData.email}
+            value={formData.email ?? ''}
             name={'email'}
             size={'default'}
             extraClass="mb-6"
@@ -57,7 +58,7 @@ export const LoginPage: React.FC = () => {
             placeholder={'Пароль'}
             onChange={e => handleChange(e)}
             icon={'ShowIcon'}
-            value={formData.password}
+            value={formData.password ?? ''}
             name={'password'}
             ref={inputRef}
             onIconClick={onIconClick}
