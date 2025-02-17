@@ -1,0 +1,266 @@
+openapi: 3.0.3
+info:
+  title: Storage contract
+  version: 0.1.5
+  description: "Контракт TTM для работы исполнителей с общим хранилищем"
+servers:
+  - url: /api
+paths:
+  /v1/storage/execution/{id}/signal/list/add:
+    post:
+      summary: Добавить сигнал
+      operationId: AddSignal
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Идентификатор запуска"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveSignalRequest'
+        required: true
+      responses:
+        '200':
+          description: "Response"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveSignalResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - basicAuth: []
+  /v1/storage/execution/{id}/signal/list/get:
+    post:
+      summary: Получить список сигналов
+      operationId: GetSignalList
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Идентификатор запуска"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyBody'
+      responses:
+        '200':
+          description: "Response"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSignalListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSignalListResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSignalListResponse'
+      security:
+        - basicAuth: []
+  /v1/storage/execution/{id}/property/{type}/save:
+    post:
+      summary: Сохранить или обновить свойство запущенного процесса
+      operationId: SaveExecution
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Идентификатор запуска"
+        - in: path
+          name: type
+          schema:
+            type: string
+          required: true
+          description: "Свойство процесса"
+        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveExecutionPropertyRequest'
+        required: true
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveExecutionPropertyResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - basicAuth: []
+  /v1/storage/execution/{id}/property/{type}/get:
+    post:
+      summary: Получить свойство запущенного процесса
+      operationId: GetExecution
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Идентификатор запуска"
+        - in: path
+          name: type
+          schema:
+            type: string
+            maxLength: 32
+          required: true
+          description: "Свойство процесса"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmptyBody'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveExecutionPropertyResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveExecutionPropertyResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveExecutionPropertyResponse'
+      security:
+        - basicAuth: []
+    
+    
+    
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    EmptyBody:
+      type: object
+    SaveSignalRequest:
+      type: object
+      required:
+      - type
+      - ttl
+      properties:
+        type:
+          type: string
+          maxLength: 32
+          example: "STOP_SIGNAL"
+          description: "Тип сигнала"
+        body: 
+          type: string
+          maxLength: 2048
+          example: "{\"message\": 1}"
+          description: "Дополнительная информация в пользовательском формате"
+        ttl:
+          type: string
+          format: iso8601
+          example: "PT10S"
+    SaveSignalResponse:
+      type: object
+      required:
+      - type
+      - expire
+      properties:
+        type:
+          type: string
+          example: "STOP_SIGNAL"
+        body: 
+          type: string
+          example: "{\"message\": 1}"
+        expire:
+          type: string
+          format: date-time
+          example: "2023-11-13T01:03:23Z"
+    GetSignalListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/SaveSignalResponse'
+    SaveExecutionPropertyRequest:
+      type: object
+      required:
+      - body
+      - ttl
+      properties:
+        body: 
+          type: string
+          maxLength: 2048
+          example: "IN_PROGRESS"
+        ttl:
+          type: string
+          format: iso8601
+          example: "PT10H"
+    SaveExecutionPropertyResponse:
+      type: object
+      required:
+      - body
+      - expire
+      properties:
+        body: 
+          type: string
+          example: "IN_PROGRESS"
+        expire:
+          type: string
+          format: date-time
+          example: "2023-11-13T01:03:23Z"
+    ErrorResponse:
+      type: object
+      properties:
+        trace_id:
+          type: string
+        user_info:
+          type: string
+          description: "Информация о пользователе"
+        code:
+          type: integer
+          format: int32
+          description: "Код ошибки"
+        message:
+          type: string
+          description: "Описание ошибки"
