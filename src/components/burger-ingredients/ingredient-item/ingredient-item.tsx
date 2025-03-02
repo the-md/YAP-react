@@ -32,7 +32,7 @@ export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
     >
       <img src={item.image} alt=""/>
       <div className="m-1 text_type_digits-default">
-        {item.price} <CurrencyIcon className={`ml-2 ${styles.priceIcon}`} type="primary"/>
+        {item.price} <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
       </div>
       <div className={styles.ingredientName}>
         {item.name}
