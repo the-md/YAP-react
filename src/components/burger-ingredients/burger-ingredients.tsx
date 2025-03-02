@@ -48,7 +48,7 @@ export const BurgerIngredients: React.FC = () => {
 
   return (
     <>
-      <section className="burgerColumn">
+      <section className="containerColumn">
         <div className="mb-10 display-flex">
           {tabsMap.map(({key, title}) => (
             <Tab

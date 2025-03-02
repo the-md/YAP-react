@@ -24,7 +24,7 @@ export const AppHeader: React.FC = () => {
               )}
             </NavLink>
             <NavLink
-              to={`/lenta`}
+              to={`/feed`}
               className={`p-5 display-flex ${styles.headerLink}`}
             >
               {({ isActive }) => (

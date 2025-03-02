@@ -1,0 +1,56 @@
+.orderItem {
+    border-radius: 40px;
+    background: #1C1C21;
+}
+.orderNumber {
+    font-size: 28px;
+}
+.orderIngrgedients {
+    display: flex;
+    align-items: center;
+}
+.orderIngrgedientItem {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin-left: -16px;
+    background: #000;
+    border-radius: 50%;
+}
+.orderIngrgedientItem:first-child {
+    margin-left: 0;
+}
+.orderIngrgedientItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background: linear-gradient(to right, #801AB2, #4C4CFF);
+    z-index: -1;
+}
+.priceIcon {
+    vertical-align: top;
+}
+.orderTable {
+    gap: 36px;
+}
+.orderReady {
+    width: 50%;
+}
+.orderInProgress {
+    width: 50%;
+}
+.orderTableList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.orderTableList li {
+    margin-bottom: 8px;
+}
+.orderReady li {
+    color: #00CCCC;
+}

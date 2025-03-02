@@ -58,7 +58,7 @@ export const BurgerConstructor: React.FC = () => {
   }
   return (
     <>
-      <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>
+      <section className={`containerColumn ml-10 mt-25`}  ref={dropTargetBun}>
         <div className="ml-4 mr-4">
           <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
             {!constructorBuns ? (

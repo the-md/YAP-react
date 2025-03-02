@@ -16,7 +16,8 @@ import { IngredientPage } from "../../pages/ingredient-page/ingredient-page.tsx"
 import { ProfilePage } from "../../pages/profile/profile.tsx";
 import { ProfileUser } from "../../pages/profile/profile-user/profile-user.tsx";
 import { ProfileOrder } from "../../pages/profile/profile-order/profile-order.tsx";
-import { LentaPage } from "../../pages/lenta/lenta.tsx";
+import { FeedPage } from "../../pages/feed/feed.tsx";
+import { OrderFeedDetails } from "../order-feed-details/order-feed-details.tsx";
 
 export const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,7 +35,8 @@ export const App: React.FC = () => {
       <AppHeader/>
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/lenta" element={<LentaPage />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:orderId" element={<OrderFeedDetails />} />
         <Route path="/ingredients/:ingredientId" element={<IngredientPage isModal={false} />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
