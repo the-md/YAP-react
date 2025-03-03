@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './feed.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "../../services/store.ts";
+import { useLocation } from "react-router-dom";
+import { wsClose, wsOpen } from "../../services/order-feed/slice.ts";
+import { BURGER_API_WSS } from "../../utils/api.ts";
+
+import { getStatus } from "../../services/order-feed/slice.ts";
+import { WebsocketStatus } from "../../utils/types.ts";
+import { wsConnect } from "../../services/order-feed/actions.ts";
+
 
 const OrderList = () => {
   return (
@@ -66,6 +75,22 @@ const OrderDashboard = () => {
   )
 }
 export const FeedPage: React.FC = () => {
+  // const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all")
+  // console.log(ws.readyState)
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const status = useSelector(getStatus);
+
+  console.log(status)
+
+  useEffect(() => {
+    dispatch(wsConnect(`${BURGER_API_WSS}/orders/all`));
+    return () => {
+      dispatch(wsClose());
+    };
+  }, [location.pathname, dispatch]);
+
   return (
     <div className="container">
       <h1 className="mb-5 mt-10 text_type_main-large">Лента заказов</h1>

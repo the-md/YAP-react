@@ -1,7 +1,8 @@
 import { Ingredient, MessageResponseProps, OrderResponseProps, User } from "./types.ts";
 
+export const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
+export const BURGER_API_WSS = `wss://norma.nomoreparties.space`;
 const apiConfig = {
-  baseUrl: 'https://norma.nomoreparties.space/api',
   headers: {
     "Content-Type": "application/json;charset=utf-8",
   },
@@ -43,7 +44,7 @@ const checkAndRefreshToken = async (): Promise<void> => {
 };
 
 export const refreshTokenRequest = async (): Promise<AuthTokenResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/token`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/token`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify({
@@ -54,7 +55,7 @@ export const refreshTokenRequest = async (): Promise<AuthTokenResponseProps> => 
 };
 
 export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/ingredients`, {
+  const res = await fetch(`${BURGER_API_URL}/ingredients`, {
     headers: apiConfig.headers,
   });
   return await getResponse<IngredientsProps>(res);
@@ -62,7 +63,7 @@ export const getIngredientsRequest = async (): Promise<IngredientsProps> => {
 
 export const orderRequest = async (order: Array<string>): Promise<OrderResponseProps> => {
   await checkAndRefreshToken();
-  const res = await fetch(`${apiConfig.baseUrl}/orders`, {
+  const res = await fetch(`${BURGER_API_URL}/orders`, {
     method: 'POST',
     headers: {
       ...apiConfig.headers,
@@ -76,7 +77,7 @@ export const orderRequest = async (order: Array<string>): Promise<OrderResponseP
 };
 
 export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<MessageResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/password-reset`, {
+  const res = await fetch(`${BURGER_API_URL}/password-reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
@@ -85,7 +86,7 @@ export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<
 };
 
 export const resetPasswordRequest = async (data: ResetPasswordRequestProps): Promise<MessageResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/password-reset/reset`, {
+  const res = await fetch(`${BURGER_API_URL}/password-reset/reset`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
@@ -94,7 +95,7 @@ export const resetPasswordRequest = async (data: ResetPasswordRequestProps): Pro
 };
 
 export const registerRequest = async (data: User): Promise<AuthResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/register`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/register`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
@@ -103,7 +104,7 @@ export const registerRequest = async (data: User): Promise<AuthResponseProps> =>
 };
 
 export const loginRequest = async (data: Omit<User, 'name'>): Promise<AuthResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/login`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/login`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
@@ -112,7 +113,7 @@ export const loginRequest = async (data: Omit<User, 'name'>): Promise<AuthRespon
 };
 
 export const logoutRequest = async (data: TokenRequestProps): Promise<MessageResponseProps> => {
-  const res = await fetch(`${apiConfig.baseUrl}/auth/logout`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/logout`, {
     method: 'POST',
     headers: apiConfig.headers,
     body: JSON.stringify(data)
@@ -122,7 +123,7 @@ export const logoutRequest = async (data: TokenRequestProps): Promise<MessageRes
 
 export const getUserRequest = async (): Promise<UserResponseProps> => {
   await checkAndRefreshToken();
-  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/user`, {
     headers: {
       ...apiConfig.headers,
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -133,7 +134,7 @@ export const getUserRequest = async (): Promise<UserResponseProps> => {
 
 export const updateUserRequest = async (user: Partial<User>): Promise<UserResponseProps> => {
   await checkAndRefreshToken();
-  const res = await fetch(`${apiConfig.baseUrl}/auth/user`, {
+  const res = await fetch(`${BURGER_API_URL}/auth/user`, {
     method: 'PATCH',
     headers: {
       ...apiConfig.headers,
