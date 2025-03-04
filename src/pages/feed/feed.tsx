@@ -3,15 +3,15 @@ import styles from './feed.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services/store.ts";
 import { useLocation } from "react-router-dom";
-import { wsClose, wsOpen } from "../../services/order-feed/slice.ts";
+import { getOrdersData, getStatus, wsClose } from "../../services/order-feed/slice.ts";
 import { BURGER_API_WSS } from "../../utils/api.ts";
 
-import { getStatus } from "../../services/order-feed/slice.ts";
-import { WebsocketStatus } from "../../utils/types.ts";
 import { wsConnect } from "../../services/order-feed/actions.ts";
+import { OrderTotal } from "../../components/order-total/order-total.tsx";
 
 
 const OrderList = () => {
+
   return (
     <section className="containerColumn">
       <div className={`p-6 ${styles.orderItem}`}>
@@ -40,49 +40,45 @@ const OrderList = () => {
   )
 }
 
+
+
 const OrderDashboard = () => {
+  const ordersData = useSelector(getOrdersData);
+  const orderDone = ordersData?.orders?.filter((product) => product.status === 'done') ?? [];
+  const orderInProgress = ordersData?.orders?.filter((product) => product.status !== 'done') ?? [];
   return (
     <section className="containerColumn ml-15">
       <div className={`display-flex mb-15 ${styles.orderTable}`}>
         <div>
           <div className="text_type_main-medium mb-6">Готовы:</div>
           <ul className={`text_type_digits-default text_color_turquoise ${styles.orderTableList}`}>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
+            {orderDone.slice(0, 10).map((item) => (
+              <li key={item._id}>{item.number.toString().padStart(6, '0')}</li>
+            ))}
           </ul>
         </div>
         <div>
           <div className="text_type_main-medium mb-6">В работе:</div>
           <ul className={`text_type_digits-default ${styles.orderTableList}`}>
-            <li>034533</li>
-            <li>034533</li>
-            <li>034533</li>
+            {orderInProgress.slice(0, 10).map((item) => (
+              <li key={item._id}>{item.number.toString().padStart(6, '0')}</li>
+            ))}
           </ul>
         </div>
       </div>
-      <div>
-        <div className={`text_type_main-medium`}>Выполнено за все время:</div>
-        <div className={`text_type_digits-large mb-15 text_shadow-number`}>28 752</div>
-      </div>
-      <div>
-        <div className={`text_type_main-medium`}>Выполнено за сегодня:</div>
-        <div className={`text_type_digits-large mb-15 text_shadow-number`}>138</div>
-      </div>
+      <OrderTotal title="Выполнено за все время:" sum={ordersData?.total ?? 0} />
+      <OrderTotal title="Выполнено за сегодня:" sum={ordersData?.totalToday ?? 0} />
     </section>
   )
 }
 export const FeedPage: React.FC = () => {
-  // const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all")
-  // console.log(ws.readyState)
-
   const dispatch = useDispatch();
   const location = useLocation();
   const status = useSelector(getStatus);
+  const ordersData = useSelector(getOrdersData);
 
-  console.log(status)
+  console.log('status', status)
+  console.log('orderData', ordersData)
 
   useEffect(() => {
     dispatch(wsConnect(`${BURGER_API_WSS}/orders/all`));

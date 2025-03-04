@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FeedOrderData, WebsocketStatus } from "../../utils/types.ts";
+import { FeedDataResponse, WebsocketStatus } from "../../utils/types.ts";
 
 interface orderFeedState {
   status: WebsocketStatus;
-  orderData: Array<FeedOrderData>;
+  ordersData: FeedDataResponse | null;
   error: string | null;
 }
 
 export const initialState: orderFeedState = {
   status: WebsocketStatus.OFFLINE,
-  orderData: [],
+  ordersData: null,
   error: null,
 };
 
@@ -31,15 +31,14 @@ export const orderFeedSlice = createSlice({
       state.error = action.payload;
     },
     wsMessage: (state, action) => {
-      console.log("action", action);
-      console.log("state", state);
+      state.ordersData = action.payload
       // state.table = liveTableUpdate(state.table, action.payload);
     }
   },
   selectors: {
     getStatus: state => state.status,
     getError: state => state.error,
-    getTable: state => state.table
+    getOrdersData: state => state.ordersData
   }
 });
 
@@ -50,7 +49,7 @@ export const {
   wsMessage,
   wsOpen
 } = orderFeedSlice.actions;
-export const { getStatus, getError, getTable } = orderFeedSlice.selectors;
+export const { getStatus, getError, getOrdersData } = orderFeedSlice.selectors;
 export default orderFeedSlice.reducer;
 
 type TActionCreators = typeof orderFeedSlice.actions;
