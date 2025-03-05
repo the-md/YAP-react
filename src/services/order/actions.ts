@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getOrdersRequest, orderRequest } from "../../utils/api.ts";
 import { clearIngredients } from "../burger-constructor/slice.ts";
-import { Order, OrderResponseProps } from "../../utils/types.ts";
+import { OrderResponseProps } from "../../utils/types.ts";
 
 export const onCreateOrder = createAsyncThunk<OrderResponseProps, Array<string>> (
   "order/postOrder",
@@ -14,12 +14,12 @@ export const onCreateOrder = createAsyncThunk<OrderResponseProps, Array<string>>
   }
 )
 
-export const onGetOrder = createAsyncThunk<Order, number> (
+export const onGetOrder = createAsyncThunk<OrderResponseProps, number> (
   "order/getOrder",
   async (orderId) => {
     const response = await getOrdersRequest(orderId);
     console.log('response', response)
-    return response.data;
+    return response;
   }
 )
 

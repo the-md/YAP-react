@@ -5,8 +5,8 @@ import OrderIcon from "../../images/done.svg";
 import { Loading } from "../loading/loading.tsx";
 
 export const OrderDetails: React.FC = () => {
-  const {orderObj, loading} = useSelector(getOrderState)
-  const numOrder = orderObj?.order.number.toString().padStart(6, '0')
+  const {order, loading} = useSelector(getOrderState)
+  const numOrder = order?.order.number.toString().padStart(6, '0')
   if (loading) return (
     <Loading/>
   );
