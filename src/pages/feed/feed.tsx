@@ -1,45 +1,63 @@
 import React, { useEffect } from "react";
 import styles from './feed.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "../../services/store.ts";
+import { type AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { useLocation } from "react-router-dom";
-import { getOrdersData, getStatus, wsClose } from "../../services/order-feed/slice.ts";
+import { getOrdersData, wsClose } from "../../services/order-feed/slice.ts";
 import { BURGER_API_WSS } from "../../utils/api.ts";
 
 import { wsConnect } from "../../services/order-feed/actions.ts";
 import { OrderTotal } from "../../components/order-total/order-total.tsx";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { loadIngredients } from "../../services/ingredients/actions.ts";
 
-
-const OrderList = () => {
-
+const OrderNumber = ({num}) => {
+  return num.toString().padStart(6, '0')
+}
+const OrderIngredients = ({ingredients}) => {
+  const { ingredients: storeIngredients } = useSelector(getIngredientsState);
+  const matchedIngredients = ingredients.map(ingredientId =>
+    storeIngredients.find(item => item._id === ingredientId)
+  ).filter(Boolean);
   return (
-    <section className="containerColumn">
-      <div className={`p-6 ${styles.orderItem}`}>
-        <div className="display-flex justify_content-space-between">
-          <div className="text_type_digits-default">#034535</div>
-          <div className="text_color_inactive text_type_main-default">
-            <FormattedDate date={new Date('2025-03-01T10:33:32.877Z')} />
-          </div>
-        </div>
-        <div className="mt-6 mb-6 text_type_main-medium">Death Star Starship Main бургер</div>
-        <div className="display-flex justify_content-space-between align_items-center">
-          <ul className={`${styles.orderIngredients}`}>
-            <li className={`${styles.orderIngredientItem}`}></li>
-            <li className={`${styles.orderIngredientItem}`}></li>
-            <li className={`${styles.orderIngredientItem}`}></li>
-            <li className={`${styles.orderIngredientItem}`}></li>
-            <li className={`${styles.orderIngredientItem}`}></li>
-            <li className={`${styles.orderIngredientItem}`}></li>
-          </ul>
-          <div className="ml-6 text_type_digits-default">
-            480 <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
-          </div>
-        </div>
-      </div>
-    </section>
+    <ul className={`${styles.orderIngredients}`}>
+      {matchedIngredients.slice(0, 6).map((ingredient, index) => (
+        <li key={ingredient._id+index} className={`${styles.orderIngredientItem}`}>
+          <img src={ingredient.image_mobile} alt={ingredient.name} className={styles.orderIngredientImage}/>
+          {index === 5 && (
+            <p className={styles.orderIngredientCount}>+{matchedIngredients.length - 5}</p>
+          )}
+        </li>
+      ))}
+    </ul>
   )
 }
 
+const OrderList = () => {
+  const ordersData = useSelector(getOrdersData);
+  return (
+    <section className="containerColumn">
+      {ordersData?.orders.slice(0, 10).map((order) => (
+        <div key={order._id} className={`p-6 mb-4 ${styles.orderItem}`}>
+          <div className="display-flex justify_content-space-between">
+            <div className="text_type_digits-default"><OrderNumber num={order.number}/></div>
+            <div className="text_color_inactive text_type_main-default">
+                <FormattedDate date={new Date(`${order.createdAt}`)}/>
+              </div>
+            </div>
+            <div className="mt-6 mb-6 text_type_main-medium">{order.name}</div>
+            <div className="display-flex justify_content-space-between align_items-center">
+              <OrderIngredients ingredients={order.ingredients} />
+              <div className="ml-6 text_type_digits-default">
+                480 <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
+              </div>
+            </div>
+          </div>
+        )
+      )}
+    </section>
+  )
+}
 
 
 const OrderDashboard = () => {
@@ -52,16 +70,20 @@ const OrderDashboard = () => {
         <div>
           <div className="text_type_main-medium mb-6">Готовы:</div>
           <ul className={`text_type_digits-default text_color_turquoise ${styles.orderTableList}`}>
-            {orderDone.slice(0, 10).map((item) => (
-              <li key={item._id}>{item.number.toString().padStart(6, '0')}</li>
+            {orderDone.slice(0, 10).map((order) => (
+              <li key={order._id}>
+                <OrderNumber num={order.number} />
+              </li>
             ))}
           </ul>
         </div>
         <div>
           <div className="text_type_main-medium mb-6">В работе:</div>
           <ul className={`text_type_digits-default ${styles.orderTableList}`}>
-            {orderInProgress.slice(0, 10).map((item) => (
-              <li key={item._id}>{item.number.toString().padStart(6, '0')}</li>
+            {orderInProgress.slice(0, 10).map((order) => (
+              <li key={order._id}>
+                <OrderNumber num={order.number} />
+              </li>
             ))}
           </ul>
         </div>
@@ -72,13 +94,16 @@ const OrderDashboard = () => {
   )
 }
 export const FeedPage: React.FC = () => {
-  const dispatch = useDispatch();
+  const { ingredients } = useSelector(getIngredientsState);
+  const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
-  const status = useSelector(getStatus);
-  const ordersData = useSelector(getOrdersData);
 
-  console.log('status', status)
-  console.log('orderData', ordersData)
+
+  useEffect(() => {
+    if (ingredients.length === 0) {
+      dispatch(loadIngredients());
+    }
+  }, [dispatch, ingredients]);
 
   useEffect(() => {
     dispatch(wsConnect(`${BURGER_API_WSS}/orders/all`));

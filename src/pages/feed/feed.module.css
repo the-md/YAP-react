@@ -16,6 +16,10 @@
     margin-left: -16px;
     background: #000;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(64deg, #801ab2, #4c4cff);
 }
 .orderIngredientItem:first-child {
     margin-left: 0;
@@ -23,13 +27,45 @@
 .orderIngredientItem::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 120%;
-    height: 120%;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: linear-gradient(to right, #801AB2, #4C4CFF);
+    background: #000;
     z-index: -1;
+}
+
+.orderIngredientItem:nth-child(1) {
+    z-index: 6;
+}
+.orderIngredientItem:nth-child(2) {
+    z-index: 5;
+}
+.orderIngredientItem:nth-child(3) {
+    z-index: 4;
+}
+.orderIngredientItem:nth-child(4) {
+    z-index: 3;
+}
+.orderIngredientItem:nth-child(5) {
+    z-index: 2;
+}
+.orderIngredientItem:nth-child(6) {
+    z-index: 1;
+}
+.orderIngredientImage {
+    height: 56px;
+    z-index: 1;
+}
+.orderIngredientCount {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(28,28,33, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
 }
 .orderTable {
     gap: 36px;

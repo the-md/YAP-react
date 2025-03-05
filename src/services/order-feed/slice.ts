@@ -32,7 +32,6 @@ export const orderFeedSlice = createSlice({
     },
     wsMessage: (state, action) => {
       state.ordersData = action.payload
-      // state.table = liveTableUpdate(state.table, action.payload);
     }
   },
   selectors: {

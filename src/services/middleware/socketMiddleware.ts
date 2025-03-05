@@ -59,8 +59,6 @@ export const socketMiddleware = <R, S>(
           try {
             const parsedData = JSON.parse(data);
 
-            // console.log(parsedData);
-
             if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
               //     refreshToken()
               //        .then(refreshData => {
