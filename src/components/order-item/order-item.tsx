@@ -2,11 +2,14 @@ import { useSelector } from "../../services/store.ts";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from "./order-item.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FeedOrder, Ingredient } from "../../utils/types.ts";
+import { Order, Ingredient } from "../../utils/types.ts";
+import { useNavigate } from "react-router-dom";
 
 
 export const OrderItem = ({ order }: OrderItemProps) => {
   const {ingredients} = useSelector(getIngredientsState);
+  const navigate = useNavigate()
+
   const {imagesIngredients, totalPrice} = order.ingredients.reduce<{
     imagesIngredients: Ingredient[];
     totalPrice: number;
@@ -22,8 +25,17 @@ export const OrderItem = ({ order }: OrderItemProps) => {
     {imagesIngredients: [], totalPrice: 0}
   );
   console.log('imagesIngredients', imagesIngredients)
+  const onOrderClick = (order:Order) => {
+    navigate(`/feed/${order._id}`, {
+      state: { background: location },
+    });
+  }
   return (
-    <div key={order._id} className={`p-6 mb-4 ${styles.orderItem}`}>
+    <div
+      key={order._id}
+      className={`p-6 mb-4 ${styles.orderItem}`}
+      onClick={() => onOrderClick(order)}
+    >
       <div className="display-flex justify_content-space-between">
         <div className="text_type_digits-default">
           {order.number.toString().padStart(6, '0')}
@@ -53,5 +65,5 @@ export const OrderItem = ({ order }: OrderItemProps) => {
 }
 
 interface OrderItemProps {
-  order: FeedOrder;
+  order: Order;
 }

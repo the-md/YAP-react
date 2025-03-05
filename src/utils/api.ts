@@ -76,6 +76,13 @@ export const orderRequest = async (order: Array<string>): Promise<OrderResponseP
   return await getResponse<OrderResponseProps>(res);
 };
 
+export const getOrdersRequest = async (orderId: number): Promise<IngredientsProps> => {
+  const res = await fetch(`${BURGER_API_URL}/orders/${orderId}`, {
+    headers: apiConfig.headers,
+  });
+  return await getResponse<IngredientsProps>(res);
+};
+
 export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<MessageResponseProps> => {
   const res = await fetch(`${BURGER_API_URL}/password-reset`, {
     method: 'POST',

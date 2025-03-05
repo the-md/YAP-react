@@ -52,12 +52,17 @@ export const App: React.FC = () => {
       {background && (
         <Routes>
           <Route
-            path='/ingredients/:ingredientId'
+            path='/feed/:orderId'
             element={
               <Modal title="Детали ингредиента" onClose={()=>navigate(-1)}>
-                <IngredientPage isModal={true} />
+                <OrderFeedDetails />
               </Modal>
             }
+          />
+
+          <Route
+            path='/ingredients/:ingredientId'
+            element={<IngredientPage isModal={true} />}
           />
         </Routes>
       )}

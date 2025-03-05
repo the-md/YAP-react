@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from './order-feed-details.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../services/store.ts";
+import { onGetOrder } from "../../services/order/actions.ts";
 
 export const OrderFeedDetails: React.FC = () => {
+  const { orderId } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (orderId) {
+      dispatch(onGetOrder(Number(orderId)));
+    }
+  }, [dispatch, orderId]);
+  console.log('orderId page', orderId)
   return (
     <article className={`${styles.order}`}>
       <div className="mb-10 text_type_digits-default text_align-center">#034535</div>

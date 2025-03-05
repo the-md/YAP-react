@@ -21,10 +21,7 @@ export interface User {
   name: string;
 }
 export interface OrderResponseProps {
-  name: string;
-  order: {
-    number: number;
-  };
+  order: Order;
   success: boolean;
 }
 export interface MessageResponseProps {
@@ -44,7 +41,7 @@ export enum OrderStatus {
   pending = "pending",
   done = "done"
 }
-export interface FeedOrder {
+export interface Order {
   ingredients: string[];
   _id: string;
   status: OrderStatus;
@@ -55,7 +52,7 @@ export interface FeedOrder {
 }
 export interface FeedDataResponse {
   success: true;
-  orders: FeedOrder[];
+  orders: Order[];
   total: number;
   totalToday: number;
 }

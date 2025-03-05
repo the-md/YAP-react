@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { onCreateOrder } from "./actions.ts";
+import { onCreateOrder, onGetOrder } from "./actions.ts";
 
 const initialState: OrderState = {
   orderObj: null,
@@ -31,6 +31,20 @@ export const orderSlice = createSlice({
       })
       .addCase(onCreateOrder.fulfilled, (state: OrderState, action) => {
         state.orderObj = action.payload;
+        console.log('state.orderObj', state.orderObj)
+        state.loading = false
+      })
+      .addCase(onGetOrder.pending, (state: OrderState) => {
+        state.loading = true
+        state.openModal = true
+      })
+      .addCase(onGetOrder.rejected, (state: OrderState, action) => {
+        state.error = action.error?.message || null;
+        state.loading = false
+      })
+      .addCase(onGetOrder.fulfilled, (state: OrderState, action) => {
+        console.log('onGetOrder action.payload', action.payload)
+        //state.orderObj = action.payload;
         state.loading = false
       })
   }
