@@ -44,7 +44,7 @@ export enum OrderStatus {
   pending = "pending",
   done = "done"
 }
-export interface FeedOrderData {
+export interface FeedOrder {
   ingredients: string[];
   _id: string;
   status: OrderStatus;
@@ -55,7 +55,7 @@ export interface FeedOrderData {
 }
 export interface FeedDataResponse {
   success: true;
-  orders: Array<FeedOrderData>;
+  orders: FeedOrder[];
   total: number;
   totalToday: number;
 }
