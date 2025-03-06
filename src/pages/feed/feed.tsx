@@ -8,6 +8,7 @@ import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import { loadIngredients } from "../../services/ingredients/actions.ts";
 import { OrderDashboard } from "../../components/order-dashboard/order-dashboard.tsx";
 import { OrderList } from "../../components/order-list/order-list.tsx";
+import styles from "./feed.module.css";
 
 export const FeedPage: React.FC = () => {
   const { ingredients } = useSelector(getIngredientsState);
@@ -30,7 +31,7 @@ export const FeedPage: React.FC = () => {
   return (
     <div className="container">
       <h1 className="mb-5 mt-10 text_type_main-large">Лента заказов</h1>
-      <main className="container display-flex">
+      <main className={`container display-flex ${styles.orderColumns}`}>
         <OrderList />
         <OrderDashboard />
       </main>

@@ -35,7 +35,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
     <div className={`p-6 mb-4 ${styles.orderItem}`} onClick={() => onOrderClick(order)}>
       <div className="display-flex justify_content-space-between">
         <div className="text_type_digits-default">
-          {order.number.toString().padStart(6, '0')}
+          #{order.number.toString().padStart(6, '0')}
         </div>
         <div className="text_color_inactive text_type_main-default">
           <FormattedDate date={new Date(`${order.createdAt}`)}/>

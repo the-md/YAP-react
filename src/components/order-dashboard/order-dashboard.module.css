@@ -1,3 +1,6 @@
+.orderColumns {
+    gap: 15px;
+}
 .orderTable {
     gap: 36px;
 }
