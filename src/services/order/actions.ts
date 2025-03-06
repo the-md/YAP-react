@@ -17,8 +17,7 @@ export const onCreateOrder = createAsyncThunk<Order, Array<string>> (
 export const onGetOrder = createAsyncThunk<Order, number> (
   "order/getOrder",
   async (orderId) => {
-    const response = await getOrdersRequest(orderId);
-    return response;
+    return await getOrdersRequest(orderId);
   }
 )
 
