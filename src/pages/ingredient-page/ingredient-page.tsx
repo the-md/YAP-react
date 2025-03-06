@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import { Ingredient } from "../../utils/types.ts";
 import { IngredientDetails } from "../../components/burger-ingredients/ingredient-details/ingredient-details.tsx";
 import { Modal } from "../../components/modal/modal.tsx";
-import type { AppDispatch } from "../../services/store.ts";
-import { loadIngredients } from "../../services/ingredients/actions.ts";
 import { Loading } from "../../components/loading/loading.tsx";
 
 export const IngredientPage: React.FC<IngredientPageProps> = ({ isModal }) => {
   const { ingredientId } = useParams();
   const { ingredients, loading } = useSelector(getIngredientsState);
-  const dispatch = useDispatch<AppDispatch>();
   const [ingredient, setIngredient] = useState<Ingredient | undefined>()
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (ingredients.length === 0) {
-      dispatch(loadIngredients());
-    }
-  }, [dispatch, ingredients]);
 
   useEffect(() => {
     const ingredientCurrent = ingredients.find(item=> item._id === ingredientId)

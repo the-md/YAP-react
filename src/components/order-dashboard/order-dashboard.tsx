@@ -8,16 +8,15 @@ export const OrderDashboard = () => {
   const ordersData = useSelector(getOrdersData);
   const orderDone = ordersData?.orders?.filter((product) => product.status === 'done') ?? [];
   const orderInProgress = ordersData?.orders?.filter((product) => product.status !== 'done') ?? [];
-  console.log(orderDone)
   return (
-    <section className="containerColumn ml-15">
+    <>
       <div className={`display-flex mb-15 ${styles.orderTable}`}>
         <OrderColumn orders={orderDone} status="done" />
         <OrderColumn orders={orderInProgress} status="inprogress" />
       </div>
       <OrderTotal title="Выполнено за все время:" sum={ordersData?.total ?? 0} />
       <OrderTotal title="Выполнено за сегодня:" sum={ordersData?.totalToday ?? 0} />
-    </section>
+    </>
   )
 }
 

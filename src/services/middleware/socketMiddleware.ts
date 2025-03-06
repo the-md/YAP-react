@@ -2,6 +2,7 @@ import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware } fro
 import { RootState } from "../store";
 import { wsConnect, wsDisconnect } from "../order-feed/actions";
 import { wsClose, wsConnecting, wsError, wsMessage, wsOpen } from "../order-feed/slice.ts";
+import { refreshTokenRequest } from "../../utils/api.ts";
 
 export type TWsActionTypes<R, S> = {
   connect: ActionCreatorWithPayload<string>;
@@ -60,22 +61,22 @@ export const socketMiddleware = <R, S>(
             const parsedData = JSON.parse(data);
 
             if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
-              //     refreshToken()
-              //        .then(refreshData => {
-              //           const wssUrl = new URL(url);
-              //           wssUrl.searchParams.set(
-              //             "token",
-              //             refreshData.accessToken.replace("Bearer ", "")
-              //           );
-              //           dispatch(connect(wssUrl.toString()));
-              //        })
-              //        .catch(err => {
-              //          dispatch(onError((err as Error).message));
-              //        });
+              refreshTokenRequest()
+                     .then(refreshData => {
+                        const wssUrl = new URL(url);
+                        wssUrl.searchParams.set(
+                          "token",
+                          refreshData.accessToken.replace("Bearer ", "")
+                        );
+                        dispatch(connect(wssUrl.toString()));
+                     })
+                     .catch(err => {
+                       dispatch(onError((err as Error).message));
+                     });
 
-              //     dispatch(disconnect());
+                  dispatch(disconnect());
 
-              //     return;
+                  return;
             }
 
             dispatch(onMessage(parsedData));
@@ -134,4 +135,4 @@ export const profileOrderMiddleware = socketMiddleware({
   onClose: wsClose,
   onError: wsError,
   onMessage: wsMessage
-});
+}, true);

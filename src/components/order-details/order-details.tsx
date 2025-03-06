@@ -1,22 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from './order-details.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Ingredient, Order } from "../../utils/types.ts";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
-import { loadIngredients } from "../../services/ingredients/actions.ts";
-import type { AppDispatch } from "../../services/store.ts";
 
 export const OrderDetails: React.FC<OrderPageProps> = ({order}) => {
   const {ingredients} = useSelector(getIngredientsState);
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    if (ingredients.length === 0) {
-      dispatch(loadIngredients());
-    }
-  }, [dispatch, ingredients]);
-
 
   const {listIngredients, totalPrice} = order.ingredients.reduce<{
     listIngredients: ListIngredientsProps[];
