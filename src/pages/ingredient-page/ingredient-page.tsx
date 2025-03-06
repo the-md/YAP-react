@@ -37,7 +37,7 @@ export const IngredientPage: React.FC<IngredientPageProps> = ({ isModal }) => {
 
   if (isModal && ingredient) {
     return (
-      <Modal title="Детали ингредиента2" onClose={handleClose}>
+      <Modal title="Детали ингредиента" onClose={handleClose}>
         <IngredientDetails item={ingredient} />
       </Modal>
     );

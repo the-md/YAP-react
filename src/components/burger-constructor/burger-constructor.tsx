@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Modal } from "../modal/modal.tsx";
-import { OrderDetails } from "../order-details/order-details.tsx";
+import { OrderConfirm } from "../order-confirm/order-confirm.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
 import { onCreateOrder } from "../../services/order/actions.ts";
@@ -54,6 +54,7 @@ export const BurgerConstructor: React.FC = () => {
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
     ];
+    //todo посмотреть, отправляется ли две булки
     dispatch(onCreateOrder(order));
   }
   return (
@@ -112,7 +113,7 @@ export const BurgerConstructor: React.FC = () => {
       </section>
       {openModal &&
         <Modal title="" onClose={() => dispatch(closeModalOrder())}>
-          <OrderDetails />
+          <OrderConfirm />
         </Modal>
       }
     </>

@@ -1,4 +1,4 @@
-import { Ingredient, MessageResponseProps, OrderResponseProps, User } from "./types.ts";
+import { Ingredient, MessageResponseProps, Order, OrderResponseProps, User } from "./types.ts";
 
 export const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
 export const BURGER_API_WSS = `wss://norma.nomoreparties.space`;
@@ -76,11 +76,12 @@ export const orderRequest = async (order: Array<string>): Promise<OrderResponseP
   return await getResponse<OrderResponseProps>(res);
 };
 
-export const getOrdersRequest = async (orderId: number): Promise<OrderResponseProps> => {
+export const getOrdersRequest = async (orderId: number): Promise<Order> => {
   const res = await fetch(`${BURGER_API_URL}/orders/${orderId}`, {
     headers: apiConfig.headers,
   });
-  return await getResponse<OrderResponseProps>(res);
+  const data = await getResponse<getOrdersResponseProps>(res);
+  return data.orders[0];
 };
 
 export const forgotPasswordRequest = async (data: Pick<User, 'email'>): Promise<MessageResponseProps> => {
@@ -177,4 +178,8 @@ export interface AuthResponseProps {
   accessToken: string,
   refreshToken: string,
   user: Omit<User, 'password'>
+}
+export interface getOrdersResponseProps {
+  success: boolean,
+  orders: Order[]
 }
