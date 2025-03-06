@@ -33,7 +33,7 @@ export const OrderDetails: React.FC<OrderPageProps> = ({order}) => {
   return (
     <article className={`${styles.order}`}>
       <div className="mb-10 text_type_digits-default text_align-center">
-        #{order.number.toString().padStart(6, '0')}
+        #{order.number}
       </div>
       <div className="mb-3 text_type_main-medium">{order.name}</div>
       <div className="mb-15 text_color_turquoise">{order.status === 'done' ? 'Выполнен' : 'Готовится'}</div>

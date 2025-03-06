@@ -3,13 +3,14 @@ import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from "./order-item.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Order, Ingredient } from "../../utils/types.ts";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 
 
 export const OrderItem = ({ order }: OrderItemProps) => {
   const {ingredients} = useSelector(getIngredientsState);
   const navigate = useNavigate()
   const location = useLocation();
+  const matchOrders = useMatch("/profile/orders")
 
   const {imagesIngredients, totalPrice} = order.ingredients.reduce<{
     imagesIngredients: Ingredient[];
@@ -27,7 +28,8 @@ export const OrderItem = ({ order }: OrderItemProps) => {
   );
 
   const onOrderClick = (order:Order) => {
-    navigate(`/feed/${order.number}`, {
+    const url = matchOrders ? `/profile/orders/${order.number}` : `/feed/${order.number}`
+    navigate(`${url}`, {
       state: { background: location },
     });
   }
@@ -35,7 +37,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
     <div className={`p-6 mb-4 ${styles.orderItem}`} onClick={() => onOrderClick(order)}>
       <div className="display-flex justify_content-space-between">
         <div className="text_type_digits-default">
-          #{order.number.toString().padStart(6, '0')}
+          #{order.number}
         </div>
         <div className="text_color_inactive text_type_main-default">
           <FormattedDate date={new Date(`${order.createdAt}`)}/>

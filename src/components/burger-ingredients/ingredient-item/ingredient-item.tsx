@@ -20,7 +20,6 @@ export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
     : constructorIngredients.filter(ingredient => ingredient._id === item._id).length
 
   const onIngredientClick = (ingredient:Ingredient) => {
-    console.log('location', location)
     navigate(`/ingredients/${ingredient._id}`, {
       state: { background: location },
     });

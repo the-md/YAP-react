@@ -51,7 +51,6 @@ export const refreshTokenRequest = async (): Promise<AuthTokenResponseProps> => 
       token: localStorage.getItem("refreshToken")
     })
   });
-  console.log('refreshTokenRequest')
   return await getResponse<AuthTokenResponseProps>(res);
 };
 

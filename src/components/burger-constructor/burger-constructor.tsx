@@ -53,8 +53,8 @@ export const BurgerConstructor: React.FC = () => {
     const order:Array<string> = [
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
+      ...(constructorBuns ? [constructorBuns._id] : []),
     ];
-    //todo посмотреть, отправляется ли две булки
     dispatch(onCreateOrder(order));
   }
   return (

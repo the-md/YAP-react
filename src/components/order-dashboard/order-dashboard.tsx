@@ -38,7 +38,7 @@ const OrderColumn = ({orders, status}: OrderColumnProps) => {
           <ul key={index} className={`text_type_digits-default ${status === 'done'? 'text_color_turquoise' : ''} ${styles.orderTableList}`}>
             {column.map((order) => (
               <li key={order._id}>
-                {order.number.toString().padStart(6, "0")}
+                {order.number}
               </li>
             ))}
           </ul>

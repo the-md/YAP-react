@@ -33,7 +33,6 @@ export const orderSlice = createSlice({
       .addCase(onCreateOrder.fulfilled, (state: OrderState, action) => {
         state.order = action.payload;
         state.loading = false
-        console.log('onCreateOrder action.payload', action.payload)
       })
       .addCase(onGetOrder.pending, (state: OrderState) => {
         state.loading = true
@@ -44,7 +43,6 @@ export const orderSlice = createSlice({
         state.loading = false
       })
       .addCase(onGetOrder.fulfilled, (state: OrderState, action) => {
-        console.log('onGetOrder action.payload', action.payload)
         state.order = action.payload;
         state.loading = false
       })

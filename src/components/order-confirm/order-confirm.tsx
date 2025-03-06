@@ -13,7 +13,7 @@ export const OrderConfirm: React.FC = () => {
   return (
     <div className="mb-15 text_align-center">
       <div className={`mb-8 text_type_digits-large text_shadow-number`}>
-        {order?.number.toString().padStart(6, '0')}
+        {order?.number}
       </div>
       <p className="text text_type_main-medium">идентификатор заказа</p>
       <img src={OrderIcon} className="mt-15 mb-15" alt="order done"/>
