@@ -20,7 +20,6 @@ const rootReducer = combineSlices(
 
 export const store = configureStore({
   reducer: rootReducer,
-  enhancers: (getDefaultEnhancers) => getDefaultEnhancers(),
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

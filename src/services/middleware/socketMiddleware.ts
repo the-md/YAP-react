@@ -62,21 +62,21 @@ export const socketMiddleware = <R, S>(
 
             if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
               refreshTokenRequest()
-                     .then(refreshData => {
-                        const wssUrl = new URL(url);
-                        wssUrl.searchParams.set(
-                          "token",
-                          refreshData.accessToken.replace("Bearer ", "")
-                        );
-                        dispatch(connect(wssUrl.toString()));
-                     })
-                     .catch(err => {
-                       dispatch(onError((err as Error).message));
-                     });
+                .then(refreshData => {
+                  const wssUrl = new URL(url);
+                  wssUrl.searchParams.set(
+                    "token",
+                    refreshData.accessToken
+                  );
+                  dispatch(connect(wssUrl.toString()));
+                })
+                .catch(err => {
+                  dispatch(onError((err as Error).message));
+                });
 
-                  dispatch(disconnect());
+              dispatch(disconnect());
 
-                  return;
+              return;
             }
 
             dispatch(onMessage(parsedData));

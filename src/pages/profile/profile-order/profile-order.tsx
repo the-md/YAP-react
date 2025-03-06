@@ -19,8 +19,6 @@ export const ProfileOrder: React.FC = () => {
   }, [location.pathname, dispatch, accessToken]);
 
   return (
-    <div className="">
-      <OrderList />
-    </div>
+    <OrderList />
   )
 }

@@ -4,12 +4,18 @@ import { OrderItem } from "../order-item/order-item.tsx";
 
 export const OrderList = () => {
   const ordersData = useSelector(getOrdersData);
+  console.log('ordersData', ordersData)
+  const sortedOrders = [...(ordersData?.orders || [])].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
+
+  console.log('sortedOrders', sortedOrders)
   return (
-    <>
-      {ordersData?.orders.map((order) => (
+    <div>
+      {sortedOrders.map((order) => (
           <OrderItem key={order._id} order={order} />
         )
       )}
-    </>
+    </div>
   )
 }
