@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate } from "react-router-dom";
 import { onRegister } from "../../services/user/actions.ts";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch } from "../../services/store.ts";
 import { User } from "../../utils/types.ts";
 
 export const RegisterPage: React.FC = () => {

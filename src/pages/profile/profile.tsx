@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./profile.module.css"
 import { NavLink, Outlet, useMatch } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { onLogout } from "../../services/user/actions.ts";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch } from "../../services/store.ts";
 
 export const ProfilePage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()

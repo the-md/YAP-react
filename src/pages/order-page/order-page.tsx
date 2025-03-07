@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "../../components/modal/modal.tsx";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { Loading } from "../../components/loading/loading.tsx";
 import { OrderDetails } from "../../components/order-details/order-details.tsx";
 import { onGetOrder } from "../../services/order/actions.ts";

@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../services/user/slice.ts";
 import { onChangeUser } from "../../../services/user/actions.ts";
-import type { AppDispatch } from "../../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../../services/store.ts";
 import { User } from "../../../utils/types.ts";
 
 export const ProfileUser: React.FC = () => {

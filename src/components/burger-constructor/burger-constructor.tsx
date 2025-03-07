@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Modal } from "../modal/modal.tsx";
@@ -9,7 +8,7 @@ import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.t
 import { onCreateOrder } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { Ingredient } from "../../utils/types.ts";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import styles from './burger-constructor.module.css';
 import { getUser } from "../../services/user/slice.ts";
 import { useNavigate } from "react-router-dom";

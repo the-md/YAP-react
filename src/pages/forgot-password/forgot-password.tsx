@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { onForgotPassword } from "../../services/user/actions.ts";
 import { getUserState, setIsChangePassword } from "../../services/user/slice.ts";
 

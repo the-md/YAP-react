@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { AppHeader } from '../app-header/app-header'
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route.tsx";
-import { AppDispatch, useSelector } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { checkUserAuth } from "../../services/user/actions.ts";
 import { HomePage } from "../../pages/home/home.tsx";
 import { LoginPage } from "../../pages/login/login.tsx";
