@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientSection } from "./ingredient-section/ingredient-section.tsx";
 import { IngredientItem } from "./ingredient-item/ingredient-item.tsx";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from './burger-ingredients.module.css';
+import { useSelector } from "../../services/store.ts";
 
 export const BurgerIngredients: React.FC = () => {
   const { ingredients } = useSelector(getIngredientsState);

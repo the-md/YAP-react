@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getConstructorState } from "../../../services/burger-constructor/slice.ts";
 import { Ingredient } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "../../../services/store.ts";
 
 export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
   const { constructorIngredients, constructorBuns } = useSelector(getConstructorState);

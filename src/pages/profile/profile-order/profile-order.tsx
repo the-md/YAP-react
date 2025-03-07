@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { OrderList } from "../../../components/order-list/order-list.tsx";
-import { type AppDispatch, useDispatch } from "../../../services/store.ts";
+import { type AppDispatch, useDispatch, useSelector } from "../../../services/store.ts";
 import { useLocation } from "react-router-dom";
 import { BURGER_API_WSS } from "../../../utils/api.ts";
 import { wsConnect } from "../../../services/profile-order/actions.ts";
 import { getStatus, wsClose } from "../../../services/profile-order/slice.ts";
-import { useSelector } from "react-redux";
 import { WebsocketStatus } from "../../../utils/types.ts";
 import { Loading } from "../../../components/loading/loading.tsx";
 

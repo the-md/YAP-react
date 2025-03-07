@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { getOrderState } from "../../services/order/slice.ts";
 import OrderIcon from "../../images/done.svg";
 import { Loading } from "../loading/loading.tsx";
+import { useSelector } from "../../services/store.ts";
 
 export const OrderConfirm: React.FC = () => {
   const {order, loading} = useSelector(getOrderState)

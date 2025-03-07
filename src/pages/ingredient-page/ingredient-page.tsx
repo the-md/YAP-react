@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import { Ingredient } from "../../utils/types.ts";
 import { IngredientDetails } from "../../components/burger-ingredients/ingredient-details/ingredient-details.tsx";
 import { Modal } from "../../components/modal/modal.tsx";
 import { Loading } from "../../components/loading/loading.tsx";
+import { useSelector } from "../../services/store.ts";
 
 export const IngredientPage: React.FC<IngredientPageProps> = ({ isModal }) => {
   const { ingredientId } = useParams();

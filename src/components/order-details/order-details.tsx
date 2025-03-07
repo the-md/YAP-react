@@ -1,9 +1,9 @@
 import React from "react";
 import styles from './order-details.module.css';
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { Ingredient, Order } from "../../utils/types.ts";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { useSelector } from "../../services/store.ts";
 
 export const OrderDetails: React.FC<OrderPageProps> = ({order}) => {
   const {ingredients} = useSelector(getIngredientsState);

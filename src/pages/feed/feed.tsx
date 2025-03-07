@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { type AppDispatch, useDispatch } from "../../services/store.ts";
+import { type AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { useLocation } from "react-router-dom";
 import { wsClose } from "../../services/order-feed/slice.ts";
 import { BURGER_API_WSS } from "../../utils/api.ts";
@@ -9,7 +9,6 @@ import { OrderList } from "../../components/order-list/order-list.tsx";
 import styles from "./feed.module.css";
 import { WebsocketStatus } from "../../utils/types.ts";
 import { Loading } from "../../components/loading/loading.tsx";
-import { useSelector } from "react-redux";
 import { getStatus } from "../../services/order-feed/slice.ts";
 
 export const FeedPage: React.FC = () => {
