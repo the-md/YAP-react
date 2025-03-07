@@ -1,7 +1,21 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware } from "@reduxjs/toolkit"
 import { RootState } from "../store";
-import { wsConnect, wsDisconnect } from "../order-feed/actions";
-import { wsClose, wsConnecting, wsError, wsMessage, wsOpen } from "../order-feed/slice.ts";
+import { wsConnect as wsOrderConnect, wsDisconnect as wsOrderDisconnect } from "../order-feed/actions";
+import { wsConnect as wsProfileConnect, wsDisconnect as wsProfileDisconnect } from "../profile-order/actions";
+import {
+  wsClose as wsOrderClose,
+  wsConnecting as wsOrderConnecting,
+  wsError as wsOrderError,
+  wsMessage as wsOrderMessage,
+  wsOpen as wsOrderOpen
+} from "../order-feed/slice.ts";
+import {
+  wsClose as wsProfileClose,
+  wsConnecting as wsProfileConnecting,
+  wsError as wsProfileError,
+  wsMessage as wsProfileMessage,
+  wsOpen as wsProfileOpen
+} from "../profile-order/slice.ts";
 import { refreshTokenRequest } from "../../utils/api.ts";
 
 export type TWsActionTypes<R, S> = {
@@ -90,7 +104,7 @@ export const socketMiddleware = <R, S>(
 
           if (isConnected) {
             reconnectTimer = window.setTimeout(() => {
-              dispatch(wsConnect(url));
+              dispatch(connect(url));
             }, RECONNECT_PERIOD);
           }
         };
@@ -118,21 +132,21 @@ export const socketMiddleware = <R, S>(
 }
 
 export const orderFeedMiddleware = socketMiddleware({
-  connect: wsConnect,
-  disconnect: wsDisconnect,
-  onConnecting: wsConnecting,
-  onOpen: wsOpen,
-  onClose: wsClose,
-  onError: wsError,
-  onMessage: wsMessage
+  connect: wsOrderConnect,
+  disconnect: wsOrderDisconnect,
+  onConnecting: wsOrderConnecting,
+  onOpen: wsOrderOpen,
+  onClose: wsOrderClose,
+  onError: wsOrderError,
+  onMessage: wsOrderMessage
 });
 
 export const profileOrderMiddleware = socketMiddleware({
-  connect: wsConnect,
-  disconnect: wsDisconnect,
-  onConnecting: wsConnecting,
-  onOpen: wsOpen,
-  onClose: wsClose,
-  onError: wsError,
-  onMessage: wsMessage
+  connect: wsProfileConnect,
+  disconnect: wsProfileDisconnect,
+  onConnecting: wsProfileConnecting,
+  onOpen: wsProfileOpen,
+  onClose: wsProfileClose,
+  onError: wsProfileError,
+  onMessage: wsProfileMessage
 }, true);

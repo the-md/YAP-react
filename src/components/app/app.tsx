@@ -68,6 +68,10 @@ export const App: React.FC = () => {
             path='/feed/:orderId'
             element={<OrderPage isModal={true} />}
           />
+          <Route
+            path='/profile/orders/:orderId'
+            element={<OrderPage isModal={true} />}
+          />
 
           <Route
             path='/ingredients/:ingredientId'
