@@ -4,8 +4,8 @@
     margin-right: auto;
 }
 .orderIngredients {
-    height: 310px;
-    overflow-y: scroll;
+    max-height: 310px;
+    overflow-y: auto;
 }
 .orderIngredientList {
     list-style: none;

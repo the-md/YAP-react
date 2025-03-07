@@ -15,15 +15,11 @@ export const ProfileOrder: React.FC = () => {
 
   console.log('ok')
   useEffect(() => {
-    console.log('ok1')
-    if (ordersData?.orders.length === 0) {
-      console.log('ok2')
-      dispatch(wsConnect(`${BURGER_API_WSS}/orders?token=${accessToken}`));
-    }
+    dispatch(wsConnect(`${BURGER_API_WSS}/orders?token=${accessToken}`));
     return () => {
       dispatch(wsClose());
     };
-  }, [location.pathname, dispatch, accessToken, ordersData]);
+  }, [location.pathname, dispatch, accessToken]);
 
   console.log('ordersData', ordersData)
 

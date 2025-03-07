@@ -3,14 +3,13 @@ import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from "./order-item.module.css";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Order, Ingredient } from "../../utils/types.ts";
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-export const OrderItem = ({ order }: OrderItemProps) => {
+export const OrderItem = ({ order, isProfile }: OrderItemProps) => {
   const {ingredients} = useSelector(getIngredientsState);
   const navigate = useNavigate()
   const location = useLocation();
-  const matchOrders = useMatch("/profile/orders")
 
   const {imagesIngredients, totalPrice} = order.ingredients.reduce<{
     imagesIngredients: Ingredient[];
@@ -28,7 +27,7 @@ export const OrderItem = ({ order }: OrderItemProps) => {
   );
 
   const onOrderClick = (order:Order) => {
-    const url = matchOrders ? `/profile/orders/${order.number}` : `/feed/${order.number}`
+    const url = isProfile ? `/profile/orders/${order.number}` : `/feed/${order.number}`
     navigate(`${url}`, {
       state: { background: location },
     });
@@ -44,7 +43,9 @@ export const OrderItem = ({ order }: OrderItemProps) => {
         </div>
       </div>
       <div className="mt-6 mb-2 text_type_main-medium">{order.name}</div>
-      <div className="mb-6 text_type_main-default">{order.status === 'done' ? 'Выполнен' : 'Готовится'}</div>
+      <div className={`mb-6 text_type_main-default ${order.status === 'done' && 'text_color_turquoise'}`}>
+        {order.status === 'done' ? 'Выполнен' : 'Готовится'}
+      </div>
       <div className="display-flex justify_content-space-between align_items-center">
         <ul className={`${styles.orderIngredients}`}>
           {imagesIngredients.slice(0, 6).map((ingredient, index) => (
@@ -66,4 +67,5 @@ export const OrderItem = ({ order }: OrderItemProps) => {
 
 interface OrderItemProps {
   order: Order;
+  isProfile: boolean;
 }
