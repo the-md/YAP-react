@@ -9,7 +9,6 @@ export const OrderConfirm: React.FC = () => {
   if (loading) return (
     <Loading/>
   );
-  //todo очистить стор, чтобы не выводилось второй раз
   return (
     <div className="mb-15 text_align-center">
       <div className={`mb-8 text_type_digits-large text_shadow-number`}>

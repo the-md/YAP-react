@@ -57,9 +57,8 @@ export const App: React.FC = () => {
         <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />} >
           <Route index element={<ProfileUser />} />
           <Route path="orders" element={<ProfileOrder />} />
-          //todo сделать отдельный роут
-          <Route path="orders/:orderId" element={<OrderPage />} />
         </Route>
+        <Route path="/profile/orders/:orderId" element={<OrderPage />} />
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
 
