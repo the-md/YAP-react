@@ -39,7 +39,7 @@ export const checkUserAuth = createAsyncThunk<void, void> (
   async (_, { dispatch }) => {
     if (localStorage.getItem("accessToken")) {
       getUserRequest()
-        .then(user => dispatch(setUser(user)))
+        .then(user => dispatch(setUser(user.user)))
         .finally(() => dispatch(setIsAuthChecked(true)));
     } else {
       dispatch(setIsAuthChecked(true));

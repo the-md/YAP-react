@@ -11,7 +11,6 @@ export const OrderList = () => {
   const sortedOrders = [...(ordersData?.orders || [])].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
-  console.log("Orders for page:", isProfile ? "Profile Orders" : "Order Feed", sortedOrders);
 
   return (
     <div>

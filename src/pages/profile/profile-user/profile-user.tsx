@@ -7,7 +7,6 @@ import type { AppDispatch } from "../../../services/store.ts";
 import { User } from "../../../utils/types.ts";
 
 export const ProfileUser: React.FC = () => {
-  //todo сбрасываются поля при обновлении страницы
   const user = useSelector(getUser)
   const dispatch = useDispatch<AppDispatch>();
   const [changeForm, setChangeForm] = useState<boolean>(false)
