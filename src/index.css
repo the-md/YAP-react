@@ -10,7 +10,7 @@ a:hover {
     margin-left: auto;
     margin-right: auto;
 }
-.burgerColumn {
+.containerColumn {
     width: 600px;
 }
 .display-flex {
@@ -54,4 +54,15 @@ a:hover {
 }
 .constructor-element {
     border: 1px solid transparent;
+}
+.price-icon-align {
+    vertical-align: top;
+}
+.text_color_turquoise {
+    color: #00CCCC;
+}
+.text_shadow-number {
+    text-shadow:
+            0 0 4px #000,
+            0 0 12px #4b4bff;
 }

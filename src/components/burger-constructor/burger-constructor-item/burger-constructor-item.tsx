@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteIngredient, sortIngredient } from "../../../services/burger-constructor/slice.ts";
 import { ConstructorIngredient } from "../../../utils/types.ts";
-import type { AppDispatch } from "../../../services/store.ts";
+import { AppDispatch, useDispatch } from "../../../services/store.ts";
 
 export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({item, index}) => {
   const dispatch = useDispatch<AppDispatch>();

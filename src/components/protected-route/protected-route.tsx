@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { getIsAuthChecked, getUser } from "../../services/user/slice.ts";
 import { Loading } from "../loading/loading.tsx";
+import { useSelector } from "../../services/store.ts";
 
 type ProtectedProps = {
   onlyUnAuth?: boolean;

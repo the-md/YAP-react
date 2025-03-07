@@ -1,5 +1,51 @@
-.orderNumber {
-    text-shadow:
-            0 0 4px #000,
-            0 0 12px #4b4bff;
+.order {
+    width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.orderIngredients {
+    max-height: 310px;
+    overflow-y: auto;
+}
+.orderIngredientList {
+    list-style: none;
+}
+.orderIngredientItem {
+    gap: 16px;
+}
+.orderIngredientImage {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+}
+.orderIngredientTitle {
+    flex-grow: 1;
+}
+.orderIngredientTotal {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.orderIngredientImage {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(64deg, #801ab2, #4c4cff);
+    z-index: 1;
+}
+.orderIngredientImage::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #000;
+    z-index: -1;
+}
+.orderIngredientImage img {
+    height: 56px;
+    z-index: 1;
 }
