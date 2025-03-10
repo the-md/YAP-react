@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: Authentication API
+  version: 1.0.0
+  description: "API for user authentication and authorization"
+servers:
+  - url: /api
+paths:
+  /password-reset:
+    post:
+      summary: Request password reset
+      operationId: requestPasswordReset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+              required:
+                - email
+      responses:
+        '200':
+          description: "Reset email sent"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+  /password-reset/reset:
+    post:
+      summary: Reset password
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                token:
+                  type: string
+              required:
+                - password
+                - token
+      responses:
+        '200':
+          description: "Password successfully reset"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+  /auth/register:
+    post:
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                name:
+                  type: string
+              required:
+                - email
+                - password
+                - name
+      responses:
+        '200':
+          description: "User registered successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      name:
+                        type: string
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+  /auth/login:
+    post:
+      summary: User login
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: "User logged in successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      name:
+                        type: string
+  /auth/logout:
+    post:
+      summary: User logout
+      operationId: logoutUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - token
+      responses:
+        '200':
+          description: "Successful logout"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+  /auth/token:
+    post:
+      summary: Refresh access token
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - token
+      responses:
+        '200':
+          description: "Access token refreshed"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+  /auth/user:
+    get:
+      summary: Get user information
+      operationId: getUserInfo
+      responses:
+        '200':
+          description: "User details returned"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      name:
+                        type: string
+    patch:
+      summary: Update user information
+      operationId: updateUserInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: "User details updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      name:
+                        type: string

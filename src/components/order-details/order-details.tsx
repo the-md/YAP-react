@@ -1,23 +1,74 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { getOrderState } from "../../services/order/slice.ts";
-import OrderIcon from "../../images/done.svg";
-import styles from "./order-details.module.css"
-import { Loading } from "../loading/loading.tsx";
+import styles from './order-details.module.css';
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Ingredient, Order } from "../../utils/types.ts";
+import { getIngredientsState } from "../../services/ingredients/slice.ts";
+import { useSelector } from "../../services/store.ts";
 
-export const OrderDetails: React.FC = () => {
-  const {orderObj, loading} = useSelector(getOrderState)
-  const numOrder = orderObj?.order.number.toString().padStart(6, '0')
-  if (loading) return (
-    <Loading/>
+export const OrderDetails: React.FC<OrderPageProps> = ({order}) => {
+  const {ingredients} = useSelector(getIngredientsState);
+
+  const {listIngredients, totalPrice} = order.ingredients.reduce<{
+    listIngredients: ListIngredientsProps[];
+    totalPrice: number;
+  }>(
+    (acc, ingredientId) => {
+      const foundIngredient = ingredients.find(item => item._id === ingredientId);
+      if (foundIngredient) {
+        const existingIngredient = acc.listIngredients.find(
+          item => item._id === foundIngredient._id
+        );
+        if (existingIngredient) {
+          existingIngredient.count! += 1;
+        } else {
+          acc.listIngredients.push({ ...foundIngredient, count: 1 });
+        }
+        acc.totalPrice += foundIngredient.price;
+      }
+      return acc;
+    },
+    {listIngredients: [], totalPrice: 0}
   );
+
   return (
-    <div className="mb-15">
-      <div className={`mb-8 text_type_digits-large ${styles.orderNumber}`}>{numOrder}</div>
-      <p className="text text_type_main-medium">идентификатор заказа</p>
-      <img src={OrderIcon} className="mt-15 mb-15" alt="order done"/>
-      <p className="text mb-2">Ваш заказ начали готовить</p>
-      <p className="text text_color_inactive">Дождитесь готовности на орбитальной станции</p>
-    </div>
+    <article className={`${styles.order}`}>
+      <div className="mb-10 text_type_digits-default text_align-center">
+        #{order.number}
+      </div>
+      <div className="mb-3 text_type_main-medium">{order.name}</div>
+      <div className="mb-15 text_color_turquoise">{order.status === 'done' ? 'Выполнен' : 'Готовится'}</div>
+      <div className="mb-6 text_type_main-medium">Состав:</div>
+      <div className={`mb-10 pr-6 ${styles.orderIngredients}`}>
+        <ul className={`text ${styles.orderIngredientList}`}>
+          {listIngredients.map((ingredient, index) => (
+            <li key={index} className={`display-flex align_items-center mb-4 ${styles.orderIngredientItem}`}>
+              <div className={`${styles.orderIngredientImage}`}>
+                <img src={ingredient.image_mobile} alt={ingredient.name} />
+              </div>
+              <div className={`text_type_main-default ${styles.orderIngredientTitle}`}>{ingredient.name}</div>
+              <div className={`text_type_digits-default ${styles.orderIngredientTotal}`}>
+                {ingredient.count} x {ingredient.price} <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="display-flex justify_content-space-between">
+        <div className="text_color_inactive text_type_main-default">
+          <FormattedDate date={new Date(`${order?.createdAt}`)}/>
+        </div>
+        <div className="ml-6 text_type_digits-default">
+          {totalPrice} <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
+        </div>
+      </div>
+    </article>
   )
+}
+
+interface OrderPageProps {
+  order: Order;
+}
+
+interface ListIngredientsProps extends Ingredient {
+  count: number;
 }

@@ -21,14 +21,38 @@ export interface User {
   name: string;
 }
 export interface OrderResponseProps {
-  name: string;
-  order: {
-    number: number;
-  };
+  order: Order;
   success: boolean;
 }
 export interface MessageResponseProps {
   success: boolean,
   message?: string,
   status?: number
+}
+
+export enum WebsocketStatus {
+  CONNECTING = 'CONNECTING...',
+  ONLINE = 'ONLINE',
+  OFFLINE = 'OFFLINE'
+}
+
+export enum OrderStatus {
+  created = "created",
+  pending = "pending",
+  done = "done"
+}
+export interface Order {
+  ingredients: string[];
+  _id: string;
+  status: OrderStatus;
+  name: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface FeedDataResponse {
+  success: true;
+  orders: Order[];
+  total: number;
+  totalToday: number;
 }

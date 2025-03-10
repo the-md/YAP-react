@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getConstructorState } from "../../../services/burger-constructor/slice.ts";
 import { Ingredient } from "../../../utils/types.ts";
 import styles from "./ingredient-item.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "../../../services/store.ts";
 
 export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
   const { constructorIngredients, constructorBuns } = useSelector(getConstructorState);
@@ -32,7 +32,7 @@ export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
     >
       <img src={item.image} alt=""/>
       <div className="m-1 text_type_digits-default">
-        {item.price} <CurrencyIcon className={`ml-2 ${styles.priceIcon}`} type="primary"/>
+        {item.price} <CurrencyIcon className="ml-2 price-icon-align" type="primary"/>
       </div>
       <div className={styles.ingredientName}>
         {item.name}

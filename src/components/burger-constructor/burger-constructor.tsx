@@ -1,15 +1,14 @@
 import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { Button, CurrencyIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Modal } from "../modal/modal.tsx";
-import { OrderDetails } from "../order-details/order-details.tsx";
+import { OrderConfirm } from "../order-confirm/order-confirm.tsx";
 import { addIngredient, getConstructorState } from "../../services/burger-constructor/slice.ts";
 import { closeModalOrder, getOpenModalOrder } from "../../services/order/slice.ts";
 import { onCreateOrder } from "../../services/order/actions.ts";
 import { BurgerConstructorItem } from "./burger-constructor-item/burger-constructor-item.tsx";
 import { Ingredient } from "../../utils/types.ts";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import styles from './burger-constructor.module.css';
 import { getUser } from "../../services/user/slice.ts";
 import { useNavigate } from "react-router-dom";
@@ -53,12 +52,13 @@ export const BurgerConstructor: React.FC = () => {
     const order:Array<string> = [
       ...(constructorBuns ? [constructorBuns._id] : []),
       ...constructorIngredients.map(item => item._id),
+      ...(constructorBuns ? [constructorBuns._id] : []),
     ];
     dispatch(onCreateOrder(order));
   }
   return (
     <>
-      <section className={`burgerColumn ml-10 mt-25`}  ref={dropTargetBun}>
+      <section className={`containerColumn ml-10 mt-25`}  ref={dropTargetBun}>
         <div className="ml-4 mr-4">
           <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
             {!constructorBuns ? (
@@ -112,7 +112,7 @@ export const BurgerConstructor: React.FC = () => {
       </section>
       {openModal &&
         <Modal title="" onClose={() => dispatch(closeModalOrder())}>
-          <OrderDetails />
+          <OrderConfirm />
         </Modal>
       }
     </>

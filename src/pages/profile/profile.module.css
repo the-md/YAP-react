@@ -3,6 +3,11 @@
     max-width: 100%;
     gap: 16px;
 }
+.blockGridOrder {
+    grid-template-columns: 1fr 2fr;
+    max-width: 100%;
+    gap: 16px;
+}
 .menu {
     text-align: left;
     list-style: none;

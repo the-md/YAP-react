@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
 import { onResetPassword } from "../../services/user/actions.ts";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch } from "../../services/store.ts";
+import { AppDispatch, useDispatch, useSelector } from "../../services/store.ts";
 import { getUserState, setIsResetPassword } from "../../services/user/slice.ts";
 
 export const ResetPasswordPage: React.FC = () => {
