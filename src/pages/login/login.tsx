@@ -51,6 +51,7 @@ export const LoginPage: React.FC = () => {
             name={'email'}
             size={'default'}
             extraClass="mb-6"
+            data-cy='email-input'
           />
           <Input
             type={'password'}
@@ -63,8 +64,9 @@ export const LoginPage: React.FC = () => {
             onIconClick={onIconClick}
             size={'default'}
             extraClass="mb-6"
+            data-cy='password-input'
           />
-          <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20">
+          <Button htmlType="submit" type="primary" size="medium" extraClass="mb-20" data-cy="login-submit">
             Войти
           </Button>
         </form>

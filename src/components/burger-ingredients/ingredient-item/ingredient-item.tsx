@@ -29,6 +29,7 @@ export const IngredientItem: React.FC<{ item: Ingredient }> = ({item}) => {
       ref={dragRef}
       className={`cursor-grab mb-8 ml-4 mr-4 text_align-center ${styles.ingredientItem}` }
       onClick={() => onIngredientClick(item)}
+      data-cy="ingredient-item"
     >
       <img src={item.image} alt=""/>
       <div className="m-1 text_type_digits-default">

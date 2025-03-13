@@ -35,3 +35,19 @@
 //     }
 //   }
 // }
+
+import { BURGER_API_URL } from "../../src/utils/api";
+
+Cypress.Commands.add("prepare", () => {
+  cy.intercept("GET", `${BURGER_API_URL}/ingredients`, { fixture: "ingredients" }).as("getIngredients");
+  cy.visit('/');
+
+  cy.intercept("POST", `${BURGER_API_URL}/auth/login`, { fixture: "login" }).as("login");
+  cy.visit("/login");
+  cy.get('[data-cy=email-input]').type(`test@test.ru`);
+  cy.get('[data-cy=password-input]').type(`password{enter}`);
+
+
+  cy.intercept("POST", `${BURGER_API_URL}/orders`, { fixture: "order" }).as("order");
+
+});

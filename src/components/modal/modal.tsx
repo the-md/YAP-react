@@ -18,11 +18,17 @@ export const Modal: React.FC<ModalProps> = ({title= '', children, onClose}) => {
   return createPortal(
     (
     <>
-      <div className={`${styles.modal}`} onClick={onClose}>
+      <div
+        className={`${styles.modal}`}
+        onClick={onClose}
+        data-cy="modal"
+      >
         <div className={`pt-10 pl-10 pr-10 pb-15 text_type_main-default ${styles.modalContent}`} onClick={(e) => e.stopPropagation()}>
           <header className={`display-flex justify_content-space-between align_items-center ${styles.modalHeader}`}>
             <div className="text_type_main-large">{title}</div>
-            <CloseIcon className="cursor-pointer" onClick={onClose} type="primary" />
+            <span data-cy="modal-close">
+              <CloseIcon className="cursor-pointer" onClick={onClose} type="primary" />
+            </span>
           </header>
           <div>{children}</div>
         </div>

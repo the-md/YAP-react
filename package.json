@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@babel/runtime": "^7.25.4",
