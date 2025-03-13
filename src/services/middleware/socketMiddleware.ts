@@ -57,11 +57,15 @@ export const socketMiddleware = <R, S>(
       if (connect.match(action)) {
         url = action.payload;
         socket = new WebSocket(action.payload);
-        onConnecting && dispatch(onConnecting());
+        if (onConnecting) {
+          dispatch(onConnecting());
+        }
         isConnected = true;
 
         socket.onopen = () => {
-          onOpen && dispatch(onOpen());
+          if (onOpen) {
+            dispatch(onOpen());
+          }
         };
 
         socket.onerror = () => {
@@ -100,7 +104,9 @@ export const socketMiddleware = <R, S>(
         };
 
         socket.onclose = () => {
-          onClose && dispatch(onClose());
+          if (onClose) {
+            dispatch(onClose());
+          }
 
           if (isConnected) {
             reconnectTimer = window.setTimeout(() => {

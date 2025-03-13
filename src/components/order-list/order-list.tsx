@@ -1,10 +1,11 @@
+import React from "react";
 import { useSelector } from "../../services/store.ts";
 import { getOrdersData as getOrderFeedData } from "../../services/order-feed/slice.ts";
 import { getOrdersData as getProfileOrderData } from "../../services/profile-order/slice.ts";
 import { OrderItem } from "../order-item/order-item.tsx";
 import { useMatch } from "react-router-dom";
 
-export const OrderList = () => {
+export const OrderList: React.FC = () => {
   const isProfile = useMatch("/profile/orders");
 
   const ordersData = useSelector(isProfile ? getProfileOrderData : getOrderFeedData);

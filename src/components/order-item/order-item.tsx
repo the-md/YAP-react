@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "../../services/store.ts";
 import { getIngredientsState } from "../../services/ingredients/slice.ts";
 import styles from "./order-item.module.css";
@@ -6,7 +7,7 @@ import { Order, Ingredient } from "../../utils/types.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
-export const OrderItem = ({ order, isProfile }: OrderItemProps) => {
+export const OrderItem: React.FC<OrderItemProps> = ({ order, isProfile }) => {
   const {ingredients} = useSelector(getIngredientsState);
   const navigate = useNavigate()
   const location = useLocation();

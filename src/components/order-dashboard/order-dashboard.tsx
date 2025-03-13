@@ -1,10 +1,11 @@
+import React from "react";
 import { useSelector } from "../../services/store.ts";
 import { getOrdersData } from "../../services/order-feed/slice.ts";
 import styles from "./order-dashboard.module.css";
 import { OrderTotal } from "../order-total/order-total.tsx";
 import { Order } from "../../utils/types.ts";
 
-export const OrderDashboard = () => {
+export const OrderDashboard: React.FC = () => {
   const ordersData = useSelector(getOrdersData);
   const orderDone = ordersData?.orders?.filter((product) => product.status === 'done') ?? [];
   const orderInProgress = ordersData?.orders?.filter((product) => product.status !== 'done') ?? [];
