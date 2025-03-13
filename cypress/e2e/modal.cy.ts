@@ -1,9 +1,9 @@
 import type {} from 'cypress';
-import type {} from "../support/cypress";
+import type {} from "../support/commands";
 
 describe('Modals', () => {
   beforeEach(() => {
-
+    cy.prepare();
   });
 
   it('open modal ingredient', () => {

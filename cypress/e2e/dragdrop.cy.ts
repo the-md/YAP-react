@@ -1,9 +1,9 @@
 import type {} from 'cypress';
-import type {} from "../support/cypress";
+import type {} from "../support/commands";
 
-describe('Modals', () => {
+describe('Drag and Drop', () => {
   beforeEach(() => {
-
+    cy.prepare();
   });
 
   it('drag buns', () => {
