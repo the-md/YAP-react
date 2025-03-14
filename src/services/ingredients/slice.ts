@@ -32,7 +32,7 @@ export const ingredientsSlice = createSlice({
 
 export const { getIngredientsState } =  ingredientsSlice.selectors
 
-interface IngredientsState {
+export interface IngredientsState {
   ingredients: Array<Ingredient>;
   loading: boolean;
   error: string | null;
