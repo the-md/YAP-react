@@ -1,7 +1,7 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { ConstructorIngredient, Ingredient } from "../../utils/types.ts";
 
-const initialState: BurgerConstructorState = {
+export const initialState: BurgerConstructorState = {
   constructorIngredients: [],
   constructorBuns: null,
 }

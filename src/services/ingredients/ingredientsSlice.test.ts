@@ -1,6 +1,6 @@
-import { ingredientsSlice, IngredientsState } from "./slice.ts";
-import { loadIngredients } from "./actions";
-import { Ingredient } from "../../utils/types";
+import { ingredientsSlice, initialState } from "./slice";
+import { loadIngredients } from "./actions.ts";
+import { Ingredient } from "../../utils/types.ts";
 
 const mockIngredients: Ingredient[] = [
   {
@@ -33,32 +33,33 @@ const mockIngredients: Ingredient[] = [
   }
 ];
 
-describe("ingredientsSlice reducer", () => {
-  const initialState = {
-    ingredients: [],
-    loading: false,
-    error: null,
-  };
-
-  it("должен устанавливать `loading = true` при `loadIngredients.pending`", () => {
-    const nextState: IngredientsState = ingredientsSlice.reducer(
-      initialState,
-      loadIngredients.pending("ingredients/loadIngredients")
-    );
-
-    expect(nextState.loading).toBe(true);
+describe("ingredients reducer", () => {
+  it("correct initial state", () => {
+    const state = ingredientsSlice.reducer(undefined, { type: "" });
+    expect(state).toEqual(initialState);
   });
 
-  it("должен устанавливать `loading = false` и `error` при `loadIngredients.rejected`", () => {
-    const error = new Error("Some error message");
-    const nextState = ingredientsSlice.reducer(initialState, loadIngredients.rejected(error, ""));
-    expect(nextState.loading).toBe(false);
-    expect(nextState.error).toBe(error.message);
+  it("loadIngredients.pending", () => {
+    const action = { type: loadIngredients.pending.type };
+
+    const state = ingredientsSlice.reducer(initialState, action);
+
+    expect(state).toEqual({...initialState, loading: true});
   });
 
-  it("должен загружать ингредиенты и устанавливать `loading = false` при `loadIngredients.fulfilled`", () => {
-    const nextState = ingredientsSlice.reducer(initialState, loadIngredients.fulfilled(mockIngredients, ""));
-    expect(nextState.loading).toBe(false);
-    expect(nextState.ingredients).toEqual(mockIngredients);
+  it("loadIngredients.rejected", () => {
+    const action = { type: loadIngredients.rejected.type, error: { message: "Test" } };
+
+    const state = ingredientsSlice.reducer(initialState, action);
+
+    expect(state).toEqual({...initialState, error: "Test"});
+  });
+
+  it("loadIngredients.fulfilled", () => {
+    const action = { type: loadIngredients.fulfilled.type, payload: mockIngredients };
+
+    const state = ingredientsSlice.reducer(initialState, action);
+
+    expect(state).toEqual({...initialState, ingredients: mockIngredients});
   });
 });
