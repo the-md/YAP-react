@@ -41,25 +41,19 @@ describe("ingredients reducer", () => {
 
   it("loadIngredients.pending", () => {
     const action = { type: loadIngredients.pending.type };
-
     const state = ingredientsSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, loading: true});
   });
 
   it("loadIngredients.rejected", () => {
     const action = { type: loadIngredients.rejected.type, error: { message: "Test" } };
-
     const state = ingredientsSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, error: "Test"});
   });
 
   it("loadIngredients.fulfilled", () => {
     const action = { type: loadIngredients.fulfilled.type, payload: mockIngredients };
-
     const state = ingredientsSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, ingredients: mockIngredients});
   });
 });

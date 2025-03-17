@@ -1,4 +1,4 @@
-import { orderSlice, initialState } from "./slice.ts";
+import { orderSlice, initialState, closeModalOrder } from "./slice.ts";
 import { onCreateOrder, onGetOrder } from "./actions.ts";
 import { Order, OrderStatus } from "../../utils/types.ts";
 
@@ -20,50 +20,47 @@ describe("order reducer", () => {
 
   it("onCreateOrder.pending", () => {
     const action = { type: onCreateOrder.pending.type };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, loading: true, openModal: true});
   });
 
   it("onCreateOrder.rejected", () => {
     const action = { type: onCreateOrder.rejected.type, error: { message: "Test" } };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, error: "Test"});
   });
 
   it("onCreateOrder.fulfilled", () => {
     const action = { type: onCreateOrder.fulfilled.type, payload: mockOrder };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, order: mockOrder});
   });
 
-
   it("onGetOrder.pending", () => {
     const action = { type: onGetOrder.pending.type };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, loading: true, openModal: true});
   });
 
   it("onGetOrder.rejected", () => {
     const action = { type: onGetOrder.rejected.type, error: { message: "Test" } };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, error: "Test"});
   });
 
   it("onGetOrder.fulfilled", () => {
     const action = { type: onGetOrder.fulfilled.type, payload: mockOrder };
-
     const state = orderSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, order: mockOrder});
+  });
+
+  it("closeModalOrder", () => {
+    const initialStateWithData = {
+      ...initialState,
+      openModal: true,
+    };
+    const action = closeModalOrder();
+    const newState = orderSlice.reducer(initialStateWithData, action);
+    expect(newState).toEqual({...initialState, openModal: false});
   });
 });

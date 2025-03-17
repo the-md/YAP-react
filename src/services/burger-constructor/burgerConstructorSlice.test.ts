@@ -1,5 +1,12 @@
 import { Ingredient } from "../../utils/types.ts";
-import { addIngredient, burgerConstructorSlice, clearIngredients, deleteIngredient, initialState, sortIngredient } from "./slice.ts";
+import {
+  addIngredient,
+  burgerConstructorSlice,
+  clearIngredients,
+  deleteIngredient,
+  initialState,
+  sortIngredient
+} from "./slice.ts";
 
 jest.mock("@reduxjs/toolkit", () => ({
   ...jest.requireActual("@reduxjs/toolkit"),
@@ -57,17 +64,13 @@ describe("burger constructor reducer", () => {
 
   it("addIngredient bun", () => {
     const action = addIngredient(mockBun)
-
     const state = burgerConstructorSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, constructorBuns: { ...mockBun, uuid: "mocked-uuid" }});
   });
 
   it("addIngredient ingredient", () => {
     const action = addIngredient(mockIngredient)
-
     const state = burgerConstructorSlice.reducer(initialState, action);
-
     expect(state).toEqual({...initialState, constructorIngredients: [{ ...mockIngredient, uuid: "mocked-uuid" }]});
   });
 
@@ -77,9 +80,7 @@ describe("burger constructor reducer", () => {
       constructorIngredients: [{ ...mockIngredient, uuid: "001" }],
     };
     const action = deleteIngredient("001")
-
     const newState = burgerConstructorSlice.reducer(initialStateWithData, action);
-
     expect(newState).toEqual({...initialState, constructorIngredients: []});
   });
 
@@ -90,24 +91,11 @@ describe("burger constructor reducer", () => {
       constructorIngredients: [{ ...mockIngredient, uuid: "002" }],
     };
     const action = clearIngredients()
-
     const newState = burgerConstructorSlice.reducer(initialStateWithData, action);
-
     expect(newState).toEqual(initialState);
   });
 
   it("sortIngredient", () => {
-    // const initialStateWithData = {
-    //   ...initialState,
-    //   constructorBuns: { ...mockBun, uuid: "001" },
-    //   constructorIngredients: [{ ...mockIngredient, uuid: "002" }],
-    // };
-    // const action = sortIngredient()
-    //
-    // const newState = burgerConstructorSlice.reducer(initialStateWithData, action);
-    //
-    // expect(newState).toEqual(initialState);
-//
     const initialStateWithData = {
       ...initialState,
       constructorIngredients: [
@@ -115,10 +103,8 @@ describe("burger constructor reducer", () => {
         { ...mockIngredientMeat, uuid: "002" },
       ],
     };
-
     const action = sortIngredient({ fromIndex: -1, toIndex: 2 });
     const newState = burgerConstructorSlice.reducer(initialStateWithData, action);
-
     expect(newState).toEqual(initialStateWithData);
   });
 });
