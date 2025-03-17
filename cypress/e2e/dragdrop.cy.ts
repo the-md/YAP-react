@@ -1,5 +1,6 @@
 import type {} from 'cypress';
 import type {} from "../support/commands";
+import { selectors } from "../fixtures/selectors";
 
 describe('Drag and Drop', () => {
   beforeEach(() => {
@@ -7,17 +8,17 @@ describe('Drag and Drop', () => {
   });
 
   it('drag buns', () => {
-    cy.get("[data-cy=ingredient-item]").first().trigger('dragstart')
-    cy.get("[data-cy=burger-constructor]").trigger('drop')
-    cy.get('[data-cy=constructor-bun-top]').contains('верх')
-    cy.get('[data-cy=constructor-bun-bottom]').contains('низ')
+    cy.get(selectors.ingredientItem).first().trigger('dragstart')
+    cy.get(selectors.burgerConstructor).trigger('drop')
+    cy.get(selectors.constructorBunTop).contains('верх')
+    cy.get(selectors.constructorBunBottom).contains('низ')
   })
 
   it('drag ingredient', () => {
-    cy.get('#sauce [data-cy=ingredient-item]').first().contains('Соус Spicy-X')
-    cy.get('#sauce [data-cy=ingredient-item]').first().trigger('dragstart')
-    cy.get('[data-cy=burger-constructor]').trigger('drop')
-    cy.get('[data-cy=constructor-center]').get('[data-cy=burger-constructor-item]').contains('Соус Spicy-X')
+    cy.get(selectors.ingredientItemSauce).first().contains('Соус Spicy-X')
+    cy.get(selectors.ingredientItemSauce).first().trigger('dragstart')
+    cy.get(selectors.burgerConstructor).trigger('drop')
+    cy.get(selectors.constructorCenter).get('[data-cy=burger-constructor-item]').contains('Соус Spicy-X')
   })
 
 })
