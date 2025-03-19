@@ -26,7 +26,12 @@ export const BurgerConstructorItem: React.FC<BurgerConstructorItemProps> = ({ite
 
   return (
     <>
-      <div ref={ref} className="display-flex justify_content-center align_items-center" draggable>
+      <div
+        ref={ref}
+        className="display-flex justify_content-center align_items-center"
+        draggable
+        data-cy="burger-constructor-item"
+      >
         <DragIcon className="mr-2 cursor-grab" type="primary"/>
         <ConstructorElement
           key={item.uuid}

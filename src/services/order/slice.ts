@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { onCreateOrder, onGetOrder } from "./actions.ts";
 import { Order } from "../../utils/types.ts";
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   order: null,
   loading: false,
   error: null,

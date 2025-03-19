@@ -11,7 +11,7 @@ export const OrderConfirm: React.FC = () => {
   );
   return (
     <div className="mb-15 text_align-center">
-      <div className={`mb-8 text_type_digits-large text_shadow-number`}>
+      <div className={`mb-8 text_type_digits-large text_shadow-number`} data-cy="order-number">
         {order?.number}
       </div>
       <p className="text text_type_main-medium">идентификатор заказа</p>

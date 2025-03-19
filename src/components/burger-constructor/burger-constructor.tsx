@@ -58,9 +58,16 @@ export const BurgerConstructor: React.FC = () => {
   }
   return (
     <>
-      <section className={`containerColumn ml-10 mt-25`}  ref={dropTargetBun}>
+      <section
+        className={`containerColumn ml-10 mt-25`}
+        ref={dropTargetBun}
+        data-cy="burger-constructor"
+      >
         <div className="ml-4 mr-4">
-          <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
+          <div
+            className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}
+            data-cy="constructor-bun-top"
+          >
             {!constructorBuns ? (
               <ConstructorEmptyItem position="top" />
             ) : (
@@ -68,13 +75,16 @@ export const BurgerConstructor: React.FC = () => {
                 key={constructorBuns.uuid}
                 type="top"
                 isLocked={true}
-                text={constructorBuns.name}
+                text={`${constructorBuns.name} (верх)`}
                 price={constructorBuns.price}
                 thumbnail={constructorBuns.image}
               />
             )}
           </div>
-          <div className={` ${canDrop && draggingItemType !== "bun" ? styles.hoverItem : ''}`}>
+          <div
+            className={` ${canDrop && draggingItemType !== "bun" ? styles.hoverItem : ''}`}
+            data-cy="constructor-center"
+          >
             {!constructorIngredients.length ? (
               <ConstructorEmptyItem position="center" />
             ) : (
@@ -85,7 +95,10 @@ export const BurgerConstructor: React.FC = () => {
               </div>
             )}
           </div>
-          <div className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}>
+          <div
+            className={`ml-8 ${canDrop && draggingItemType === "bun" ? styles.hoverItem : ''}`}
+            data-cy="constructor-bun-bottom"
+          >
             {!constructorBuns ? (
               <ConstructorEmptyItem position="bottom" />
             ) : (
@@ -93,7 +106,7 @@ export const BurgerConstructor: React.FC = () => {
                 key={constructorBuns.uuid}
                 type="bottom"
                 isLocked={true}
-                text={constructorBuns.name}
+                text={`${constructorBuns.name} (низ)`}
                 price={constructorBuns.price}
                 thumbnail={constructorBuns.image}
               />
@@ -102,10 +115,17 @@ export const BurgerConstructor: React.FC = () => {
         </div>
         <div className="mt-10 mb-10 mr-4 ml-4 display-flex justify_content-end align_items-center">
           <div className="mr-10 display-flex justify_content-center">
-            <span className="text_type_digits-medium mr-2">{totalPrice}</span>
+            <span className="text_type_digits-medium mr-2" data-cy="total-price">{totalPrice}</span>
             <CurrencyIcon className={styles.burgerConstructorTotalIcon} type="primary"/>
           </div>
-          <Button onClick={() => handleCreateOrder()} htmlType="button" type="primary" size="medium" disabled={totalPrice == 0 && true}>
+          <Button
+            onClick={() => handleCreateOrder()}
+            htmlType="button"
+            type="primary"
+            size="medium"
+            disabled={totalPrice == 0 && true}
+            data-cy="order-button"
+          >
             Оформить заказ
           </Button>
         </div>

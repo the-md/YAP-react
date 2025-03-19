@@ -22,23 +22,23 @@ export const IngredientDetails: React.FC<{ item: Ingredient }> = ({item}) => {
           }
         }}
       />
-      <div className="mt-4 mb-8 text_type_main-medium font_size-24">{item.name}</div>
+      <div className="mt-4 mb-8 text_type_main-medium font_size-24" data-cy="ingredient-detail-title">{item.name}</div>
       <ul className={`text_color_inactive display-flex align_items-start justify_content-center ${styles.detailsList}`}>
         <li>
           <div>Калории,ккал</div>
-          <div className="mt-2 text_type_digits-default">{item.calories}</div>
+          <div className="mt-2 text_type_digits-default" data-cy="ingredient-detail-calories">{item.calories}</div>
         </li>
         <li>
           <div>Белки, г</div>
-          <div className="mt-2 text_type_digits-default">{item.proteins}</div>
+          <div className="mt-2 text_type_digits-default" data-cy="ingredient-detail-proteins">{item.proteins}</div>
         </li>
         <li>
           <div>Жиры, г</div>
-          <div className="mt-2 text_type_digits-default">{item.fat}</div>
+          <div className="mt-2 text_type_digits-default" data-cy="ingredient-detail-fat">{item.fat}</div>
         </li>
         <li>
           <div>Углеводы, г</div>
-          <div className="mt-2 text_type_digits-default">{item.carbohydrates}</div>
+          <div className="mt-2 text_type_digits-default" data-cy="ingredient-detail-carbohydrates">{item.carbohydrates}</div>
         </li>
       </ul>
     </article>
